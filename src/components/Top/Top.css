@@ -1,0 +1,8 @@
+.top{
+    position: sticky;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(156, 156, 156);
+    padding-bottom: 4vh;
+}

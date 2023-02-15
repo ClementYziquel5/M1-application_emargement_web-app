@@ -1,0 +1,61 @@
+.listes{
+    display: flex;
+    flex-direction: column;
+    margin: 5vh 60px;
+    gap: 30px;      /*gap entre tous les élements de la liste*/
+    
+}
+
+.infos-liste{
+    display: flex;
+    background-color: white;
+    height: 8vh;
+    border-radius: 18px;
+    justify-content: space-around;
+    align-items: center;
+    gap: 45px;   /*gap entre les infos d'une liste*/
+    font-family: 'Poppins', sans-serif;
+    color: black;
+    overflow: hidden;
+}
+
+.bouton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.bouton-edit, .bouton-poubelle{
+    width:calc(10px + 1vw);
+    height: fit-content;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.cours{
+
+}
+
+.matiere{
+    font-size: 20px;
+}
+
+.type{
+    font-size: 12px;
+}
+
+.intervenants{
+    
+}
+.groupes-liste{
+    
+}
+
+.date{
+    
+}
+
+.heure{
+    text-align: right;
+}

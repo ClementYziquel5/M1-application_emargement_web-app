@@ -1,0 +1,92 @@
+*{
+    font-family: 'Inder';
+}
+
+.creation{   /* pour la div class="creation" dans App.js */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: calc(20px + 0.5vw);
+}
+
+.creationSession{
+    background-color: #3D3939;
+    border-radius: 10px;
+    width: 700px;
+    height: 500px;
+    color: white;
+    font-size: 25px;
+    padding: 30px 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+label{
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.inputGroupe{
+    display: flex;
+    flex-direction: column;
+    margin: 0px 50px;
+}
+
+.matiere, .type{
+    display: flex;
+    flex-direction: column;
+}
+
+#input_matiere, #input_type{
+    height: 33px;
+}
+
+#input_groupe,#input_intervenant,#input_salle{
+    height: 120px;
+}
+
+#input_date,#input_heure_debut,#input_heure_fin{
+    height: 33px;
+}
+
+input, textarea{
+    width: 220px;
+    border: 1px solid #D0D4D9;
+    border-radius: 5px;
+    line-height: 1.5em;
+}
+
+.dateHeure>div{
+    width: 150px;
+}
+
+.dateHeure{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: auto;
+    gap: 55px;
+    align-content: space-between;
+}
+
+.dateHeure>*>input{
+    width: 120px;
+}
+
+input[type=submit]{
+    width: calc(10px + 10vw);
+    height: 5vh;
+    background-color: white;
+    border: 0;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-family: 'Roboto';
+    font-size: 0.9vw;
+    margin-top: 15px;
+    cursor: pointer;
+}

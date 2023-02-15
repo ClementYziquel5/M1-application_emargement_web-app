@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
+
+.connexion{
+    background-color: #3D3939;
+    border-radius: 10px;
+    width: 900px;
+    height: 600px;
+    color: white;
+    font-size: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-connexion{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+}
+
+.form-connexion>form>input{
+    color: #666666;
+    background-color: #18171E !important; 
+    font-size: 1.2rem;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    border-radius: 0.2rem;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    width: 90%;
+    border-bottom: 0.3rem solid transparent;
+    transition: all 0.3s;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.form-connexion>form>button{
+    margin-top: 10px;
+    text-align: center;
+    width: 102%;
+    font-size: 20px;
+    height: 81px;
+    left: 359px;
+    top: 597px;
+    background: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    border-radius: 6px;
+    font-family: 'Roboto', sans-serif;
+}
+
+label{
+    font-family: 'Nunito', sans-serif;
+}
+
+.forgot-password{
+    width: 500px;
+}
+
+.forgot-password>a{
+    font-size: 20px;
+    text-decoration: none;
+    color:#FFFFFF;
+    font-family: 'Nunito', sans-serif;
+}
+
+.login-error{
+    width: 500px;
+    height: 20px;
+}
+
+.error-msg{
+    font-size: 20px;
+    color: red;
+    display: none;
+    font-family: 'Nunito', sans-serif;
+}

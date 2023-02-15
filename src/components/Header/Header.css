@@ -1,0 +1,92 @@
+.header{
+    display: flex;
+    font-family: 'Inder';
+    font-size: 35px;
+    padding: 2vh 5vh 3vh 5vh;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background-color: rgb(156, 156, 156);
+    z-index: 30;
+}
+
+.logo-div{
+    justify-content: center;
+}
+.logo{
+    width:calc(150px + 1.5vw);
+    height: fit-content;
+}
+
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    gap: 2vw;
+    margin-right: 600px;
+}
+
+.navbar>a{
+    text-decoration: none;
+    list-style-type: none;
+    color: white;
+}
+.navbar>a:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.hamburger-div{
+    display: flex;
+    margin-right: 0;
+    margin-top: 35px;
+}
+
+.hamburger{
+    width:calc(20px + 1.5vw);
+    height: fit-content;
+    z-index: 1001;
+}
+.hamburger:hover{
+    cursor: pointer;
+}
+
+.infos-hamburger{
+    background: #444349;
+    border: 3px solid #27272B;
+    border-radius: 22px;
+    position: fixed;
+    right: 30px;
+    top: 40px;
+    z-index: 1000;
+    width: 400px;
+    height: 150px;
+    display: block;
+}
+
+.infos-hamburger>a>p{
+    margin-top: 25px;
+}
+
+#pseudo{
+    color: #8D8B8B;
+    margin-top: 0;
+}
+
+#nom{
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.infos-hamburger>p,.deconnexion{
+    font-size: 25px;
+    color: white;
+    margin-left: 15px;
+    font-family: 'Comfortaa';
+}
+
+a{
+    text-decoration: none;
+}

@@ -1,0 +1,89 @@
+*{
+    font-family: 'Inder';
+}
+
+.creation-groupe{
+    background-color: #3D3939;
+    border-radius: 10px;
+    width: 700px;
+    height: 500px;
+    color: white;
+    font-size: 25px;
+    padding: 30px 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.creation-groupe>*:not(.button-rectangle){
+    display: flex;
+    flex-direction: column;
+}
+
+label{
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 50%;
+    align-items: center;
+}
+
+.inputs>div{
+    width: 200px;
+}
+
+.inputs>*>input,.input-eleve>*>input{
+    width: 200px;
+    border: 1px solid #D0D4D9;
+    border-radius: 5px;
+    height: 33px;
+}
+
+.input-eleve{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.liste{
+    width: 50%;
+    height: 70%;
+}
+
+.liste>h3{
+    margin: 0;
+}
+
+.eleves{
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: scroll;
+    width: 80%;
+}
+
+.eleve{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 15px;
+    margin: 0;
+}
+
+.eleve>img{
+    margin-right: 4px;
+}
+
+p{
+    margin: 0;
+    overflow-x: unset;
+}
