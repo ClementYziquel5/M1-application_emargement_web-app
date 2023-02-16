@@ -17,6 +17,7 @@ Use npm to install the missing dependancies, and some needed packages
 ```
 npm install
 npm install react-router-dom
+npm install @mui/material @emotion/react @emotion/styled @mui/styles --force
 ```
 Run the app
 ```
