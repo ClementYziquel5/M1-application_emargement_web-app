@@ -1,37 +1,68 @@
-import { useState } from "react";
-import './CreationGroupe.css'
 import React from 'react';
+import { useState } from "react";
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import { makeStyles } from '@mui/styles';
+import './CreationGroupe.css'
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      "& .MuiInputBase-root": {
+        background: "white",
+        textAlign: "center",
+        color: "black",
+        borderRadius: "5px",
+        justifyContent: "center",
+        padding: 0,
+        margin: 0,
+        fontWeight: "normal",
+        fontFamily: "Inder",
+        fontSize: "15px",
+        width: "200px",
+
+
+      },
+      "& .MuiOutlinedInput-root": {
+        padding: 0,
+        margin: 0,
+      },
+      "& MuiAutocomplete-inputRoot": {
+        padding: 0,
+        margin: 0,
+      }
+    }
+  }));
 
 function CreationGroupe(props){
 
-    const [groupe, setGroupe] = useState();
+    const [groupe, setGroupe] = useState('');
     const [nom, setNom] = useState();
     const [prenom, setPrenom] = useState();
     const [nomPrenom, setNomPrenom] = useState();
     const [etudiants, setEtudiants] = useState([]);
+    const [datas, setDatas] = useState([]);
+    const classes = useStyles();
 
     function handleGroupe(e) {
         const newGroupe = e.target.value;
         const newGroupeCap = newGroupe.split(' ').map(word => word.charAt(0).toUpperCase() + word.substr(1)).join(' ');
+        console.log(newGroupeCap);
         setGroupe(newGroupeCap);
     }
 
-    // function handleNom(e) {
-    //     setNom(e.target.value.toUpperCase());
-    // }
-
-    // function handlePrenom(e) {
-    //     const newPrenom = e.target.value;
-    //     const newPrenomCap = newPrenom.charAt(0).toUpperCase() + newPrenom.substr(1);
-    //     setPrenom(newPrenomCap);
-    // }
-    
     function handleAddEtudiant() {
+        console.log("nom : ",nom, "prenom : ", prenom);
         if (nom && prenom) {
             setEtudiants([...etudiants, {nom, prenom}]);
             setNom('');
             setPrenom('');
         }
+    }
+
+    function handleDeleteEtudiant(index) {
+        const newEtudiants = [...etudiants];
+        newEtudiants.splice(index, 1);
+        setEtudiants(newEtudiants);
     }
 
     function handleNomPrenom(e) {
@@ -43,11 +74,27 @@ function CreationGroupe(props){
         setPrenom(prenom);
     }
 
-    //fonction qui supprime un élève
-    function handleDeleteEtudiant(index) {
-        const newEtudiants = [...etudiants];
-        newEtudiants.splice(index, 1);
-        setEtudiants(newEtudiants);
+    function handleNomPrenomAutoComplete(fullName) {
+        const parts = fullName.split(" ");
+        const prenom = parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].substr(1).toLowerCase();
+        const nom = parts.slice(0, -1).join(" ").toUpperCase();
+        setNom(nom);
+        setPrenom(prenom);
+    }
+
+    function handleAutoComplete(e) {
+        const input = e.target.value;
+        const url = `http://127.0.0.1:8000/api/v1.0/etudiants/${input}`;
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setDatas(data);
+        })
+    }
+
+    //fonction qui envoie la requete api pour créer le groupe
+    function handleCreateGroupe() {
+        
     }
 
 
@@ -58,16 +105,37 @@ function CreationGroupe(props){
                 <div className='inputs'>
                     <div>
                         <label htmlFor='nomGroupe'>Nom du groupe</label>
-                        <input name='nomGroupe' id='nomGroupe' type='text' value={groupe} onChange={handleGroupe}></input>
+                        <TextField className={classes.root} name='nomGroupe' id='nomGroupe' type='text' value={groupe} onChange={handleGroupe}/>
                     </div>
 
                     <div className='input-eleve'>
                         <div>
                             <label htmlFor='nom-prenom'>NOM Prénom</label>
-                            <input name='nom-prenom' id='nom-prenom' type='text' value={nomPrenom} onChange={handleNomPrenom}/>
+                            {/* <input name='nom-prenom' id='nom-prenom' type='text' value={nomPrenom} onChange={handleNomPrenom}/> */}
+                            <div>
+                            <Autocomplete
+                                className={classes.root}
+                                name='nom-prenom'
+                                id='nom-prenom'
+                                type='text'
+                                freeSolo
+                                inputValue={nomPrenom}
+                                onInputChange={(_, nomPrenomSelect) => { handleNomPrenomAutoComplete(nomPrenomSelect); }}
+                                options={datas.map((option) => option.nom.toUpperCase() + ' ' + option.prenom)}
+                                renderInput={(params) => 
+                                <TextField
+                                    className={classes.root}
+                                    {...params}
+                                    value={nomPrenom}
+                                    onChange={(event) => { handleNomPrenom(event); handleAutoComplete(event); }}
+                                />}
+                            />
+                            
+                            
+                            </div>
                         </div>
 
-                        <button class="button-rectangle" type="button" onClick={handleAddEtudiant}>AJOUTER ➤</button>
+                        <button className="button-rectangle" type="button" onClick={handleAddEtudiant}>AJOUTER ➤</button>
 
                     </div>
                 </div>
@@ -83,7 +151,7 @@ function CreationGroupe(props){
                         ))}
                     </div>
                 </div>
-                <button class="button-rectangle" type="button">Créer</button>
+                <button className="button-rectangle" type="button" onClick={handleCreateGroupe}>Créer</button>
             </div>
         </div>
     );
