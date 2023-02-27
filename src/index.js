@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import CasClient, { constant } from "react-cas-client";
 import './index.css';
 import App from './App';
+import Connexion from './components/Connexion/Connexion.js';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
