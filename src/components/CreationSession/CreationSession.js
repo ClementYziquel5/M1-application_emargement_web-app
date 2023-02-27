@@ -1,50 +1,29 @@
-import React from 'react';
+import * as React from 'react';
 import { useState, useRef, useEffect } from "react";
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { makeStyles } from '@mui/styles'
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+
 import './CreationSession.css'
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      "& .MuiInputBase-root": {
-        background: "white",
-        textAlign: "center",
-        color: "black",
-        borderRadius: "5px",
-        justifyContent: "center",
-        padding: 0,
-        margin: 0,
-        fontWeight: "normal",
-        fontFamily: "Inder",
-        fontSize: "15px",
-        width: "200px",
+const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+]
 
-
-      },
-      "& .MuiOutlinedInput-root": {
-        padding: 0,
-        margin: 0,
-      },
-      "& MuiAutocomplete-inputRoot": {
-        padding: 0,
-        margin: 0,
-      }
-    }
-}));
+const animatedComponents = makeAnimated();
 
 function CreationSession(props){
     const [matiere, setMatiere] = useState('');
     const [groupe, setGroupe] = useState('');
+    const [salle, setSalle] = useState('');
     const [types, setTypes] = useState([]);
     const [matieres, setMatieres] = useState([]);
-    const classes = useStyles();
     useEffect(() => {
             getTypes();
             getMatieres();
+            getSalles();
     }, []);
- 
-
 
     function handleMatiere(e) {
         const input = e.target.value;
@@ -53,7 +32,6 @@ function CreationSession(props){
 
     function handleGroupe(e) {
         const input = e.target.value;
- 
     }
 
     //fonction qui récupère les types via l'API 
@@ -73,6 +51,17 @@ function CreationSession(props){
         .then(response => response.json())
         .then(data => {
             setMatieres(data);
+        })
+        .catch(error => console.log(error));
+    }
+
+    function getSalles() {
+        const url = `http://127.0.0.1:8000/api/v1.0/salles`;
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setSalle(data);
+            console.log(data);
         })
         .catch(error => console.log(error));
     }
@@ -108,7 +97,13 @@ function CreationSession(props){
 
                     <div className="inputGroupe">
                         <label htmlFor='salle'>Salle(s)</label>
-                        <textarea name='salle' id='input_salle' type='text'></textarea>
+                        <Select
+                            closeMenuOnSelect={false}
+                            components={animatedComponents}
+                            isMulti
+                            options={options}
+
+                        />
                     </div>
 
                     <div className="inputGroupe">
@@ -140,8 +135,6 @@ function CreationSession(props){
                     
                     <input type="submit" value="Créer"/>
                 </div>
-                
-                
             </form>
         </div>
     );

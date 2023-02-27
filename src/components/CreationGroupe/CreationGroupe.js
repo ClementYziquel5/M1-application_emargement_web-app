@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         margin: 0,
       }
     }
-  }));
+}));
 
 function CreationGroupe(props){
 
