@@ -54,11 +54,20 @@ label{
     height: 33px;
 }
 
-input, textarea{
+input, textarea {
     width: 220px;
     border: 1px solid #D0D4D9;
     border-radius: 5px;
     line-height: 1.5em;
+}
+
+select {
+    width: 220px;
+    border: 1px solid #D0D4D9;
+    border-radius: 5px;
+    line-height: 1.5em;
+    height: 3em;
+    cursor: pointer;
 }
 
 .dateHeure>div{
