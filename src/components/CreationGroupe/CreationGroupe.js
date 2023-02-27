@@ -51,7 +51,6 @@ function CreationGroupe(props){
     }
 
     function handleAddEtudiant() {
-        console.log("nom : ",nom, "prenom : ", prenom);
         if (nom && prenom) {
             setEtudiants([...etudiants, {nom, prenom}]);
             setNom('');
@@ -113,7 +112,6 @@ function CreationGroupe(props){
             
         });
 
-        console.log("reset");
         setNom('');
         setPrenom('');
         setEtudiants([]);
