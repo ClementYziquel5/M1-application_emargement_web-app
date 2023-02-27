@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css'
 
-function Header(){
+function Header(props){
     const [showInfos, setShowInfos] = useState(false);
     const handleClick = () => {
       setShowInfos(!showInfos);
@@ -28,7 +28,7 @@ function Header(){
                 <div className='infos-hamburger' style={{ display: showInfos ? 'block' : 'none' }}>
                     <p id='nom'>Nom Prenom</p>
                     <p id='pseudo'>pseudo</p>
-                    <a href='#'><p className='deconnexion'>Déconnexion</p></a>
+                    <a onClick={props.logout}><p className='deconnexion'>Déconnexion</p></a>
                 </div>  
             </div>
         </div>

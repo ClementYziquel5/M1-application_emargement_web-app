@@ -90,3 +90,7 @@
 a{
     text-decoration: none;
 }
+
+.deconnexion{
+    cursor: pointer;
+}

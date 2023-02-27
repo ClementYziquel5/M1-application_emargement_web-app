@@ -84,7 +84,7 @@ function CreationGroupe(props){
 
     function handleAutoComplete(e) {
         const input = e.target.value;
-        const url = `http://127.0.0.1:8000/api/v1.0/etudiants/${input}`;
+        const url = `https://127.0.0.1:8000/api/v1.0/etudiants/${input}`;
         fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -94,7 +94,7 @@ function CreationGroupe(props){
 
     //fonction qui envoie la requete api pour créer le groupe
     function handleCreateGroupe() {
-        const url = 'http://127.0.0.1:8000/api/v1.0/groupe/creation';
+        const url = 'https://127.0.0.1:8000/api/v1.0/groupe/creation';
         fetch(url, {
           method: 'POST',
           headers: {
@@ -102,7 +102,7 @@ function CreationGroupe(props){
           },
           body: JSON.stringify(
             {
-                nom: "Test8" 
+                nom: "Test50" 
             }
           )
         })

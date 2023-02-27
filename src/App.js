@@ -1,4 +1,5 @@
-import React, { useEffect,useState, useContext, Box, Text, Spinner, Button, Paragraph,Login,Logout} from 'react';
+import React, { useEffect,useState, useContext} from 'react';
+import { Box, Text, Button, Heading } from 'rebass';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate, useNavigate, Outlet} from 'react-router-dom';
 import Header from './components/Header/Header.js';
 import Filtres from './components/Filtres/Filtres.js';
@@ -12,12 +13,11 @@ import useCas from './hooks/useCas.js';
 function App() {
   return (
       <Router>
-          
           <Routes>
-            {/* <Route path='/connexion' element={<Connexion/>} />  */}
-            <Route path="/sessions" element={<Sessions />} />
-            <Route path="/groupes" element={<Groupes />} />
-            <Route path="/creation" element={<Creation />} />
+            <Route path='/' element={<Connexion_layout/>} />
+            <Route exact path="/sessions" element={<Sessions />} />
+            <Route exact path="/groupes" element={<Groupes />} />
+            <Route exact path="/creation" element={<Creation />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
       </Router>
@@ -38,11 +38,14 @@ function Layout(props){
   }, [props.isSecure,casUserContext.user]);
 
   return (
-    <Connexion/>
-  );
+    <Box align="center" background={props.background} fill>
+      <Box justify="center" align="center">
+        {props.children}
+      </Box>
+    </Box>  );
 }
 
-function Sessions(){
+function Connexion_layout(){
   const navigate = useNavigate();
   const cas = useCas(true);
   const casUserContext = useContext(CasUserContext);
@@ -57,43 +60,14 @@ function Sessions(){
     <Layout background="status-unknown" isSecure={false}>
       {cas.isLoading && (
         <Box align="center" gap="medium">
-          <Spinner
-            border={[
-              {
-                side: "all",
-                color: "brand",
-                size: "medium",
-                style: "dotted",
-              },
-            ]}
-          />
           <Text>Redirecting ...</Text>
         </Box>
       )}
       {!cas.isLoading && (
         <Box align="center" gap="xsmall">
-          <Paragraph textAlign="center">
-            Hello anonymous! Please click{" "}
-            <Text color="brand" size="large">
-              LOGIN
-            </Text>{" "}
-            with follows account.
-          </Paragraph>
-          <Box align="center" gap="xsmall" direction="column">
-            <Text size="xsmall">Username / Password</Text>
-            <Text size="large">
-              <Text color="brand" size="large">
-                casuser
-              </Text>{" "}
-              /{" "}
-              <Text color="brand" size="large">
-                Mellon
-              </Text>
-            </Text>
-          </Box>
+          <Connexion/>
           <Button
             label="Login"
-            icon={<Login />}
             a11yTitle="Login button"
             margin="medium"
             reverse
@@ -107,23 +81,60 @@ function Sessions(){
   );
 }
 
-function SecureHome(){
+function Sessions(){
   const cas = useCas();
   const casUserContext = useContext(CasUserContext);
 
   return (
     <Layout background="status-ok" isSecure={true}>
-      <Box align="center" gap="medium">
-        <Paragraph textAlign="center">
-          welome{" "}
-          <Text color="brand" size="xxlarge">
-            {casUserContext.user}
-          </Text>
-        </Paragraph>
-      </Box>
+      <Header logout={cas.logout}/>
+      <Filtres />
+      <Listes />
       <Button
         label="Logout"
-        icon={<Logout />}
+        a11yTitle="Logout button"
+        reverse
+        onClick={() => {
+          cas.logout();
+        }}
+      />
+    </Layout>
+  );
+}
+
+function Groupes(){
+  const cas = useCas();
+  const casUserContext = useContext(CasUserContext);
+
+  return (
+    <Layout background="status-ok" isSecure={true}>
+      <Header logout={cas.logout}/>
+      <Filtres />
+      <Button
+        label="Logout"
+        a11yTitle="Logout button"
+        reverse
+        onClick={() => {
+          cas.logout();
+        }}
+      />
+    </Layout>
+  );
+}
+
+function Creation(){
+  const cas = useCas();
+  const casUserContext = useContext(CasUserContext);
+
+  return (
+    <Layout background="status-ok" isSecure={true}>
+      <Header logout={cas.logout}/>
+      <div className="creation">
+        <CreationSession />
+        <CreationGroupe />
+      </div>
+      <Button
+        label="Logout"
         a11yTitle="Logout button"
         reverse
         onClick={() => {
@@ -141,28 +152,5 @@ const NotFound = () => (
   </div>
 );
 
-const Home = () => (
-  <div>
-
-  </div>
-);
-
-// const Sessions = () => (
-//   <div>
-//     <Filtres />
-//     <Listes />
-//   </div>
-// );
-const Groupes = () => (
-  <div>
-    <Filtres />
-  </div>
-);
-const Creation = () => (
-  <div className="creation">
-    <CreationSession />
-    <CreationGroupe />
-  </div>
-);
 
 export default App;

@@ -4,11 +4,14 @@ import './index.css';
 import App from './App';
 import Connexion from './components/Connexion/Connexion.js';
 import reportWebVitals from './reportWebVitals';
+import { CasUserContextProvider } from './context/casUserContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <CasUserContextProvider>
+      <App/>
+    </CasUserContextProvider>
   </React.StrictMode>
 );
 

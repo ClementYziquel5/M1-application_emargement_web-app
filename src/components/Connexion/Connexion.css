@@ -31,7 +31,7 @@ body{
     width: 500px;
 }
 
-.form-connexion>form>input{
+.form-connexion>input{
     color: #666666;
     background-color: #18171E !important; 
     font-size: 1.2rem;
@@ -47,7 +47,7 @@ body{
     margin-top: 10px;
 }
 
-.form-connexion>form>button{
+.form-connexion>button{
     margin-top: 10px;
     text-align: center;
     width: 102%;
@@ -61,7 +61,7 @@ body{
     font-family: 'Roboto', sans-serif;
 }
 
-.form-connexion>form>button:hover{
+.form-connexion>button:hover{
     cursor: pointer;
 }
 
