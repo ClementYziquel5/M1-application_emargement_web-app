@@ -36,10 +36,12 @@ const useStyles = makeStyles((theme) => ({
 function CreationSession(props){
     const [matiere, setMatiere] = useState('');
     const [groupe, setGroupe] = useState('');
-    const [datas, setDatas] = useState([]);
+    const [types, setTypes] = useState([]);
+    const [matieres, setMatieres] = useState([]);
     const classes = useStyles();
     useEffect(() => {
             getTypes();
+            getMatieres();
     }, []);
  
 
@@ -60,8 +62,17 @@ function CreationSession(props){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            setDatas(data);
-            console.log(data);
+            setTypes(data);
+        })
+        .catch(error => console.log(error));
+    }
+
+    function getMatieres() {
+        const url = `http://127.0.0.1:8000/api/v1.0/matieres`;
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setMatieres(data);
         })
         .catch(error => console.log(error));
     }
@@ -74,30 +85,19 @@ function CreationSession(props){
                     <div className='inputGroupe'>
                         <div className="matiere">
                             <label htmlFor='matiere'>Matière</label>
-                            <input required name='matiere' id='input_matiere' type='text'></input>
-                            {/* <Autocomplete
-                                className={classes.root}
-                                name='matiere'
-                                id='input-matiere'
-                                type='text'
-                                freeSolo
-                                inputValue={matiere}
-                                // onInputChange={(_, nomPrenomSelect) => { handleNomPrenomAutoComplete(nomPrenomSelect); }}
-                                options={datas.map((option) => option)}
-                                renderInput={(params) => 
-                                <TextField
-                                    className={classes.root}
-                                    {...params}
-                                    value={matiere}
-                                    onChange={(event) => { handleMatiere(event);}}
-                                />}
-                            /> */}
+                            <select id='select-matiere'>
+                                {matieres.map((item) => (
+                                    <option value={item.matiere} key={item.matiere}>
+                                        {item.matiere}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         <div className="type">
                             <label htmlFor='type'>Type</label>
                             <select id='select-type'>
-                                {datas.map((item) => (
+                                {types.map((item) => (
                                     <option value={item.type} key={item.type}>
                                         {item.type}
                                     </option>
