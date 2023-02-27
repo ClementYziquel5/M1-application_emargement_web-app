@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from "react";
+import { useState, useRef } from "react";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { makeStyles } from '@mui/styles';
@@ -42,11 +42,11 @@ function CreationGroupe(props){
     const [etudiants, setEtudiants] = useState([]);
     const [datas, setDatas] = useState([]);
     const classes = useStyles();
+    const autoC = useRef(null);
 
     function handleGroupe(e) {
         const newGroupe = e.target.value;
         const newGroupeCap = newGroupe.split(' ').map(word => word.charAt(0).toUpperCase() + word.substr(1)).join(' ');
-        console.log(newGroupeCap);
         setGroupe(newGroupeCap);
     }
 
@@ -57,6 +57,8 @@ function CreationGroupe(props){
             setNom('');
             setPrenom('');
         }
+        const ele = autoC.current.getElementsByClassName('MuiAutocomplete-clearIndicator')[0];
+        if (ele) ele.click();
     }
 
     function handleDeleteEtudiant(index) {
@@ -102,13 +104,20 @@ function CreationGroupe(props){
           },
           body: JSON.stringify(
             {
-                nom: "Test8" 
+                nom: groupe
             }
           )
         })
         .catch(error => {
-          console.error('Error:', error);
-        });     
+            console.error('Error:', error);
+            
+        });
+
+        console.log("reset");
+        setNom('');
+        setPrenom('');
+        setEtudiants([]);
+        setGroupe('');
     }
 
     return (
@@ -132,6 +141,7 @@ function CreationGroupe(props){
                                 id='nom-prenom'
                                 type='text'
                                 freeSolo
+                                ref={autoC}
                                 inputValue={nomPrenom}
                                 onInputChange={(_, nomPrenomSelect) => { handleNomPrenomAutoComplete(nomPrenomSelect); }}
                                 options={datas.map((option) => option.nom.toUpperCase() + ' ' + option.prenom)}
