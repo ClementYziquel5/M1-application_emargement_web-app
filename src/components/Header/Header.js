@@ -28,7 +28,7 @@ function Header(props){
                 <div className='infos-hamburger' style={{ display: showInfos ? 'block' : 'none' }}>
                     <p id='nom'>Nom Prenom</p>
                     <p id='pseudo'>pseudo</p>
-                    <a onClick={props.logout}><p className='deconnexion'>Déconnexion</p></a>
+                    <p onClick={() => {props.logout.logout()} } className='deconnexion'>Déconnexion</p>
                 </div>  
             </div>
         </div>

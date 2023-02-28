@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import './Connexion.css'
 
 function Connexion(props){
@@ -14,7 +14,7 @@ function Connexion(props){
                     <label htmlFor='identifiant'>Connexion</label>
                     <input type='text' id='identifiant' placeholder='Identifiant CAS'></input>
                     <input type='password' id='password' placeholder='Mot de passe'></input>
-                    <button>SE CONNECTER</button>
+                    <button onClick={() => {props.cas.attemptCasLogin(false)}}>SE CONNECTER</button>
                     
                 </div>
                 <div className='forgot-password'>

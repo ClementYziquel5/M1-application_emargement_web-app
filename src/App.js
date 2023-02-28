@@ -1,26 +1,28 @@
 import React, { useEffect,useState, useContext} from 'react';
-import { Box, Text, Button, Heading } from 'rebass';
-import { BrowserRouter as Router, Route, Routes, Link, Navigate, useNavigate, Outlet} from 'react-router-dom';
+import { Box } from 'rebass';
+import { BrowserRouter as Router, Route, Routes, useNavigate} from 'react-router-dom';
 import Header from './components/Header/Header.js';
 import Filtres from './components/Filtres/Filtres.js';
 import Listes from './components/Listes/Listes.js';
 import CreationSession from './components/CreationSession/CreationSession.js';
 import CreationGroupe from './components/CreationGroupe/CreationGroupe.js';
 import Connexion from './components/Connexion/Connexion.js';
-import { CasUserContextProvider, useCasUserContext, CasUserContext } from './context/casUserContext';
+import { CasUserContext, CasUserContextProvider } from './context/casUserContext';
 import useCas from './hooks/useCas.js';
 
 function App() {
   return (
+    <CasUserContextProvider>
       <Router>
           <Routes>
-            <Route path='/' element={<Connexion_layout/>} />
+            <Route path='/login' element={<Connexion_layout/>} />
             <Route exact path="/sessions" element={<Sessions />} />
             <Route exact path="/groupes" element={<Groupes />} />
             <Route exact path="/creation" element={<Creation />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
       </Router>
+    </CasUserContextProvider>
   );
 }
 
@@ -30,53 +32,40 @@ function Layout(props){
   const casUserContext = useContext(CasUserContext);
 
   useEffect(() => {
-    if (props.isSecure && !casUserContext.user) {
-      navigate('/');
+    if (props.isSecure && !casUserContext.user) { // si la page nécessite une authentification et que l'utilisateur n'est pas connecté
+      navigate('/login'); // on le redirige vers la page de connexion
     }else{
-      setSecurityChecked(true);
+      setSecurityChecked(true); // sinon on indique que la sécurité a été vérifiée
     }
-  }, [props.isSecure,casUserContext.user]);
+  }, [props.isSecure,casUserContext.user]); // on vérifie à chaque fois que la page change ou que l'utilisateur se connecte
 
   return (
-    <Box align="center" background={props.background} fill>
-      <Box justify="center" align="center">
-        {props.children}
+    <Box align="center" background={props.background} fill> 
+      <Box justify="center" align="center"> 
+        {props.children} 
       </Box>
     </Box>  );
 }
 
 function Connexion_layout(){
-  const navigate = useNavigate();
-  const cas = useCas(true);
-  const casUserContext = useContext(CasUserContext);
+  const navigate = useNavigate(); 
+  const cas = useCas(true); 
+  const casUserContext = useContext(CasUserContext); 
 
   useEffect(() => {
-    if (casUserContext.user) {
-      navigate('/sessions');
+    if (casUserContext.user) { // si l'utilisateur est connecté
+      navigate('/'); // on le redirige vers la page des sessions
     }
-  }, [casUserContext.user]);
+  }, [casUserContext.user]); // on vérifie à chaque fois que l'utilisateur se connecte
 
   return (
-    <Layout background="status-unknown" isSecure={false}>
-      {cas.isLoading && (
-        <Box align="center" gap="medium">
-          <Text>Redirecting ...</Text>
+    <Layout background="status-unknown" isSecure={false}> 
+      {!cas.isLoading && (  // si le chargement de l'authentification est terminé
+        <Box align="center" gap="xsmall"> 
+          
         </Box>
-      )}
-      {!cas.isLoading && (
-        <Box align="center" gap="xsmall">
-          <Connexion/>
-          <Button
-            label="Login"
-            a11yTitle="Login button"
-            margin="medium"
-            reverse
-            onClick={() => {
-              cas.attemptCasLogin(false);
-            }}
-          />
-        </Box>
-      )}
+       )}
+       <Connexion/> 
     </Layout>
   );
 }
@@ -86,18 +75,10 @@ function Sessions(){
   const casUserContext = useContext(CasUserContext);
 
   return (
-    <Layout background="status-ok" isSecure={true}>
-      <Header logout={cas.logout}/>
+    <Layout background="status-ok" isSecure={false}>
+      <Header logout={cas}/>
       <Filtres />
       <Listes />
-      <Button
-        label="Logout"
-        a11yTitle="Logout button"
-        reverse
-        onClick={() => {
-          cas.logout();
-        }}
-      />
     </Layout>
   );
 }
@@ -108,16 +89,8 @@ function Groupes(){
 
   return (
     <Layout background="status-ok" isSecure={true}>
-      <Header logout={cas.logout}/>
+      <Header logout={cas}/>
       <Filtres />
-      <Button
-        label="Logout"
-        a11yTitle="Logout button"
-        reverse
-        onClick={() => {
-          cas.logout();
-        }}
-      />
     </Layout>
   );
 }
@@ -128,19 +101,11 @@ function Creation(){
 
   return (
     <Layout background="status-ok" isSecure={true}>
-      <Header logout={cas.logout}/>
+      <Header logout={cas}/>
       <div className="creation">
         <CreationSession />
         <CreationGroupe />
       </div>
-      <Button
-        label="Logout"
-        a11yTitle="Logout button"
-        reverse
-        onClick={() => {
-          cas.logout();
-        }}
-      />
     </Layout>
   );
 }
