@@ -42,15 +42,15 @@ label{
     flex-direction: column;
 }
 
-#input_matiere, #input_type{
+#input-matiere, #input-type{
     height: 33px;
 }
 
-#input_groupe,#input_intervenant,#input_salle{
+#input-groupe,#input-intervenant,#input-salle{
     height: 120px;
 }
 
-#input_date,#input_heure_debut,#input_heure_fin{
+#input-date,#input-heure-debut,#input-heure-fin{
     height: 33px;
 }
 

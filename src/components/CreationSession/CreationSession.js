@@ -136,7 +136,6 @@ function CreationSession(props){
             getIntervenants();
     }, []);
 
-    //fonction qui récupère les types via l'API 
     function getTypes() {
         const url = `http://127.0.0.1:8000/api/v1.0/types`;
         fetch(url)
@@ -196,10 +195,48 @@ function CreationSession(props){
         .catch(error => console.log(error));
     }
 
+    function handleCreateSession() {
+        // const url = 'http://127.0.0.1:8000/api/v1.0/session/creation';
+        // fetch(url, {
+        //     method: 'POST',
+        //     headers: {
+        //     'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(
+        //     {
+        //         matiere: document.getElementById('select-matiere').value,
+        //         type: document.getElementById('select-type').value,
+        //         groupe: document.getElementById('select-groupe').value,
+        //         salle: document.getElementById('select-salle').value,
+        //         intervenant: document.getElementById('select-intervenant').value,
+        //         date: document.getElementById('input-date').value,
+        //         heure_debut: document.getElementById('input-heure-debut').value,
+        //         heure_fin: document.getElementById('input-heure-fin').value,
+        //     }
+        //     )
+        // })
+        // .catch(error => {
+        //     console.error('Error:', error);
+            
+        // });
+        // console.log(document.getElementById('input-date').value);
+        // console.log(document.getElementById('input-heure-debut').value);
+        // console.log(document.getElementById('input-heure-fin').value);
+        // console.log(document.getElementById('select-matiere').value);
+        // let matiereSelectionnee = document.getElementById('select-matiere').value;
+        // for (let i = 0; i < matieres.length; i++) {
+        //     if (matieres[i].matiere === matiereSelectionnee) {
+        //       let id = matieres[i].id;
+        //       console.log(id);
+        //       break;
+        //     }
+        // }
+    }
+
 
     return (
         <div>
-            <form>
+            <div>
                 <div className='creationSession'>
                     <div className='inputGroupe'>
                         <div className="matiere">
@@ -229,6 +266,7 @@ function CreationSession(props){
                     <div className="inputGroupe">
                         <label htmlFor='salle'>Salle(s)</label>
                         <Select
+                            id = 'select-salle'
                             placeholder=""
                             components={animatedComponents}
                             isMulti
@@ -242,6 +280,7 @@ function CreationSession(props){
                     <div className="inputGroupe">
                         <label htmlFor='groupe'>Groupe(s)</label>
                         <Select
+                            id = 'select-groupe'
                             placeholder=""
                             components={animatedComponents}
                             isMulti
@@ -254,6 +293,7 @@ function CreationSession(props){
                     <div className="inputGroupe">
                         <label htmlFor='intervenant'>Intervenant(s)</label>
                         <Select
+                            id = 'select-intervenant'
                             placeholder=""
                             components={animatedComponents}
                             isMulti
@@ -266,23 +306,23 @@ function CreationSession(props){
                     <div className='dateHeure'>
                         <div>
                             <label htmlFor='date'>Date</label>
-                            <input required name='date' id='input_date' type='date' ></input>
+                            <input required name='date' id='input-date' type='date' ></input>
                         </div>
 
                         <div>
                             <label htmlFor='heure_debut'>Début</label>
-                            <input required name='heure_debut' id='input_heure_debut' type='time'></input>
+                            <input required name='heure_debut' id='input-heure-debut' type='time'></input>
                         </div>
 
                         <div>
                             <label htmlFor='heure_fin'>Fin</label>
-                            <input required name='heure_fin' id='input_heure_fin' type='time'></input>
+                            <input required name='heure_fin' id='input-heure-fin' type='time'></input>
                         </div>
                     </div>
                     
-                    <input type="submit" value="Créer"/>
+                    <input type="submit" value="Créer" onClick={handleCreateSession}/>
                 </div>
-            </form>
+            </div>
         </div>
     );
 }
