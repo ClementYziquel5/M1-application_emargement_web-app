@@ -8,11 +8,61 @@ import './CreationSession.css'
 
 const animatedComponents = makeAnimated();
 
-const selectStyle = {
+const multiSelectStyle = {
     control: (provided, state) => ({
         ...provided,
         width: '220px',
         height: '120px',
+        backgroundColor: 'white',
+        color: 'black',
+        fontSize: '16px',
+        alignItems: 'flex-start',
+        border: '0px',
+        overflow: 'hidden',
+        ":hover": {
+            cursor: 'text',
+        }
+    }),
+    menu: (provided, state) => ({
+        ...provided,
+        width: '220px',
+        backgroundColor: 'white',
+        color: 'black',
+        fontSize: '16px',
+        margin: '0px',
+        padding: '0px',
+        ":hover": {
+            cursor: 'pointer',
+        }
+    }),
+    option: (provided, state) => ({
+        ...provided,
+        color: 'black', // Modifier la couleur de la police
+        backgroundColor: state.isSelected ? 'blue' : 'white', // Modifier la couleur de fond en fonction de l'état de la sélection
+        '&:hover': {
+          backgroundColor: 'lightgray', // Modifier la couleur de fond au survol
+          cursor: 'pointer',
+        },
+    }),
+    valueContainer: (provided) => ({
+        ...provided,
+        width: '200px', // Modifier l'espace entre les options sélectionnées
+        padding: '3px',
+        '&:hover': {
+            cursor: 'pointer',
+        },
+    }),
+    clearIndicator: (provided, state) => ({
+        ...provided,
+        cursor: 'pointer', // Modifier le curseur de la croix
+    }),
+}
+
+const simpleSelectStyle = {
+    control: (provided, state) => ({
+        ...provided,
+        width: '220px',
+        height: '2.7em',
         backgroundColor: 'white',
         color: 'black',
         fontSize: '16px',
@@ -169,17 +219,19 @@ function CreationSession(props){
                                     </option>
                                 ))}
                             </select>
+                          
                         </div>
                     </div>
 
                     <div className="inputGroupe">
                         <label htmlFor='salle'>Salle(s)</label>
                         <Select
+                            placeholder=""
                             components={animatedComponents}
                             isMulti
                             options={salles}
                             theme={selectTheme}
-                            styles={selectStyle}
+                            styles={multiSelectStyle}
                         />
 
                     </div>
@@ -187,22 +239,24 @@ function CreationSession(props){
                     <div className="inputGroupe">
                         <label htmlFor='groupe'>Groupe(s)</label>
                         <Select
+                            placeholder=""
                             components={animatedComponents}
                             isMulti
                             options={groupes}
                             theme={selectTheme}
-                            styles={selectStyle}
+                            styles={multiSelectStyle}
                         />
                     </div>
 
                     <div className="inputGroupe">
                         <label htmlFor='intervenant'>Intervenant(s)</label>
                         <Select
+                            placeholder=""
                             components={animatedComponents}
                             isMulti
                             options={intervenants}
                             theme={selectTheme}
-                            styles={selectStyle}
+                            styles={multiSelectStyle}
                         />
                     </div>
 
