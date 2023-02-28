@@ -184,7 +184,6 @@ function CreationSession(props){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             const intervenant = data.map((item) => {
                 return {value: item.nom.toUpperCase() + ' ' + item.prenom, label: item.nom.toUpperCase() + ' ' + item.prenom}
             })
