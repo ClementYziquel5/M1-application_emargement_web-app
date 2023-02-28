@@ -129,7 +129,6 @@ function CreationSession(props){
     const [intervenants, setIntervenants] = useState('');
     const [types, setTypes] = useState([]);
     const [matieres, setMatieres] = useState([]);
-    const options = [];
     useEffect(() => {
             getTypes();
             getMatieres();
