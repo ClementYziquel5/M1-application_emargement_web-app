@@ -154,30 +154,6 @@ function CreationSession(props){
                             })}
                             styles={selectStyle}
                         />
-                        
-
-                        {/* <Select
-                            options={salle}
-                            theme={(theme) => ({
-                                ...theme,
-                                colors: {
-                                    ...theme.colors,
-                                    primary25: 'lightgray',
-                                    primary: 'black',
-                                },
-                            })}
-                            styles={{
-                                control: (provided) => ({
-                                    ...provided,
-                                    width: '200px', // Modifier la taille du menu
-                                }),
-                                menu: (provided) => ({
-                                    ...provided,
-                                    width: '200px', // Modifier la largeur des options (la meme que le menu)
-                                }),
-                            }}
-                        /> */}
-
 
                     </div>
 
