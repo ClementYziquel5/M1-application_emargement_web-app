@@ -13,11 +13,9 @@ cd project/
 git clone https://web.isen-ouest.fr/gitlab/projet-m1/application_emargement_electronique/web-app.git
 cd web-app/
 ``` 
-Use npm to install the missing dependancies, and some needed packages
+Use npm to install the needed dependancies
 ```
-npm install
-npm install react-router-dom
-npm install @mui/material @emotion/react @emotion/styled @mui/styles --force
+npm install --force
 ```
 Run the app
 ```
