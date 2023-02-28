@@ -138,7 +138,7 @@ function CreationSession(props){
 
     //fonction qui récupère les types via l'API 
     function getTypes() {
-        const url = `http://127.0.0.1:8000/api/v1.0/types`;
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/types';
         fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -148,7 +148,7 @@ function CreationSession(props){
     }
 
     function getMatieres() {
-        const url = `http://127.0.0.1:8000/api/v1.0/matieres`;
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/matieres';
         fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -158,7 +158,7 @@ function CreationSession(props){
     }
 
     function getSalles() {
-        const url = `http://127.0.0.1:8000/api/v1.0/salles`;
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/salles';
         fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -171,7 +171,9 @@ function CreationSession(props){
     }
 
     function getGroupes() {
-        const url = `http://127.0.0.1:8000/api/v1.0/groupes`;
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes';
+        console.log(url);
+
         fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -184,7 +186,8 @@ function CreationSession(props){
     }
 
     function getIntervenants() {
-        const url = `http://127.0.0.1:8000/api/v1.0/intervenants`;
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/intervenants';
+
         fetch(url)
         .then(response => response.json())
         .then(data => {
