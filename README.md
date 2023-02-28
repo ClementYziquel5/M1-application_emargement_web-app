@@ -13,12 +13,15 @@ cd project/
 git clone https://web.isen-ouest.fr/gitlab/projet-m1/application_emargement_electronique/web-app.git
 cd web-app/
 ``` 
-Use npm to install the missing dependancies, and some needed packages
+Use npm to install the missing dependancies.
 ```
-npm install
-npm install react-router-dom
-npm install @mui/material @emotion/react @emotion/styled @mui/styles --force
+npm install --force
 ```
+Create the .env.local file. Update the REACT_APP_CAS_ENDPOINT with your CAS server endpoint and the REACT_APP_API_ENDPOINT with your API endpoint.
+```
+cp .env .env.local
+```
+
 Run the app
 ```
 npm run start
