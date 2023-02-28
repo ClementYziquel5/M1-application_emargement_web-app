@@ -82,15 +82,6 @@ function CreationSession(props){
             getIntervenants();
     }, []);
 
-    function handleMatiere(e) {
-        const input = e.target.value;
-      
-    }
-
-    function handleGroupe(e) {
-        const input = e.target.value;
-    }
-
     //fonction qui récupère les types via l'API 
     function getTypes() {
         const url = `http://127.0.0.1:8000/api/v1.0/types`;
