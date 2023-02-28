@@ -5,20 +5,15 @@ import makeAnimated from 'react-select/animated';
 
 import './CreationSession.css'
 
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-]
 
 const animatedComponents = makeAnimated();
 
 function CreationSession(props){
-    const [matiere, setMatiere] = useState('');
     const [groupe, setGroupe] = useState('');
     const [salle, setSalle] = useState('');
-    const [types, setTypes] = useState([]);
-    const [matieres, setMatieres] = useState([]);
+    const [type, setType] = useState([]);
+    const [matiere, setMatiere] = useState([]);
+    const options = [];
     useEffect(() => {
             getTypes();
             getMatieres();
@@ -40,7 +35,7 @@ function CreationSession(props){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            setTypes(data);
+            setType(data);
         })
         .catch(error => console.log(error));
     }
@@ -50,7 +45,7 @@ function CreationSession(props){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            setMatieres(data);
+            setMatiere(data);
         })
         .catch(error => console.log(error));
     }
@@ -60,10 +55,14 @@ function CreationSession(props){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            setSalle(data);
-            console.log(data);
+            const salles = data.map((item) => {
+                return {value: item.salle, label: item.salle}
+            })
+            setSalle(salles);
         })
         .catch(error => console.log(error));
+
+        
     }
 
 
@@ -75,7 +74,7 @@ function CreationSession(props){
                         <div className="matiere">
                             <label htmlFor='matiere'>Matière</label>
                             <select id='select-matiere'>
-                                {matieres.map((item) => (
+                                {matiere.map((item) => (
                                     <option value={item.matiere} key={item.matiere}>
                                         {item.matiere}
                                     </option>
@@ -86,7 +85,7 @@ function CreationSession(props){
                         <div className="type">
                             <label htmlFor='type'>Type</label>
                             <select id='select-type'>
-                                {types.map((item) => (
+                                {type.map((item) => (
                                     <option value={item.type} key={item.type}>
                                         {item.type}
                                     </option>
@@ -101,9 +100,13 @@ function CreationSession(props){
                             closeMenuOnSelect={false}
                             components={animatedComponents}
                             isMulti
-                            options={options}
-
+                            options={salle}
                         />
+                        
+
+                        
+
+
                     </div>
 
                     <div className="inputGroupe">
