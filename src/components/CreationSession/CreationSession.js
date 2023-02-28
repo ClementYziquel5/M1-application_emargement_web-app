@@ -9,6 +9,12 @@ import './CreationSession.css'
 const animatedComponents = makeAnimated();
 
 const multiSelectStyle = {
+    dropdownIndicator: (base) => ({
+        ...base,
+        ":hover": {
+            cursor: 'pointer',
+        }
+    }),
     control: (provided, state) => ({
         ...provided,
         width: '220px',
