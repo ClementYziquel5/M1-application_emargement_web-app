@@ -46,7 +46,7 @@ const multiSelectStyle = {
         color: 'black', // Modifier la couleur de la police
         backgroundColor: state.isSelected ? 'blue' : 'white', // Modifier la couleur de fond en fonction de l'état de la sélection
         '&:hover': {
-          backgroundColor: 'lightgray', // Modifier la couleur de fond au survol
+          backgroundColor: 'rgb(245,245,245)', // Modifier la couleur de fond au survol
           cursor: 'pointer',
         },
     }),
