@@ -5,7 +5,6 @@ import makeAnimated from 'react-select/animated';
 
 import './CreationSession.css'
 
-
 const animatedComponents = makeAnimated();
 
 const multiSelectStyle = {
