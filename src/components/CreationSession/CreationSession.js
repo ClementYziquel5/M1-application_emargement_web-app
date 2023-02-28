@@ -48,19 +48,38 @@ const selectStyle = {
         ...provided,
         width: '200px', // Modifier l'espace entre les options sélectionnées
         padding: '3px',
+        '&:hover': {
+            cursor: 'pointer',
+        },
+    }),
+    clearIndicator: (provided, state) => ({
+        ...provided,
+        cursor: 'pointer', // Modifier le curseur de la croix
     }),
 }
 
+const selectTheme = (theme) => ({
+    ...theme,
+    colors: {
+            ...theme.colors,
+            primary25: 'lightgray',
+            primary: 'black',
+    },
+})
+
 function CreationSession(props){
-    const [groupe, setGroupe] = useState('');
-    const [salle, setSalle] = useState('');
-    const [type, setType] = useState([]);
-    const [matiere, setMatiere] = useState([]);
+    const [groupes, setGroupes] = useState('');
+    const [salles, setSalles] = useState('');
+    const [intervenants, setIntervenants] = useState('');
+    const [types, setTypes] = useState([]);
+    const [matieres, setMatieres] = useState([]);
     const options = [];
     useEffect(() => {
             getTypes();
             getMatieres();
             getSalles();
+            getGroupes();
+            getIntervenants();
     }, []);
 
     function handleMatiere(e) {
@@ -78,7 +97,7 @@ function CreationSession(props){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            setType(data);
+            setTypes(data);
         })
         .catch(error => console.log(error));
     }
@@ -88,7 +107,7 @@ function CreationSession(props){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            setMatiere(data);
+            setMatieres(data);
         })
         .catch(error => console.log(error));
     }
@@ -98,14 +117,39 @@ function CreationSession(props){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            const salles = data.map((item) => {
+            const salle = data.map((item) => {
                 return {value: item.salle, label: item.salle}
             })
-            setSalle(salles);
+            setSalles(salle);
         })
         .catch(error => console.log(error));
+    }
 
-        
+    function getGroupes() {
+        const url = `http://127.0.0.1:8000/api/v1.0/groupes`;
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const groupe = data.map((item) => {
+                return {value: item.groupe, label: item.groupe}
+            })
+            setGroupes(groupe);
+        })
+        .catch(error => console.log(error));
+    }
+
+    function getIntervenants() {
+        const url = `http://127.0.0.1:8000/api/v1.0/intervenants`;
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            const intervenant = data.map((item) => {
+                return {value: item.nom.toUpperCase() + ' ' + item.prenom, label: item.nom.toUpperCase() + ' ' + item.prenom}
+            })
+            setIntervenants(intervenant);
+        })
+        .catch(error => console.log(error));
     }
 
 
@@ -117,7 +161,7 @@ function CreationSession(props){
                         <div className="matiere">
                             <label htmlFor='matiere'>Matière</label>
                             <select id='select-matiere'>
-                                {matiere.map((item) => (
+                                {matieres.map((item) => (
                                     <option value={item.matiere} key={item.matiere}>
                                         {item.matiere}
                                     </option>
@@ -128,7 +172,7 @@ function CreationSession(props){
                         <div className="type">
                             <label htmlFor='type'>Type</label>
                             <select id='select-type'>
-                                {type.map((item) => (
+                                {types.map((item) => (
                                     <option value={item.type} key={item.type}>
                                         {item.type}
                                     </option>
@@ -142,16 +186,8 @@ function CreationSession(props){
                         <Select
                             components={animatedComponents}
                             isMulti
-                            options={salle}
-                            limitTags={2}
-                            theme={(theme) => ({
-                                ...theme,
-                                colors: {
-                                    ...theme.colors,
-                                    primary25: 'lightgray',
-                                    primary: 'black',
-                                },
-                            })}
+                            options={salles}
+                            theme={selectTheme}
                             styles={selectStyle}
                         />
 
@@ -159,12 +195,24 @@ function CreationSession(props){
 
                     <div className="inputGroupe">
                         <label htmlFor='groupe'>Groupe(s)</label>
-                        <textarea required name='groupe' id='input_groupe' type='text'></textarea>
+                        <Select
+                            components={animatedComponents}
+                            isMulti
+                            options={groupes}
+                            theme={selectTheme}
+                            styles={selectStyle}
+                        />
                     </div>
 
                     <div className="inputGroupe">
                         <label htmlFor='intervenant'>Intervenant(s)</label>
-                        <textarea name='intervenant' id='input_intervenant' type='text'></textarea>
+                        <Select
+                            components={animatedComponents}
+                            isMulti
+                            options={intervenants}
+                            theme={selectTheme}
+                            styles={selectStyle}
+                        />
                     </div>
 
                     <div className='dateHeure'>
