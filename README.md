@@ -17,6 +17,10 @@ Use npm to install the needed dependancies
 ```
 npm install --force
 ```
+Create the .env.local file. Update the REACT_APP_CAS_ENDPOINT with your CAS server endpoint.
+```
+cp .env .env.local
+```
 Run the app
 ```
 npm run start
