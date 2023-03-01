@@ -223,31 +223,7 @@ function CreationSession(props){
         .catch(error => console.error(error));
     }
 
-    function handleCreateSession() {
-        // const url = 'http://127.0.0.1:8000/api/v1.0/session/creation';
-        // fetch(url, {
-        //     method: 'POST',
-        //     headers: {
-        //     'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(
-        //     {
-        //         matiere: document.getElementById('select-matiere').value,
-        //         type: document.getElementById('select-type').value,
-        //         groupe: document.getElementById('select-groupe').value,
-        //         salle: document.getElementById('select-salle').value,
-        //         intervenant: document.getElementById('select-intervenant').value,
-        //         date: document.getElementById('input-date').value,
-        //         heure_debut: document.getElementById('input-heure-debut').value,
-        //         heure_fin: document.getElementById('input-heure-fin').value,
-        //     }
-        //     )
-        // })
-        // .catch(error => {
-        //     console.error('Error:', error);
-            
-        // });
-        
+    function handleCreateSession() {      
         let date = document.getElementById('input-date').value;
         let heure_debut = document.getElementById('input-heure-debut').value;
         let heure_fin = document.getElementById('input-heure-fin').value;
@@ -271,6 +247,33 @@ function CreationSession(props){
         console.log("idGroupes : ", idGroupes);
         console.log("idSalles : ", idSalles);
         console.log("idIntervenants : ", idIntervenants);
+
+        console.log("typeof : ", typeof idIntervenants);
+
+
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/create';
+        fetch(url, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+            {
+                date: date,
+                heure_debut: heure_debut,
+                heure_fin: heure_fin,
+                id_matiere: id_matiere,
+                type: type,
+                idGroupes: idGroupes,
+                idSalles: idSalles,
+                idIntervenants: idIntervenants,
+            }
+            )
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            
+        });
     }
 
     function handleChangeGroupe(e) {
