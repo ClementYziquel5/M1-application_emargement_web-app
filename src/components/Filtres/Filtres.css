@@ -31,8 +31,15 @@
     font-family: 'Roboto';
     font-size: 12px;
     text-align: center;
+    padding: 7px;
+    margin: 0px;
 }
 
 .button-rectangle:hover{
     cursor: pointer;
+}
+
+#date-input-filtres {
+    padding: 0px;
+    height: 5vh;
 }

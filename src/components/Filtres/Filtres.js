@@ -5,7 +5,7 @@ function Filtres(){
         <div className="top-filtres">
             <div className="filtres">
                 
-                <select className="select" name="annee" id="annee-select">
+                <select className="select" required name="annee" id="annee-select-filtres">
                     <option value="annee-1">Année 1</option>
                     <option value="annee-2">Année 2</option>
                     <option value="annee-3">Année 3</option>
@@ -13,7 +13,7 @@ function Filtres(){
                     <option value="annee-5">Année 5</option>
                 </select>
 
-                <select className="select" name="cycle" id="cycle-select">
+                <select className="select" required name="cycle" id="cycle-select-filtres">
                     <option value="cycle-cir">CIR</option>
                     <option value="cycle-biast">BIAST</option>
                     <option value="cycle-biost">BIOST</option>
@@ -22,7 +22,7 @@ function Filtres(){
                     <option value="cycle-csi">CSI</option>
                 </select>
 
-                <select className="select" name="option" id="option-select">
+                <select className="select" required name="option" id="option-select-filtres">
                     <option value="option-esp">Espagnol</option>
                     <option value="option-ang">Anglais</option>
                     <option value="option-all">Allemand</option>
@@ -30,7 +30,7 @@ function Filtres(){
                     <option value="option-chi">Chinois</option>
                 </select>
 
-                <input clasName="select" required name='date' id='date-filtres' type='date' ></input>
+                <input clasName="select" required name='date' id='date-input-filtres' type='date' ></input>
 
                 <button className="button-rectangle" type="button">Afficher
                 </button>
