@@ -4,8 +4,8 @@ import Header from './components/Header/Header.js';
 import Filtres from './components/Filtres/Filtres.js';
 import CreationSession from './components/CreationSession/CreationSession.js';
 import CreationGroupe from './components/CreationGroupe/CreationGroupe.js';
-import Liste_session from './components/Liste_session/Liste_session.js';
-import Liste_groupe from './components/Liste_groupe/Liste_groupe.js';
+import ListeSession from './components/ListeSession/ListeSession.js';
+import ListeGroupe from './components/ListeGroupe/ListeGroupe.js';
 
 const App = () => (
     <Router>
@@ -23,12 +23,12 @@ const App = () => (
 const Sessions = () => (
   <div>
     <Filtres/>
-    <Liste_session/>
+    <ListeSession/>
   </div>
 );
 const Groupes = () => (
   <div>
-    <Liste_groupe/>
+    <ListeGroupe/>
   </div>
 );
 const Creation = () => (

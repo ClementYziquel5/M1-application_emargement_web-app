@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import ConfirmationModal from '../Confirmation/Confirmation';
 
-import './Liste_groupe.css'
+import './ListeGroupe.css'
 
-function Liste_groupe(props){
+function ListeGroupe(props){
     const [groupes, setGroupes] = useState([]);
     const [etudiants, setEtudiants] = useState([]);
     const [state, setState] = useState({
@@ -171,4 +171,4 @@ function Liste_groupe(props){
 
 }
 
-export default Liste_groupe;
+export default ListeGroupe;

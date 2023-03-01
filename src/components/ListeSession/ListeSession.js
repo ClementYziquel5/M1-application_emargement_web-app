@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import ConfirmationModal from '../Confirmation/Confirmation';
 
-import './Liste_session.css'
+import './ListeSession.css'
 
-function Liste_session(props){
+function ListeSession(props){
     const [sessions, setSessions] = useState([]);
     const [state, setState] = useState({
         showConfirmationModal: false,
@@ -129,4 +129,4 @@ function Liste_session(props){
     );
 }
 
-export default Liste_session;
+export default ListeSession;
