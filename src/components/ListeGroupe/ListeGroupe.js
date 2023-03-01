@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 import ConfirmationModal from '../Confirmation/Confirmation';
 import CreationGroupe from '../CreationGroupe/CreationGroupe';
 
-import './Liste_groupe.css'
+import './ListeGroupe.css'
 
-function Liste_groupe(props){
+function ListeGroupe(props){
     const [groupes, setGroupes] = useState([]);
     const [etudiants, setEtudiants] = useState([]);
     const [showEditForm, setShowEditForm] = useState(false);
@@ -166,4 +166,4 @@ function Liste_groupe(props){
 
 }
 
-export default Liste_groupe;
+export default ListeGroupe;
