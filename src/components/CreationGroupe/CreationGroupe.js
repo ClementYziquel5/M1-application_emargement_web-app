@@ -172,7 +172,7 @@ function CreationGroupe(props){
                         ))}
                     </div>
                 </div>
-                <button className="button-rectangle" type="button" onClick={handleCreateGroupe}>Créer</button>
+                <button className="button-rectangle input-creer" type="button" onClick={handleCreateGroupe}>Créer</button>
             </div>
         </div>
     );

@@ -86,16 +86,3 @@ select {
 .dateHeure>*>input{
     width: 120px;
 }
-
-input[type=submit]{
-    width: calc(10px + 10vw);
-    height: 5vh;
-    background-color: white;
-    border: 0;
-    border-radius: 5px;
-    text-transform: uppercase;
-    font-family: 'Roboto';
-    font-size: 0.9vw;
-    margin-top: 15px;
-    cursor: pointer;
-}
