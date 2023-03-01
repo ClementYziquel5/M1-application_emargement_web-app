@@ -2,14 +2,13 @@
     display: flex;
     flex-direction: column;
     margin: 5vh 60px;
-    gap: 30px;      /*gap entre tous les élements de la liste*/
-    
+    gap: 30px;
 }
 
 .infos-liste{
     display: flex;
     background-color: white;
-    height: 8vh;
+    height: 90px;
     border-radius: 18px;
     justify-content: space-around;
     align-items: center;
@@ -33,8 +32,12 @@
     cursor: pointer;
 }
 
-.cours{
-
+.infos-liste>*{
+    max-height: 80px;
+    overflow-y: scroll;
+    padding-right: 10px;
+    min-width: 150px;
+    text-align: left;
 }
 
 .matiere{
@@ -43,19 +46,4 @@
 
 .type{
     font-size: 12px;
-}
-
-.intervenants{
-    
-}
-.groupes-liste{
-    
-}
-
-.date{
-    
-}
-
-.heure{
-    text-align: right;
 }
