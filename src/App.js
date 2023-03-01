@@ -4,7 +4,7 @@ import Header from './components/Header/Header.js';
 import Filtres from './components/Filtres/Filtres.js';
 import CreationSession from './components/CreationSession/CreationSession.js';
 import CreationGroupe from './components/CreationGroupe/CreationGroupe.js';
-import Liste_session from './components/ListeSession/Liste_session.js';
+import Liste_session from './components/ListeSession/ListeSession.js';
 import Liste_groupe from './components/ListeGroupe/ListeGroupe.js';
 
 const App = () => (
