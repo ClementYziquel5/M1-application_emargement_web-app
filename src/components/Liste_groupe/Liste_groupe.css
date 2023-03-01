@@ -1,0 +1,81 @@
+.affichage-groupes{
+    display: flex;
+    flex-direction: row;
+}
+
+.etudiants{
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 60vw;
+}
+
+.infos-etudiant{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Poppins', sans-serif;
+    color: black;
+    overflow: hidden;
+}
+
+.groupes{
+    display: flex;
+    flex-direction: column;
+    margin: 5vh 60px;
+    gap: 30px;
+    width: 50vw;
+}
+
+.infos-groupe{
+    display: flex;
+    background-color: white;
+    height: 90px;
+    border-radius: 18px;
+    justify-content: space-around;
+    align-items: center;
+    gap: 45px;   /*gap entre les infos d'une liste*/
+    font-family: 'Poppins', sans-serif;
+    color: black;
+    overflow: hidden;
+}
+
+.bouton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.bouton-edit, .bouton-poubelle{
+    width:calc(10px + 1vw);
+    height: fit-content;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.infos-groupe>*{
+    max-height: 80px;
+    overflow-y: scroll;
+    padding-right: 10px;
+    min-width: 150px;
+    text-align: left;
+}
+
+.voir-membres-button{
+    cursor: pointer;
+}
+
+.voir-membres-button:hover{
+    text-decoration: underline;
+}
+
+.nom,.voir-membres{
+    font-size: 20px;
+}
+
+.nomGroupe{
+    font-size: 30px;
+    margin-bottom: 15px;
+}
