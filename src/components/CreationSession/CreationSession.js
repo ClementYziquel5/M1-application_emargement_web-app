@@ -126,15 +126,36 @@ function CreationSession(props){
     const [groupes, setGroupes] = useState('');
     const [salles, setSalles] = useState('');
     const [intervenants, setIntervenants] = useState('');
+
+    const [groupesOptions, setGroupesOptions] = useState('');
+    const [sallesOptions, setSallesOptions] = useState('');
+    const [intervenantsOptions, setIntervenantsOptions] = useState('');
+
     const [types, setTypes] = useState([]);
     const [matieres, setMatieres] = useState([]);
     useEffect(() => {
-            getTypes();
-            getMatieres();
-            getSalles();
-            getGroupes();
-            getIntervenants();
+            // getTypes();
+            // getMatieres();
+            // getSalles();
+            // getGroupes();
+            // getIntervenants();
+            setConstantes();
     }, []);
+    const [selectedGroupes, setSelectedGroupes] = useState([]);
+
+    function setConstantes() {
+        console.log("test");
+        setGroupes([{id: 1, groupe: 'Groupe 1'}, {id: 2, groupe: 'Groupe 2'}]);
+        setSalles([{id: 1, salle: 'Salle 1'}, {id: 2, salle: 'Salle 2'}]);
+        setIntervenants([{id: 1, intervenant: 'Intervenant 1'}, {id: 2, intervenant: 'Intervenant 2'}]);
+        
+        setGroupesOptions([{value: 'Groupe 1', label: 'Groupe 1'}, {value: 'Groupe 2', label: 'Groupe 2'}]);
+        setSallesOptions([{value: 'Salle 1', label: 'Salle 1'}, {value: 'Salle 2', label: 'Salle 2'}]);
+        setIntervenantsOptions([{value: 'Intervenant 1', label: 'Intervenant 1'}, {value: 'Intervenant 2', label: 'Intervenant 2'}]);
+        
+        setTypes([{type: 'Cours'}, {type: 'TD'}, {type: 'TP'}]);
+        setMatieres([{id: 1, matiere: 'Mathématiques'}, {id: 2, matiere: 'Physique'}, {id: 3, matiere: 'Chimie'}]);
+    }
 
     function getTypes() {
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/types';
@@ -143,7 +164,7 @@ function CreationSession(props){
         .then(data => {
             setTypes(data);
         })
-        .catch(error => console.log(error));
+        .catch(error => console.error(error));
     }
 
     function getMatieres() {
@@ -153,7 +174,7 @@ function CreationSession(props){
         .then(data => {
             setMatieres(data);
         })
-        .catch(error => console.log(error));
+        .catch(error => console.error(error));
     }
 
     function getSalles() {
@@ -164,24 +185,24 @@ function CreationSession(props){
             const salle = data.map((item) => {
                 return {value: item.salle, label: item.salle}
             })
-            setSalles(salle);
+            setSalles(data);
+            setSallesOptions(salle);
         })
-        .catch(error => console.log(error));
+        .catch(error => console.error(error));
     }
 
     function getGroupes() {
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes';
-        console.log(url);
-
         fetch(url)
         .then(response => response.json())
         .then(data => {
             const groupe = data.map((item) => {
                 return {value: item.groupe, label: item.groupe}
             })
-            setGroupes(groupe);
+            setGroupes(data);
+            setGroupesOptions(groupe);
         })
-        .catch(error => console.log(error));
+        .catch(error => console.error(error));
     }
 
     function getIntervenants() {
@@ -193,9 +214,10 @@ function CreationSession(props){
             const intervenant = data.map((item) => {
                 return {value: item.nom.toUpperCase() + ' ' + item.prenom, label: item.nom.toUpperCase() + ' ' + item.prenom}
             })
-            setIntervenants(intervenant);
+            setIntervenants(data);
+            setIntervenantsOptions(intervenant);
         })
-        .catch(error => console.log(error));
+        .catch(error => console.error(error));
     }
 
     function handleCreateSession() {
@@ -222,20 +244,55 @@ function CreationSession(props){
         //     console.error('Error:', error);
             
         // });
-        // console.log(document.getElementById('input-date').value);
-        // console.log(document.getElementById('input-heure-debut').value);
-        // console.log(document.getElementById('input-heure-fin').value);
-        // console.log(document.getElementById('select-matiere').value);
-        // let matiereSelectionnee = document.getElementById('select-matiere').value;
-        // for (let i = 0; i < matieres.length; i++) {
-        //     if (matieres[i].matiere === matiereSelectionnee) {
-        //       let id = matieres[i].id;
-        //       console.log(id);
-        //       break;
-        //     }
-        // }
+        let date = document.getElementById('input-date').value;
+        let heure_debut = document.getElementById('input-heure-debut').value;
+        let heure_fin = document.getElementById('input-heure-fin').value;
+        console.log(matieres);
+        let id_matiere;
+        let matiereSelectionnee = document.getElementById('select-matiere').value;
+        for (let i = 0; i < matieres.length; i++) {
+            if (matieres[i].matiere === matiereSelectionnee) {
+                id_matiere = matieres[i].id;
+                break;
+            }
+        }
+
+        let type = document.getElementById('select-type').value;
+        let groupes = document.getElementById('select-groupe');
+
+        console.log(date);
+        console.log(heure_debut);
+        console.log(heure_fin);
+        console.log(id_matiere);
+        console.log(type);
+        console.log(groupes);
     }
 
+    function handleChangeGroupe(e) {
+        let id_groupes = [];
+        const groupe = e.map((item) => {
+            for (let i = 0; i < groupes.length; i++) {  //groupes est le tableau contenant les groupes de la BDD
+                console.log(groupes[i]);
+                if (groupes[i].value === item.value) {  //si le groupe sélectionné est égal à un groupe de la BDD
+                    if (id_groupes.includes(item.value)) {   //test si le groupe est déjà dans le tableau id_groupes
+                        console.log(item.value, 'est déjà dans le tableau.');
+                    } else {
+                        id_groupes.push(item.value);
+                        console.log(item.value, 'est ajouté.');
+                    }
+                    break;
+                }
+            }
+            
+            // if (groupes[i].matiere === matiereSelectionnee) {
+            //     id_matiere = matieres[i].id;
+            //     break;
+            // }
+            
+            //return {id: item.value, groupe: item.value}
+        })
+        //console.log(id_groupes);
+    }
 
     return (
         <div>
@@ -273,7 +330,7 @@ function CreationSession(props){
                             placeholder=""
                             components={animatedComponents}
                             isMulti
-                            options={salles}
+                            options={sallesOptions}
                             theme={selectTheme}
                             styles={multiSelectStyle}
                         />
@@ -287,9 +344,11 @@ function CreationSession(props){
                             placeholder=""
                             components={animatedComponents}
                             isMulti
-                            options={groupes}
+                            options={groupesOptions}
                             theme={selectTheme}
                             styles={multiSelectStyle}
+                            //value={selectedGroupes}
+                            onChange={handleChangeGroupe}
                         />
                     </div>
 
@@ -300,7 +359,7 @@ function CreationSession(props){
                             placeholder=""
                             components={animatedComponents}
                             isMulti
-                            options={intervenants}
+                            options={intervenantsOptions}
                             theme={selectTheme}
                             styles={multiSelectStyle}
                         />
