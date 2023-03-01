@@ -1,55 +1,125 @@
+import React, {useState, useEffect} from 'react';
+import ConfirmationModal from '../Confiramtion/Confirmation';
+
 import './Listes.css'
 
-function Listes(){
-    const groupes = [1, 2, 3, 4, 5, 6, 7];
+function Listes(props){
+    const [sessions, setSessions] = useState([]);
+    const [state, setState] = useState({
+        showConfirmationModal: false,
+        itemToDelete: null,
+    });
+    useEffect(() => {
+        GetTodaySessions();
+    }, []);
+
+    // Get today sessions
+    function GetTodaySessions(){
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/sessions';
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setSessions(data);console.log(data);
+        })
+        .catch(error => console.log(error));
+    }
+
+    // Delete session
+    function handleDeleteClick(id) {
+        setState({
+          showConfirmationModal: true,
+          itemToDelete: id,
+        });
+      };
+
+    // Confirm delete
+    function handleConfirmDelete(){
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/suppression';
+        fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+            {
+                id: state.itemToDelete
+            }
+            )
+        })
+        .then(response => {
+            if (response.ok) {
+              GetTodaySessions();
+            } else {
+              throw new Error('DeleteSession error');
+            }
+          })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+        setState({
+            showConfirmationModal: false,
+            itemToDelete: null,
+        })
+    }
+
+    // Cancel delete
+    function handleCancelDelete(){
+        setState({
+            showConfirmationModal: false,
+            itemToDelete: null,
+        })
+    }
+
     return (
         <div className="listes">
-            {groupes.map((groupe,index) =>
-            <div className="infos-liste">
+            {sessions.map((item) =>
+            <div className="infos-liste" key={item.id}>
                 <div className="bouton">
                     <img src="button-edit.png" className="bouton-edit" alt='Bouton edit'></img>
-                    <img src="button-delete.png" className="bouton-poubelle" alt='Bouton edit'></img>
+                    <img src="button-delete.png" className="bouton-poubelle" alt='Bouton suppression' onClick={() => handleDeleteClick(item.id)}></img>
+                    <ConfirmationModal isOpen={state.showConfirmationModal} onRequestClose={handleCancelDelete} onConfirm={() => handleConfirmDelete()} />
                 </div>
                 <div className="cours">
                     <div className="matiere">
-                        Framework
+                        {item.matiere}
                     </div>
                     <div className="type">
-                        Travaux pratiques
+                        {item.type}
                     </div>
                 </div>
                 <div className="groupes-liste">
-                    <div>
-                        M1 Groupe 5
-                    </div>
-                    <div>
-                        M1 Groupe 4
-                    </div>
+                    {item["groupes"].map((groupe) => 
+                        <div className="groupe">
+                            {groupe}
+                        </div>
+                    )}
                 </div>
                 <div className="intervenants">
-                    <div>
-                        Didier LE FOLL
-                    </div>
-                    <div>
-                        Christophe VIGNAUD
-                    </div>
+                    {item["intervenants"].map((intervenant) =>
+                        <div className="intervenant">
+                            {intervenant}
+                        </div>
+                    )}
                 </div>
-                <div className="salle">
-                    <div className="la-salle">
-                        S136C
-                    </div>
+                <div className="salles">
+                    {item["salles"].map((salle) =>
+                        <div className="salle">
+                            {salle}
+                        </div>
+                    )}
                 </div>
                 <div className="date">
                     <div className="la-date">
-                        16/01/23
+                        {item.date}
                     </div>
                 </div>
                 <div className="heure">
-                    <div class="heure-debut">
-                        09h00
+                    <div className="heure-debut">
+                        {item.heureDebut}
                     </div>
                     <div className="heure-fin">
-                        10h30
+                        {item.heureFin}
                     </div>
                 </div>
             </div>
