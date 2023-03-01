@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import ConfirmationModal from '../Confiramtion/Confirmation';
+import ConfirmationModal from '../Confirmation/Confirmation';
 
-import './Listes.css'
+import './Liste_session.css'
 
-function Listes(props){
+function Liste_session(props){
     const [sessions, setSessions] = useState([]);
     const [state, setState] = useState({
         showConfirmationModal: false,
@@ -19,7 +19,7 @@ function Listes(props){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            setSessions(data);console.log(data);
+            setSessions(data);
         })
         .catch(error => console.log(error));
     }
@@ -129,4 +129,4 @@ function Listes(props){
     );
 }
 
-export default Listes;
+export default Liste_session;
