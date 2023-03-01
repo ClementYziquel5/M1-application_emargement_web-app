@@ -322,7 +322,8 @@ function CreationSession(props){
                     <div className='inputGroupe'>
                         <div className="matiere">
                             <label htmlFor='matiere'>Matière</label>
-                            <select id='select-matiere'>
+                            <select id='select-matiere' defaultValue=''>
+                                <option value='' disabled>Choisir une matière</option>
                                 {matieres.map((item) => (
                                     <option value={item.matiere} key={item.matiere}>
                                         {item.matiere}
