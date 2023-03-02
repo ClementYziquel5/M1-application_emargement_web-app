@@ -38,6 +38,7 @@ function CreationGroupe(props){
     const [groupe, setGroupe] = useState('');
     const [nom, setNom] = useState();
     const [prenom, setPrenom] = useState();
+    const [ine, setIne] = useState();
     const [nomPrenom, setNomPrenom] = useState();
     const [etudiants, setEtudiants] = useState([]);
     const [datas, setDatas] = useState([]);
@@ -52,9 +53,10 @@ function CreationGroupe(props){
 
     function handleAddEtudiant() {
         if (nom && prenom) {
-            setEtudiants([...etudiants, {nom, prenom}]);
+            setEtudiants([...etudiants, {nom, prenom, ine}]);
             setNom('');
             setPrenom('');
+            setIne('');
         }
         const ele = autoC.current.getElementsByClassName('MuiAutocomplete-clearIndicator')[0];
         if (ele) ele.click();
@@ -191,9 +193,9 @@ function CreationGroupe(props){
                     </div>
                 </div>
                 {(props.nom) ?
-                    <button className="button-rectangle input-creer" type="button" onClick={props.handleUpdateGroupe}>Modifier</button>
+                    <button className="button-rectangle input-creer" type="button" onClick={() => props.handleUpdateGroupe(props.id, groupe, etudiants)}>Modifier</button>
                     :
-                    <button className="button-rectangle input-creer" type="button" onClick={handleCreateGroupe}>Créer</button>
+                    <button className="button-rectangle input-creer" type="button" onClick={() => handleCreateGroupe}>Créer</button>
                 }
             </div>
         </div>

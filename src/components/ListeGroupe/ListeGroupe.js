@@ -89,17 +89,17 @@ function ListeGroupe(props){
         });
     }
 
-    function handleUpdateGroupe(){
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupe/modification';
+    function handleUpdateGroupe(id, nom, etudiants){
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupe/miseajour';
         fetch(url, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                id: state.idGroupe,
-                nom: document.getElementById('nomGroupe').innerHTML,
-                ines: etudiants.map((item) => item.ines)
+                id: id,
+                nom: nom,
+                ines: etudiants.map((item) => item.ine)
             })
         })
         .then(response => {
@@ -136,8 +136,8 @@ function ListeGroupe(props){
                     </div>
                     <div className="voir-membres">
                         <p className="voir-membres-button" onClick={() => {
-                            GetEtudiantsOfGroup(item.id);
                             setShowEditForm(false);
+                            GetEtudiantsOfGroup(item.id);
                             document.getElementById('nomGroupe').innerHTML = item.groupe;
                         }}>Voir les membres ➤</p>
                     </div>
