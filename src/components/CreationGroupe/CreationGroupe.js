@@ -104,6 +104,10 @@ function CreationGroupe(props){
 
     //fonction qui envoie la requete api pour créer le groupe
     function handleCreateGroupe() {
+        console.log(groupe);
+        console.log(etudiants);
+        console.log(etudiants.map(etudiant => etudiant.ine));
+
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupe/creation';
         fetch(url, {
           method: 'POST',
@@ -112,7 +116,8 @@ function CreationGroupe(props){
           },
           body: JSON.stringify(
             {
-                nom: groupe
+                nom: groupe,
+                ines: etudiants.map(etudiant => etudiant.ine)
             }
           )
         })
@@ -120,7 +125,7 @@ function CreationGroupe(props){
             console.error('Error:', error);
         });
 
-        handleAddEtudiantsToGroup();
+        //handleAddEtudiantsToGroup();
 
         setNom('');
         setPrenom('');
@@ -138,7 +143,7 @@ function CreationGroupe(props){
             },
             body: JSON.stringify(
                 {
-                    idGroupe: 57,
+                    idGroupe: 40,
                     ines: etudiants.map(etudiant => etudiant.ine)
                 }
             )
