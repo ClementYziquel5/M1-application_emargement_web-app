@@ -1,15 +1,20 @@
+import { Box } from '@mui/system';
 import React, {useState, useEffect} from 'react';
+import ReactDOM from 'react-dom';
 import ConfirmationModal from '../Confirmation/Confirmation';
+import CreationGroupe from '../CreationGroupe/CreationGroupe';
 
 import './ListeGroupe.css'
 
 function ListeGroupe(props){
     const [groupes, setGroupes] = useState([]);
     const [etudiants, setEtudiants] = useState([]);
+    const [showEditForm, setShowEditForm] = useState(false);
+    const [groupeToEditId, setGroupeToEditId] = useState(null);
+    const [groupeToEditNom, setGroupeToEditNom] = useState(null);
     const [state, setState] = useState({
         showConfirmationModal: false,
         itemToDelete: null,
-        idGroupe: null,
     });
     useEffect(() => {
         GetGroupes();
@@ -25,21 +30,11 @@ function ListeGroupe(props){
         .catch(error => console.log(error));
     }
 
-    // Delete etudiant
-    function handleDeleteClickEtudiant(id, idGroupe=null) {
-        setState({
-          showConfirmationModal: true,
-          itemToDelete: id,
-          idGroupe: idGroupe,
-        });
-    }
-
     // Delete groupe
     function handleDeleteClickGroupe(id) {
         setState({
             showConfirmationModal: true,
             itemToDelete: id,
-            idGroupe: null,
         });
     };
 
@@ -94,33 +89,28 @@ function ListeGroupe(props){
         });
     }
 
-    function handleConfirmDeleteEtudiant(){
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/etudiant/suppression';
+    function handleUpdateGroupe(){
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupe/modification';
         fetch(url, {
-            method: 'DELETE',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                idGroupe: state.idGroupe,
-                ines: [state.itemToDelete]
-            }
-            )
+                id: state.idGroupe,
+                nom: document.getElementById('nomGroupe').innerHTML,
+                ines: etudiants.map((item) => item.ines)
+            })
         })
         .then(response => {
             if (response.ok) {
                 GetEtudiantsOfGroup();
             } else {
-                throw new Error('DeleteEtudiant error');
+                throw new Error('UpdateGroupe error');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-        });
-
-        setState({
-            showConfirmationModal: false,
-            itemToDelete: null,
         });
     }
     
@@ -132,7 +122,12 @@ function ListeGroupe(props){
                 {groupes.map((item) =>
                 <div className="infos-groupe" key={item.id}>
                     <div className="bouton">
-                        <img src="button-edit.png" className="bouton-edit" alt='Bouton edit'></img>
+                        <img src="button-edit.png" className="bouton-edit" alt='Bouton edit' onClick={() => {
+                            setShowEditForm(true);
+                            GetEtudiantsOfGroup(item.id);
+                            setGroupeToEditId(item.id);
+                            setGroupeToEditNom(item.groupe);
+                        }}></img>
                         <img src="button-delete.png" className="bouton-poubelle" alt='Bouton suppression' onClick={() => handleDeleteClickGroupe(item.id,null)}></img>
                         <ConfirmationModal isOpen={state.showConfirmationModal} onRequestClose={handleCancelDelete} onConfirm={() => handleConfirmDeleteGroupe()} />
                     </div>
@@ -142,31 +137,31 @@ function ListeGroupe(props){
                     <div className="voir-membres">
                         <p className="voir-membres-button" onClick={() => {
                             GetEtudiantsOfGroup(item.id);
+                            setShowEditForm(false);
                             document.getElementById('nomGroupe').innerHTML = item.groupe;
-                            document.getElementById('nomGroupe').accessKey = item.id;
-                        }}>Voir les membres</p>
+                        }}>Voir les membres ➤</p>
                     </div>
                 </div>
                 )}
             </div>
             <div className="etudiants">
-                <div><p id='nomGroupe' className='nomGroupe'></p></div>
-                {etudiants.map((item) =>
-                    <div className="infos-etudiant" key={item.id}>
-                        <div className="bouton">
-                            <img src="button-delete.png" className="bouton-poubelle" alt='Bouton suppression' onClick={() => handleDeleteClickEtudiant(item.id,document.getElementById('nomGroupe').accessKey )}></img>
-                            <ConfirmationModal isOpen={state.showConfirmationModal} onRequestClose={handleCancelDelete} onConfirm={() => handleConfirmDeleteEtudiant()} />
-                        </div>
-                        
-                        <div className="etudiant">
-                            {item.nom + " " + item.prenom}
-                        </div>
+                {showEditForm ?
+                    <CreationGroupe id={groupeToEditId} nom={groupeToEditNom} etudiants={etudiants} handleUpdateGroupe={handleUpdateGroupe}/>
+                : 
+                <Box>
+                    <div id='nomGroupe' className='nomGroupe'></div>
+                    <div className="infos-etudiant"> 
+                        {etudiants.map((item) =>            
+                            <div className="etudiant" key={item.ine} >
+                                {item.nom + " " + item.prenom}
+                            </div>
+                        )}
                     </div>
-                )}
+                </Box>
+                
+                }
             </div>
         </div>
-
-       
     );
 
 }

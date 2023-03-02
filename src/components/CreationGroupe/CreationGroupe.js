@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState, useRef } from "react";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -117,6 +117,24 @@ function CreationGroupe(props){
         setEtudiants([]);
         setGroupe('');
     }
+    // Récupérer les étudiants d'un groupe
+    function GetEtudiantsOfGroup(id){
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/etudiants/groupe/' + id;
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setEtudiants(data);
+        })
+        .catch(error => console.log(error));
+    }
+
+    useEffect(() => {
+        if (props.etudiants) {
+            setEtudiants(props.etudiants);
+            setGroupe(props.nom);
+
+        }
+    }, [props.etudiants]);
 
     return (
         <div>
@@ -151,8 +169,7 @@ function CreationGroupe(props){
                                     onChange={(event) => { handleNomPrenom(event); handleAutoComplete(event); }}
                                 />}
                             />
-                            
-                            
+
                             </div>
                         </div>
 
@@ -170,9 +187,14 @@ function CreationGroupe(props){
                                 <p>{etudiant.nom} {etudiant.prenom}</p>
                             </div>
                         ))}
+
                     </div>
                 </div>
-                <button className="button-rectangle input-creer" type="button" onClick={handleCreateGroupe}>Créer</button>
+                {(props.nom) ?
+                    <button className="button-rectangle input-creer" type="button" onClick={props.handleUpdateGroupe}>Modifier</button>
+                    :
+                    <button className="button-rectangle input-creer" type="button" onClick={handleCreateGroupe}>Créer</button>
+                }
             </div>
         </div>
     );
