@@ -71,18 +71,25 @@ function CreationGroupe(props){
     function handleNomPrenom(e) {
         const fullName = e.target.value;
         const parts = fullName.split(" ");
-        const prenom = parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].substr(1).toLowerCase();
-        const nom = parts.slice(0, -1).join(" ").toUpperCase();
-        setNom(nom);
-        setPrenom(prenom);
+        const monPrenom = parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].substr(1).toLowerCase();
+        const monNom = parts.slice(0, -1).join(" ").toUpperCase();
+        setNom(monNom);
+        setPrenom(monPrenom);
     }
 
     function handleNomPrenomAutoComplete(fullName) {
         const parts = fullName.split(" ");
-        const prenom = parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].substr(1).toLowerCase();
-        const nom = parts.slice(0, -1).join(" ").toUpperCase();
-        setNom(nom);
-        setPrenom(prenom);
+        const monPrenom = parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].substr(1).toLowerCase();
+        const monNom = parts.slice(0, -1).join(" ").toUpperCase();
+
+        //for qui trouve l'ine correspondant au nom et prenom en piochant dans le tableau datas qui est le tableau des étudiants qu'on récupère de l'api
+        for (let i = 0; i < datas.length; i++) {
+            if (datas[i].nom.toUpperCase() === monNom && datas[i].prenom === monPrenom) {
+                setIne(datas[i].ine);
+            }
+        }
+        setNom(monNom);
+        setPrenom(monPrenom);
     }
 
     function handleAutoComplete(e) {
@@ -111,14 +118,37 @@ function CreationGroupe(props){
         })
         .catch(error => {
             console.error('Error:', error);
-            
         });
+
+        handleAddEtudiantsToGroup();
 
         setNom('');
         setPrenom('');
         setEtudiants([]);
         setGroupe('');
     }
+
+    //fonction qui envoie la requete api pour ajouter les étudiants au groupe
+    function handleAddEtudiantsToGroup() {
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupe/etudiant/ajout';
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    idGroupe: 57,
+                    ines: etudiants.map(etudiant => etudiant.ine)
+                }
+            )
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+            
+
     // Récupérer les étudiants d'un groupe
     function GetEtudiantsOfGroup(id){
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/etudiants/groupe/' + id;
@@ -134,7 +164,6 @@ function CreationGroupe(props){
         if (props.etudiants) {
             setEtudiants(props.etudiants);
             setGroupe(props.nom);
-
         }
     }, [props.etudiants]);
 
@@ -151,7 +180,6 @@ function CreationGroupe(props){
                     <div className='input-eleve'>
                         <div>
                             <label htmlFor='nom-prenom'>NOM Prénom</label>
-                            {/* <input name='nom-prenom' id='nom-prenom' type='text' value={nomPrenom} onChange={handleNomPrenom}/> */}
                             <div>
                             <Autocomplete
                                 className={classes.root}
@@ -195,7 +223,7 @@ function CreationGroupe(props){
                 {(props.nom) ?
                     <button className="button-rectangle input-creer" type="button" onClick={() => props.handleUpdateGroupe(props.id, groupe, etudiants)}>Modifier</button>
                     :
-                    <button className="button-rectangle input-creer" type="button" onClick={() => handleCreateGroupe}>Créer</button>
+                    <button className="button-rectangle input-creer" type="button" onClick={() => handleCreateGroupe()}>Créer</button>
                 }
             </div>
         </div>
