@@ -325,10 +325,6 @@ function CreationSession(props){
 
             // fill inputs with data values
 
-            // date
-            let date = data.date;
-            date = date.split('T')[0];
-            document.getElementById('input-date').value = date;
         })
 
     }
