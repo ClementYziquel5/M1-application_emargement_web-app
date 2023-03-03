@@ -30,7 +30,7 @@ function Filtres(){
                     <option value="option-chi">Chinois</option>
                 </select>
 
-                <input clasName="select" required name='date' id='date-input-filtres' type='date' ></input>
+                <input className="select" required name='date' id='date-input-filtres' type='date' ></input>
 
                 <button className="button-rectangle" type="button">Afficher
                 </button>

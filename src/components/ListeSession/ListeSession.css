@@ -3,6 +3,7 @@
     flex-direction: column;
     margin: 5vh 60px;
     gap: 30px;
+    
 }
 
 .infos-liste{
@@ -11,10 +12,12 @@
     height: 90px;
     border-radius: 18px;
     align-items: center;
-    gap: calc(5px + 2vw );   /*gap entre les infos d'une liste*/
+    gap: calc(4.5vw);   /*gap entre les infos d'une liste*/
     font-family: 'Poppins', sans-serif;
     color: black;
     overflow: hidden;
+    justify-content: space-between;
+    padding: 0vw 4vw 0vw 3vw;
 }
 
 .boutons-listeSession{
@@ -22,7 +25,7 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    width: 100px;
+    width: 5%;
 }
 
 .bouton-edit, .bouton-poubelle{
@@ -33,10 +36,8 @@
 }
 
 .infos-liste>*{
-    max-height: 80%;
+    max-height: 75%;
     overflow-y: auto;
-    padding-right: 10px;
-    min-width: 150px;
     text-align: left;
 }
 
@@ -54,6 +55,33 @@
     font-size: 12px;
 }
 
+.cours-listeSession {
+    width: 15%;
+    overflow-x: hidden;
+}
+
 .groupes-listeSession {
-    width: 100px;
+    width: 10%;
+}
+
+.intervenants-listeSession {
+    width: 15%;
+}
+
+.salles-listeSession {
+    width: 10%;
+}
+
+.groupe {
+    overflow-x: hidden;
+}
+
+.heure-listeSession {
+    width: 4%;
+    text-align: right;
+}
+
+.date-listeSession {
+    width: 7%;
+    text-align: center;
 }
