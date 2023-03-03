@@ -119,7 +119,7 @@ function ListeGroupe(props){
             </div>
             <div className="etudiants">
                 {showEditForm ?
-                    <CreationGroupe id={groupeToEditId} nom={groupeToEditNom} etudiants={etudiants} GetEtudiantsOfGroup={GetEtudiantsOfGroup}/>
+                    <CreationGroupe id={groupeToEditId} nom={groupeToEditNom} etudiants={etudiants} getEtudiantsOfGroup={getEtudiantsOfGroup}/>
                 : 
                 <Box>
                     <div id='nomGroupe' className='nomGroupe'></div>

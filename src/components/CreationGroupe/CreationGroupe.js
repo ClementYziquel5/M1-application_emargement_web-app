@@ -158,7 +158,7 @@ function CreationGroupe(props){
         })
         .then(response => {
             if (response.ok) {
-                props.GetEtudiantsOfGroup(props.id);
+                props.getEtudiantsOfGroup(props.id);
             } else {
                 throw new Error('UpdateGroupe error');
             }
@@ -221,7 +221,7 @@ function CreationGroupe(props){
                     <div className='eleves'>
                         {etudiants.map((etudiant, index) => (
                             <div className="eleve" key={index}>
-                                <img src="button-delete.png" className="bouton-edit" alt='Bouton edit' onClick={handleDeleteEtudiant}/>
+                                <img src="button-delete.png" className="bouton-edit" alt='Bouton edit' onClick={() => handleDeleteEtudiant(index)}/>
                                 <p>{etudiant.nom} {etudiant.prenom}</p>
                             </div>
                         ))}
@@ -229,9 +229,6 @@ function CreationGroupe(props){
                 </div>
                 {(props.nom) ?
                     <button className="button-rectangle input-creer" type="button" onClick={() => {
-                        console.log(props.id);
-                        console.log(groupe);
-                        console.log(etudiants);
                         handleUpdateGroupe(props.id, groupe, etudiants)}}>Modifier</button>
                     :
                     <button className="button-rectangle input-creer" type="button" onClick={() => handleCreateGroupe()}>Créer</button>
