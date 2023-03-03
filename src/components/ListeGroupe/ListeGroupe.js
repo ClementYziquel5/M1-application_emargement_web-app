@@ -153,7 +153,7 @@ function ListeGroupe(props){
                     <div className="infos-etudiant"> 
                         {etudiants.map((item) =>            
                             <div className="etudiant" key={item.ine} >
-                                {item.nom + " " + item.prenom}
+                                {item.nom.toUpperCase() + " " + item.prenom}
                             </div>
                         )}
                     </div>
