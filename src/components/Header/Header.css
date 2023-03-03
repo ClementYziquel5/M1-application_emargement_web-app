@@ -2,7 +2,7 @@
     display: flex;
     font-family: 'Inder';
     font-size: 35px;
-    padding: 2vh 5vh 3vh 5vh;
+    padding: 2vh 5vw 3vh 5vw;
     justify-content: space-between;
     position: sticky;
     top: 0;
@@ -25,7 +25,7 @@
     margin: 0;
     padding: 0;
     gap: 2vw;
-    margin-right: 600px;
+    margin-right: 30vw;
 }
 
 .navbar>a{
@@ -58,8 +58,8 @@
     border: 3px solid #27272B;
     border-radius: 22px;
     position: fixed;
-    right: 30px;
-    top: 40px;
+    right: 4vw;
+    top: 4vh;
     z-index: 1000;
     width: 400px;
     height: 150px;
