@@ -301,15 +301,25 @@ function CreationSession(props){
     function handleChangeIntervenant(e) {
         let ids = [];
         e.map((item) => {
-            const fullName = item.value;
-            const parts = fullName.split(" ");
-            const nom = parts.slice(0, -1).join(" ").toUpperCase();
-            const prenom = parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].substr(1).toLowerCase();
+            const nomComplet = item.value;
             
-            const intervenant = intervenants.find(i => i.nom.toUpperCase() === nom);
-            if(intervenant.id) {
-                ids.push(intervenant.id);
+            // const parts = fullName.split(" ");
+            // const nom = parts.slice(0, -1).join(" ").toUpperCase();
+            // const prenom = parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].substr(1).toLowerCase();
+            
+            const regex = /^([A-Z\s]+)\s(.*)$/;
+            const resultats = nomComplet.match(regex);
+            
+            if (resultats) {
+                const nom = resultats[1];
+                const intervenant = intervenants.find(i => i.nom.toUpperCase() === nom);
+                if(intervenant.id) {
+                    ids.push(intervenant.id);
+                }
             }
+
+
+            
         })
         setIdIntervenants(ids);
     }
