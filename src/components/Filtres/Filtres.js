@@ -60,6 +60,22 @@ function Filtres(){
         })
         .catch(error => console.error(error));
     }
+
+    //fonction qui récupère les valeurs des select
+    function getSelectValues(select) {
+        console.log(select);
+        let matiere = document.getElementById('select-matiere-Filtres').value;
+        let groupe = document.getElementById('select-groupe-Filtres').value;
+        let intervenant = document.getElementById('select-intervenant-Filtres').value;
+        let salle = document.getElementById('select-salle-Filtres').value;
+        let date = document.getElementById('date-input-Filtres').value;
+        console.log(matiere);
+        console.log(groupe);
+        console.log(intervenant);
+        console.log(salle);
+        console.log(date);
+    }
+
     
     return (
         <div className="top-filtres">
@@ -104,11 +120,9 @@ function Filtres(){
                 <input className="select" required name='date' id='date-input-Filtres' type='date' ></input>
                 
                 <div id="button-afficher-Filtres">
-                    <button className="button-rectangle" type="button">Afficher
+                    <button className="button-rectangle" type="button" onClick={ () => getSelectValues()}>Afficher
                     </button>
                 </div>
-                
-
                 
             </div>
         </div>
