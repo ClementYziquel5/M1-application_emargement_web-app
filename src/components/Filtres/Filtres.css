@@ -1,6 +1,6 @@
 .filtres{
     display: flex;
-    gap: calc(10px + 5vw);
+    gap: calc(4vw);
     justify-content: center;
     margin-left: 80px;
     margin-right: 80px;
@@ -11,14 +11,19 @@
 }
 
 .select{
-    width: 17vw;
+    width: 200px;
     border-radius: 7px;
     padding: 7px;
     height: 45px;
+    min-width: 170px;
 }
 
 .select:hover{
     cursor: pointer;
+}
+
+.select-default {
+    color: rgb(180, 180, 180);
 }
 
 .button-rectangle{
@@ -39,7 +44,12 @@
     cursor: pointer;
 }
 
-#date-input-filtres {
+#date-input-Filtres {
     padding: 0px;
     height: 45px;
+}
+
+#button-afficher-Filtres {
+    display: flex;
+    align-items: center;
 }
