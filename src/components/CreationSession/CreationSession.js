@@ -143,22 +143,7 @@ function CreationSession(props){
             getSalles();
             getGroupes();
             getIntervenants();
-            //setConstantes();
     }, []);
-
-    function setConstantes() {
-        console.log("test");
-        setGroupes([{id: 1, groupe: 'Groupe 1'}, {id: 2, groupe: 'Groupe 2'}]);
-        setSalles([{id: 1, salle: 'Salle 1'}, {id: 2, salle: 'Salle 2'}]);
-        setIntervenants([{id: 1, intervenant: 'Intervenant 1'}, {id: 2, intervenant: 'Intervenant 2'}]);
-        
-        setGroupesOptions([{value: 'Groupe 1', label: 'Groupe 1'}, {value: 'Groupe 2', label: 'Groupe 2'}]);
-        setSallesOptions([{value: 'Salle 1', label: 'Salle 1'}, {value: 'Salle 2', label: 'Salle 2'}]);
-        setIntervenantsOptions([{value: 'Intervenant 1', label: 'Intervenant 1'}, {value: 'Intervenant 2', label: 'Intervenant 2'}]);
-        
-        setTypes([{type: 'Cours'}, {type: 'TD'}, {type: 'TP'}]);
-        setMatieres([{id: 1, matiere: 'Mathématiques'}, {id: 2, matiere: 'Physique'}, {id: 3, matiere: 'Chimie'}]);
-    }
 
     function getTypes() {
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/types';
@@ -324,6 +309,35 @@ function CreationSession(props){
         setIdIntervenants(ids);
     }
 
+    useEffect(() => {
+        fillInputs(props.idSession);
+    }, [props.idSession === true])
+
+    
+    function fillInputs(id){
+        console.log("filling");
+        // get session by id
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/' + id;
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            data = data[0];
+
+            // fill inputs with data values
+
+            // date
+            let date = data.date;
+            date = date.split('T')[0];
+            document.getElementById('input-date').value = date;
+        })
+
+    }
+
+    function handleEditSession(id){
+        console.log("edit session, à terminer");
+        console.log("id : ", id);
+    }
+
 
     return (
         <div>
@@ -415,7 +429,13 @@ function CreationSession(props){
                         </div>
                     </div>
                     
-                    <button className='button-rectangle' type="button" onClick={handleCreateSession}>Créer</button>
+                    {props.edit
+                    ? <div>
+                        <button className='button-rectangle' type="button" onClick={() => handleEditSession(props.idSession)}>Modifier</button>
+                        <button className='button-rectangle' type="button" onClick={() => props.setEdit(false)}>Annuler</button>
+                      </div>
+                    : <button className='button-rectangle' type="button" onClick={handleCreateSession}>Créer</button>
+                    }
                 </div>
             </div>
         </div>
