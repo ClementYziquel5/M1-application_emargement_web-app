@@ -142,15 +142,30 @@ function CreationGroupe(props){
     }
             
 
-    // Récupérer les étudiants d'un groupe
-    function GetEtudiantsOfGroup(id){
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/etudiants/groupe/' + id;
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            setEtudiants(data);
+    function handleUpdateGroupe(id, nom, etudiants){
+        console.log(id, nom, etudiants);
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupe/miseajour';
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: id,
+                nom: nom,
+                ines: etudiants.map((item) => item.ine)
+            })
         })
-        .catch(error => console.log(error));
+        .then(response => {
+            if (response.ok) {
+                props.getEtudiantsOfGroup(props.id);
+            } else {
+                throw new Error('UpdateGroupe error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 
     useEffect(() => {
@@ -206,15 +221,15 @@ function CreationGroupe(props){
                     <div className='eleves'>
                         {etudiants.map((etudiant, index) => (
                             <div className="eleve" key={index}>
-                                <img src="button-delete.png" className="bouton-edit" alt='Bouton edit' onClick={handleDeleteEtudiant}/>
+                                <img src="button-delete.png" className="bouton-edit" alt='Bouton edit' onClick={() => handleDeleteEtudiant(index)}/>
                                 <p>{etudiant.nom} {etudiant.prenom}</p>
                             </div>
                         ))}
-
                     </div>
                 </div>
                 {(props.nom) ?
-                    <button className="button-rectangle input-creer" type="button" onClick={() => props.handleUpdateGroupe(props.id, groupe, etudiants)}>Modifier</button>
+                    <button className="button-rectangle input-creer" type="button" onClick={() => {
+                        handleUpdateGroupe(props.id, groupe, etudiants)}}>Modifier</button>
                     :
                     <button className="button-rectangle input-creer" type="button" onClick={() => handleCreateGroupe()}>Créer</button>
                 }

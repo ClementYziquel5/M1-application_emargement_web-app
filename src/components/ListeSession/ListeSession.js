@@ -78,7 +78,6 @@ function ListeSession(props){
                 <div className="boutons-listeSession">
                     <img src="button-edit.png" className="bouton-edit" alt='Bouton edit'></img>
                     <img src="button-delete.png" className="bouton-poubelle" alt='Bouton suppression' onClick={() => handleDeleteClick(item.id)}></img>
-                    <ConfirmationModal isOpen={state.showConfirmationModal} onRequestClose={handleCancelDelete} onConfirm={() => handleConfirmDelete()} />
                 </div>
                 <div className="cours-listeSession">
                     <div className="matiere">
@@ -124,6 +123,8 @@ function ListeSession(props){
                 </div>
             </div>
             )}
+            <ConfirmationModal type="session" isOpen={state.showConfirmationModal} onRequestClose={handleCancelDelete} onConfirm={() => handleConfirmDelete()} />
+
         </div>
        
     );
