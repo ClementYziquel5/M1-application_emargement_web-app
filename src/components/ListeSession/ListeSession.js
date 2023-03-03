@@ -10,11 +10,11 @@ function ListeSession(props){
         itemToDelete: null,
     });
     useEffect(() => {
-        GetTodaySessions();
+        getTodaySessions();
     }, []);
 
-    // Get today sessions
-    function GetTodaySessions(){
+    // get today sessions
+    function getTodaySessions(){
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/sessions';
         fetch(url)
         .then(response => response.json())
@@ -48,7 +48,7 @@ function ListeSession(props){
         })
         .then(response => {
             if (response.ok) {
-              GetTodaySessions();
+              getTodaySessions();
             } else {
               throw new Error('DeleteSession error');
             }
