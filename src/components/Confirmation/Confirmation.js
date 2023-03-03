@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import './Confirmation.css';
 
-const ConfirmationModal = ({ isOpen, onRequestClose, onConfirm }) => {
+const ConfirmationModal = ({ type, isOpen, onRequestClose, onConfirm }) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -22,7 +22,8 @@ const ConfirmationModal = ({ isOpen, onRequestClose, onConfirm }) => {
       }}
     >
       <h2>Confirmer la suppression</h2>
-      <p>Êtes-vous sûr de vouloir supprimer cette session?</p>
+      {type === 'groupe' && <p>Êtes-vous sûr de vouloir supprimer ce groupe?</p>}
+      {type === 'session' && <p>Êtes-vous sûr de vouloir supprimer cette session?</p>}
       <button onClick={onConfirm}>Supprimer</button>
       <button onClick={onRequestClose}>Annuler</button>
     </Modal>
