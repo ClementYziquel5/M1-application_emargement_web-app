@@ -15,7 +15,7 @@ function ListeSession(props){
 
     // get today sessions
     function getTodaySessions(){
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/sessions';
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/sessions/date=0/groupe=0/matiere=0/intervenant=0/salle=0';
         fetch(url)
         .then(response => response.json())
         .then(data => {
