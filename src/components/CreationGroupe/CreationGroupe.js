@@ -13,23 +13,11 @@ const useStyles = makeStyles((theme) => ({
         color: "black",
         borderRadius: "5px",
         justifyContent: "center",
-        padding: 0,
-        margin: 0,
         fontWeight: "normal",
         fontFamily: "Inder",
         fontSize: "15px",
         width: "200px",
-
-
       },
-      "& .MuiOutlinedInput-root": {
-        padding: 0,
-        margin: 0,
-      },
-      "& MuiAutocomplete-inputRoot": {
-        padding: 0,
-        margin: 0,
-      }
     }
 }));
 
@@ -188,7 +176,7 @@ function CreationGroupe(props){
                             <div>
                             <Autocomplete
                                 className={classes.root}
-                                name='nom-prenom'
+                                name='nomPrenom'
                                 id='nom-prenom'
                                 type='text'
                                 freeSolo
