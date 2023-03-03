@@ -16,10 +16,10 @@ function ListeGroupe(props){
         itemToDelete: null,
     });
     useEffect(() => {
-        GetGroupes();
+        getGroupes();
     }, []);
 
-    function GetGroupes(){
+    function getGroupes(){
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes';
         fetch(url)
         .then(response => response.json())
@@ -47,7 +47,7 @@ function ListeGroupe(props){
     }
 
     // Récupérer les étudiants d'un groupe
-    function GetEtudiantsOfGroup(id){
+    function getEtudiantsOfGroup(id){
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/etudiants/groupe/' + id;
         fetch(url)
         .then(response => response.json())
@@ -73,7 +73,7 @@ function ListeGroupe(props){
         })
         .then(response => {
             if (response.ok) {
-                GetGroupes();
+                getGroupes();
             } else {
                 throw new Error('DeleteGroupe error');
             }
@@ -95,7 +95,8 @@ function ListeGroupe(props){
                 <div className="infos-groupe" key={item.id}>
                     <div className="bouton">
                         <img src="button-edit.png" className="bouton-edit" alt='Bouton edit' onClick={() => {
-                            GetEtudiantsOfGroup(item.id);
+                            setShowEditForm(true);
+                            getEtudiantsOfGroup(item.id);
                             setGroupeToEditId(item.id);
                             setGroupeToEditNom(item.groupe);
                             setShowEditForm(true);
@@ -108,7 +109,7 @@ function ListeGroupe(props){
                     <div className="voir-membres">
                         <p className="voir-membres-button" onClick={() => {
                             setShowEditForm(false);
-                            GetEtudiantsOfGroup(item.id);
+                            getEtudiantsOfGroup(item.id);
                             document.getElementById('nomGroupe').innerHTML = item.groupe;
                         }}>Voir les membres ➤</p>
                     </div>
@@ -125,7 +126,7 @@ function ListeGroupe(props){
                     <div className="infos-etudiant"> 
                         {etudiants.map((item) =>            
                             <div className="etudiant" key={item.ine} >
-                                {item.nom + " " + item.prenom}
+                                {item.nom.toUpperCase() + " " + item.prenom}
                             </div>
                         )}
                     </div>
