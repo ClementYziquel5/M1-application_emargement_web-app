@@ -1,39 +1,112 @@
+import * as React from 'react';
+import { useState, useRef, useEffect } from "react";
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+
 import './Filtres.css'
 
 function Filtres(){
+    const [matieres, setMatieres] = useState([]);
+    const [groupes, setGroupes] = useState([]);
+    const [intervenants, setIntervenants] = useState([]);
+    const [salles, setSalles] = useState([]);
+    
+
+    useEffect(() => {
+        getMatieres();
+        getGroupes();
+        getIntervenants();
+        getSalles();
+    }, []);
+
+    function getMatieres() {
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/matieres';
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setMatieres(data);
+        })
+        .catch(error => console.error(error));
+    }
+
+    function getGroupes() {
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes';
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setGroupes(data);
+        })
+        .catch(error => console.error(error));
+    }
+
+    
+    function getIntervenants() {
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/intervenants';
+
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setIntervenants(data);
+        })
+        .catch(error => console.error(error));
+    }
+
+    function getSalles() {
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/salles';
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setSalles(data);
+        })
+        .catch(error => console.error(error));
+    }
+    
     return (
         <div className="top-filtres">
             <div className="filtres">
+
+                <select className="select" id='select-matiere-Filtres' defaultValue=''>
+                    <option className='select-default' value=''>Matière</option>
+                    {matieres.map((item) => (
+                        <option value={item.matiere} key={item.matiere}>
+                            {item.matiere}
+                        </option>
+                    ))}
+                </select>
                 
-                <select className="select" required name="annee" id="annee-select-filtres">
-                    <option value="annee-1">Année 1</option>
-                    <option value="annee-2">Année 2</option>
-                    <option value="annee-3">Année 3</option>
-                    <option value="annee-4">Année 4</option>
-                    <option value="annee-5">Année 5</option>
+                <select className="select" id='select-groupe-Filtres' defaultValue=''>
+                    <option className='select-default' value=''>Groupe</option>
+                    {groupes.map((item) => (
+                        <option value={item.groupe} key={item.groupe}>
+                            {item.groupe}
+                        </option>
+                    ))}
                 </select>
 
-                <select className="select" required name="cycle" id="cycle-select-filtres">
-                    <option value="cycle-cir">CIR</option>
-                    <option value="cycle-biast">BIAST</option>
-                    <option value="cycle-biost">BIOST</option>
-                    <option value="cycle-cent">CENT</option>
-                    <option value="cycle-cest">CEST</option>
-                    <option value="cycle-csi">CSI</option>
+                <select className="select" id='select-intervenant-Filtres' defaultValue=''>
+                    <option className='select-default' value=''>Intervenant</option>
+                    {intervenants.map((item) => (
+                        <option value={item.nom} key={item.nom}>
+                            {item.nom.toUpperCase() + ' ' + item.prenom}
+                        </option>
+                    ))}
+                </select>
+                
+                <select className="select" id='select-salle-Filtres' defaultValue=''>
+                    <option className='select-default' value=''>Salle</option>
+                    {salles.map((item) => (
+                        <option value={item.salle} key={item.salle}>
+                            {item.salle}
+                        </option>
+                    ))}
                 </select>
 
-                <select className="select" required name="option" id="option-select-filtres">
-                    <option value="option-esp">Espagnol</option>
-                    <option value="option-ang">Anglais</option>
-                    <option value="option-all">Allemand</option>
-                    <option value="option-bret">Breton</option>
-                    <option value="option-chi">Chinois</option>
-                </select>
-
-                <input className="select" required name='date' id='date-input-filtres' type='date' ></input>
-
-                <button className="button-rectangle" type="button">Afficher
-                </button>
+                <input className="select" required name='date' id='date-input-Filtres' type='date' ></input>
+                
+                <div id="button-afficher-Filtres">
+                    <button className="button-rectangle" type="button">Afficher
+                    </button>
+                </div>
                 
 
                 
