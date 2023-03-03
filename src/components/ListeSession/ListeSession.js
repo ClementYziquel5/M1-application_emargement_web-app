@@ -75,12 +75,12 @@ function ListeSession(props){
         <div className="listes">
             {sessions.map((item) =>
             <div className="infos-liste" key={item.id}>
-                <div className="bouton">
+                <div className="boutons-listeSession">
                     <img src="button-edit.png" className="bouton-edit" alt='Bouton edit'></img>
                     <img src="button-delete.png" className="bouton-poubelle" alt='Bouton suppression' onClick={() => handleDeleteClick(item.id)}></img>
                     <ConfirmationModal isOpen={state.showConfirmationModal} onRequestClose={handleCancelDelete} onConfirm={() => handleConfirmDelete()} />
                 </div>
-                <div className="cours">
+                <div className="cours-listeSession">
                     <div className="matiere">
                         {item.matiere}
                     </div>
@@ -88,33 +88,33 @@ function ListeSession(props){
                         {item.type}
                     </div>
                 </div>
-                <div className="groupes-liste">
+                <div className="groupes-listeSession">
                     {item["groupes"].map((groupe) => 
                         <div className="groupe">
                             {groupe}
                         </div>
                     )}
                 </div>
-                <div className="intervenants">
+                <div className="intervenants-listeSession">
                     {item["intervenants"].map((intervenant) =>
                         <div className="intervenant">
                             {intervenant}
                         </div>
                     )}
                 </div>
-                <div className="salles">
+                <div className="salles-listeSession">
                     {item["salles"].map((salle) =>
                         <div className="salle">
                             {salle}
                         </div>
                     )}
                 </div>
-                <div className="date">
+                <div className="date-listeSession">
                     <div className="la-date">
                         {item.date}
                     </div>
                 </div>
-                <div className="heure">
+                <div className="heure-listeSession">
                     <div className="heure-debut">
                         {item.heureDebut}
                     </div>
