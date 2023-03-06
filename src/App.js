@@ -6,6 +6,7 @@ import CreationSession from './components/CreationSession/CreationSession.js';
 import CreationGroupe from './components/CreationGroupe/CreationGroupe.js';
 import ListeSession from './components/ListeSession/ListeSession.js';
 import ListeGroupe from './components/ListeGroupe/ListeGroupe.js';
+import VisualisationSession from './components/VisualisationSession/VisualisationSession.js';
 
 
 const App = () => (
@@ -23,13 +24,19 @@ const App = () => (
 
 function Sessions(){
   const [edit, setEdit] = useState(false);
+  const [visu, setVisu] = useState(false);
   const [idSession, setIdSession] = useState(0);
+  const [session, setSession] = useState({});
+
   return (
     <div>
-      {edit 
-      ? <CreationSession idSession={idSession} setEdit={setEdit} edit={edit}/> 
-      : <div> <Filtres/> <ListeSession setIdSession={setIdSession} setEdit={setEdit}/> </div>
+      {visu 
+      ? <VisualisationSession session={session} setVisu={setVisu} idSession={idSession}/>
+      : edit 
+        ? <CreationSession idSession={idSession} setEdit={setEdit} edit={edit}/> 
+        : <div> <Filtres/> <ListeSession setVisu={setVisu} setIdSession={setIdSession} setSession={setSession} setEdit={setEdit}/> </div>
       }
+
     </div>
   )
 }

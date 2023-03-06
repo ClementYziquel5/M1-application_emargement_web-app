@@ -95,21 +95,21 @@ function ListeSession(props){
                 </div>
                 <div className="groupes-listeSession">
                     {item["groupes"].map((groupe) => 
-                        <div className="groupe">
+                        <div className="groupe" key={groupe}>
                             {groupe}
                         </div>
                     )}
                 </div>
                 <div className="intervenants-listeSession">
                     {item["intervenants"].map((intervenant) =>
-                        <div className="intervenant">
+                        <div className="intervenant" key={intervenant}>
                             {intervenant}
                         </div>
                     )}
                 </div>
                 <div className="salles-listeSession">
                     {item["salles"].map((salle) =>
-                        <div className="salle">
+                        <div className="salle" key={salle}>
                             {salle}
                         </div>
                     )}
@@ -126,6 +126,9 @@ function ListeSession(props){
                     <div className="heure-fin">
                         {item.heureFin}
                     </div>
+                </div>
+                <div className="infos-listeSession">
+                    <p className="voir-infos" onClick={() => {props.setSession(item); props.setVisu(true); props.setIdSession(item.id)}}>Voir infos ➤</p>                
                 </div>
             </div>
             )}

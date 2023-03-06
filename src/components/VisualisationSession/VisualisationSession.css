@@ -1,9 +1,10 @@
-.listes{
+.visualisation-session>*{
     display: flex;
     flex-direction: column;
     margin: 5vh 60px;
     gap: 30px;
-    
+    justify-content: center;
+    align-items: center;
 }
 
 .infos-liste{
@@ -20,19 +21,8 @@
     padding: 0vw 4vw 0vw 3vw;
 }
 
-.boutons-listeSession{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    width: 5%;
-}
-
-.bouton-edit, .bouton-poubelle{
-    width:calc(10px + 1vw);
-    height: fit-content;
-    justify-content: center;
-    cursor: pointer;
+.infos-groupes{
+    height: 500px;
 }
 
 .infos-liste>*{
@@ -82,7 +72,7 @@
 }
 
 .date-listeSession {
-    width: 7%;
+    width: 10%;
     text-align: center;
 }
 
