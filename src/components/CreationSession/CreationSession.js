@@ -127,16 +127,20 @@ function CreationSession(props){
     const [salles, setSalles] = useState('');
     const [intervenants, setIntervenants] = useState('');
 
+    const [groupesSelected, setGroupesSelected] = useState('');
+    const [sallesSelected, setSallesSelected] = useState('');
+    const [intervenantsSelected, setIntervenantsSelected] = useState('');
+
     const [groupesOptions, setGroupesOptions] = useState('');
     const [sallesOptions, setSallesOptions] = useState('');
     const [intervenantsOptions, setIntervenantsOptions] = useState('');
 
     const [types, setTypes] = useState([]);
     const [matieres, setMatieres] = useState([]);
-    const [idGroupes,setIdGroupes] = useState([]);
-    const [idSalles,setIdSalles] = useState([]);
-    const [idIntervenants,setIdIntervenants] = useState([]);
-    
+    const [idGroupes, setIdGroupes] = useState([]);
+    const [idSalles, setIdSalles] = useState([]);
+    const [idIntervenants, setIdIntervenants] = useState([]);
+
     useEffect(() => {
             getTypes();
             getMatieres();
@@ -195,7 +199,6 @@ function CreationSession(props){
 
     function getIntervenants() {
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/intervenants';
-
         fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -233,9 +236,6 @@ function CreationSession(props){
         console.log("idSalles : ", idSalles);
         console.log("idIntervenants : ", idIntervenants);
 
-        console.log("typeof : ", typeof idIntervenants);
-
-
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/create';
         fetch(url, {
             method: 'POST',
@@ -262,6 +262,7 @@ function CreationSession(props){
     }
 
     function handleChangeGroupe(e) {
+        setGroupesSelected(e);
         let ids = [];
         e.map((item) => {
             const groupe = groupes.find(g => g.groupe === item.value);
@@ -273,6 +274,7 @@ function CreationSession(props){
     }
 
     function handleChangeSalle(e) {
+        setSallesSelected(e);
         let ids = [];
         e.map((item) => {
             const salle = salles.find(s => s.salle === item.value);
@@ -284,17 +286,16 @@ function CreationSession(props){
     }
 
     function handleChangeIntervenant(e) {
+        setIntervenantsSelected(e);
         let ids = [];
         e.map((item) => {
             const nomComplet = item.value;
-            
             // const parts = fullName.split(" ");
             // const nom = parts.slice(0, -1).join(" ").toUpperCase();
             // const prenom = parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].substr(1).toLowerCase();
             
             const regex = /^([A-Z\s]+)\s(.*)$/;
             const resultats = nomComplet.match(regex);
-            
             if (resultats) {
                 const nom = resultats[1];
                 const intervenant = intervenants.find(i => i.nom.toUpperCase() === nom);
@@ -302,9 +303,6 @@ function CreationSession(props){
                     ids.push(intervenant.id);
                 }
             }
-
-
-            
         })
         setIdIntervenants(ids);
     }
@@ -315,25 +313,30 @@ function CreationSession(props){
 
     
     function fillInputs(id){
-        console.log("filling");
-        // get session by id
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/' + id;
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            data = data[0];
-
-            // fill inputs with data values
-
+            if (data.length > 0) {
+                document.getElementById('input-date').value = data[0].date;
+                document.getElementById('input-heure-debut').value = data[0].heureDebut;
+                document.getElementById('input-heure-fin').value = data[0].heureFin;
+                document.getElementById('select-matiere').value = data[0].matiere;
+                document.getElementById('select-type').value = data[0].type;
+                const newGroupes = data[0].groupes.map(item => ({ value: item, label: item }));
+                setGroupesSelected(newGroupes);
+                const newSalles = data[0].salles.map(item => ({ value: item, label: item }));
+                setSallesSelected(newSalles);
+                const newIntervenants = data[0].intervenants.map(item => ({ value: item, label: item }));
+                setIntervenantsSelected(newIntervenants);
+            }
         })
-
     }
 
     function handleEditSession(id){
         console.log("edit session, à terminer");
         console.log("id : ", id);
     }
-
 
     return (
         <div>
@@ -373,6 +376,7 @@ function CreationSession(props){
                             components={animatedComponents}
                             isMulti
                             options={sallesOptions}
+                            value={sallesSelected}
                             theme={selectTheme}
                             styles={multiSelectStyle}
                             onChange={handleChangeSalle}
@@ -389,6 +393,7 @@ function CreationSession(props){
                             isMulti
                             options={groupesOptions}
                             theme={selectTheme}
+                            value={groupesSelected}
                             styles={multiSelectStyle}
                             onChange={handleChangeGroupe}
                         />
@@ -402,6 +407,7 @@ function CreationSession(props){
                             components={animatedComponents}
                             isMulti
                             options={intervenantsOptions}
+                            value={intervenantsSelected}
                             theme={selectTheme}
                             styles={multiSelectStyle}
                             onChange={handleChangeIntervenant}
