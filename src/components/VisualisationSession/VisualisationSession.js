@@ -79,18 +79,21 @@ function VisualisationSession(props) {
                 </div>
             </div>
             <div className="infos-groupes">
-                {console.log(etudiants)}
                 {etudiants.map((item,index) =>
-                    <div className="nom-groupe" key={index}>
-                        {item.groupe}
+                    <div className="infos-presence" key={index}>
+                        <div className='nom-groupe'>{item.groupe}</div>
                         {item.etudiants.map((etudiant) =>
                             <div>
-                                <div className="nom-etudiant">
-                                    {etudiant.nom.toUpperCase() + " " + etudiant.prenom}
-                                </div>
-                                <div className='presence'>
-                                    {etudiant.presence ? "Présent" : "Absent"}
-                                </div>
+                                <table>
+                                    <tr>
+                                        <td className='nom-etudiant'>
+                                            {etudiant.nom.toUpperCase() + " " + etudiant.prenom}
+                                        </td>
+                                        <td className={etudiant.presence ? "present" : "absent"}>
+                                            {etudiant.presence ? "Présent" : "Absent"}
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         )}
                     </div>
