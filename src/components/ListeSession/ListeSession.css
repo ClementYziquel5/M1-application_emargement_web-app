@@ -12,11 +12,10 @@
     height: 90px;
     border-radius: 18px;
     align-items: center;
-    gap: calc(4.5vw);   /*gap entre les infos d'une liste*/
+    gap: calc(2vw);   /*gap entre les infos d'une liste*/
     font-family: 'Poppins', sans-serif;
     color: black;
     overflow: hidden;
-    justify-content: space-between;
     padding: 0vw 4vw 0vw 3vw;
 }
 

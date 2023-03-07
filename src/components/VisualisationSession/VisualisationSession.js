@@ -34,42 +34,42 @@ function VisualisationSession(props) {
             </div>
             <div className="liste">
                 <div className="infos-liste" key={props.session.id}>
-                    <div className="cours-listeSession">
-                        <div className="matiere">
+                    <div className="cours-visuSession">
+                        <div className="matiere-visuSession">
                             {props.session.matiere}
                         </div>
                         <div className="type">
                             {props.session.type}
                         </div>
                     </div>
-                    <div className="groupes-listeSession">
+                    <div className="groupes-visuSession">
                         {props.session["groupes"].map((groupe) => 
-                            <div className="groupe">
+                            <div className="groupe-visuSession">
                                 {groupe}
                             </div>
                         )}
                     </div>
-                    <div className="intervenants-listeSession">
+                    <div className="intervenants-visuSession">
                         {props.session["intervenants"].map((intervenant) =>
-                            <div className="intervenant">
+                            <div className="intervenant-visuSession">
                                 {intervenant}
                             </div>
                         )}
                     </div>
-                    <div className="salles-listeSession">
+                    <div className="salles-visuSession">
                         {props.session["salles"].map((salle) =>
-                            <div className="salle">
+                            <div className="salle-visuSession">
                                 {salle}
                             </div>
                         )}
                     </div>
-                    <div className="date-listeSession">
-                        <div className="la-date">
+                    <div className="date-visuSession">
+                        <div className="la-date-visuSession">
                             {props.session.date}
                         </div>
                     </div>
-                    <div className="heure-listeSession">
-                        <div className="heure-debut">
+                    <div className="heure-visuSession">
+                        <div className="heure-debut-visuSession">
                             {props.session.heureDebut}
                         </div>
                         <div className="heure-fin">

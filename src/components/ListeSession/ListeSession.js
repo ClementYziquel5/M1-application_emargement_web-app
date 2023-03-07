@@ -130,7 +130,7 @@ function ListeSession(props){
                     <div className="heure-debut-listeSession">
                         {item.heureDebut}
                     </div>
-                    <div className="heure-fin">
+                    <div className="heure-fin-listeSession">
                         {item.heureFin}
                     </div>
                 </div>
