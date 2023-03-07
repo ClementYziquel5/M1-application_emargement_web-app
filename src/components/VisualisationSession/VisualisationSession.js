@@ -32,8 +32,8 @@ function VisualisationSession(props) {
             <div className="retour">
                 <button onClick={() => props.setVisu(false)}>Retour</button>
             </div>
-            <div className="liste">
-                <div className="infos-liste" key={props.session.id}>
+            <div className="liste-visuSession">
+                <div className="infos-liste-visuSession" key={props.session.id}>
                     <div className="cours-visuSession">
                         <div className="matiere-visuSession">
                             {props.session.matiere}

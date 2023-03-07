@@ -1,19 +1,31 @@
-.visualisation-session>*{
+.visualisation-session{
     display: flex;
     flex-direction: column;
-    margin: 5vh 60px;
+    margin: 0 60px;
+    gap: 30px;
+}
+
+.retour{
+    display: flex;
+    flex-direction: column;
     gap: 30px;
     justify-content: center;
     align-items: center;
 }
 
-.infos-liste{
+.liste-visuSession{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.infos-liste-visuSession{
     display: flex;
     background-color: white;
     height: 90px;
     border-radius: 18px;
     align-items: center;
-    gap: calc(4.5vw);   /*gap entre les infos d'une liste*/
+    gap: calc(2vw);   /*gap entre les infos d'une liste*/
     font-family: 'Poppins', sans-serif;
     color: black;
     overflow: hidden;
@@ -55,7 +67,7 @@
 }
 
 .intervenants-visuSession {
-    width: 15%;
+    width: 20%;
 }
 
 .salles-visuSession {
@@ -67,12 +79,12 @@
 }
 
 .heure-visuSession {
-    width: 4%;
+    width: 10%;
     text-align: right;
 }
 
 .date-visuSession {
-    width: 10%;
+    width: 20%;
     text-align: center;
 }
 
@@ -113,6 +125,7 @@
     height: 100%;
     justify-content: center;
     align-items: flex-start;
+    gap: 30px;
 }
 
 .infos-presence{
@@ -125,4 +138,8 @@
     padding: 20px;
     background-color: white;
     border-radius: 18px;
+}
+
+button {
+    margin: 0;
 }
