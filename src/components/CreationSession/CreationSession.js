@@ -307,35 +307,78 @@ function CreationSession(props){
         setIdIntervenants(ids);
     }
 
-    useEffect(() => {
-        fillInputs(props.idSession);
-    }, [props.idSession === true])
 
+    useEffect(() => {
+        fillInputs(props.session);
+    }, [props.session === true])
     
-    function fillInputs(id){
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/' + id;
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            if (data.length > 0) {
-                document.getElementById('input-date').value = data[0].date;
-                document.getElementById('input-heure-debut').value = data[0].heureDebut;
-                document.getElementById('input-heure-fin').value = data[0].heureFin;
-                document.getElementById('select-matiere').value = data[0].matiere;
-                document.getElementById('select-type').value = data[0].type;
-                const newGroupes = data[0].groupes.map(item => ({ value: item, label: item }));
-                setGroupesSelected(newGroupes);
-                const newSalles = data[0].salles.map(item => ({ value: item, label: item }));
-                setSallesSelected(newSalles);
-                const newIntervenants = data[0].intervenants.map(item => ({ value: item, label: item }));
-                setIntervenantsSelected(newIntervenants);
-            }
-        })
+    function fillInputs(session){
+        document.getElementById('input-date').value = session.date;
+        document.getElementById('input-heure-debut').value = session.heureDebut;
+        document.getElementById('input-heure-fin').value = session.heureFin;
+        document.getElementById('select-matiere').value = session.matiere;
+        document.getElementById('select-type').value = session.type;
+        const newGroupes = session.groupes.map(item => ({ value: item, label: item }));
+        setGroupesSelected(newGroupes);
+        const newSalles = session.salles.map(item => ({ value: item, label: item }));
+        setSallesSelected(newSalles);
+        const newIntervenants = session.intervenants.map(item => ({ value: item, label: item }));
+        setIntervenantsSelected(newIntervenants);
     }
 
     function handleEditSession(id){
         console.log("edit session, à terminer");
         console.log("id : ", id);
+
+        // mise à jour de la session
+        let date = document.getElementById('input-date').value;
+        let heure_debut = document.getElementById('input-heure-debut').value;
+        let heure_fin = document.getElementById('input-heure-fin').value;
+
+        let id_matiere;
+        let matiereSelectionnee = document.getElementById('select-matiere').value;
+        for (let i = 0; i < matieres.length; i++) {
+            if (matieres[i].matiere === matiereSelectionnee) {
+                id_matiere = matieres[i].id;
+                break;
+            }
+        }
+
+        let type = document.getElementById('select-type').value;
+
+        console.log("date : ", date);
+        console.log("heure_debut : ", heure_debut);
+        console.log("heure_fin : ", heure_fin);
+        console.log("id_matiere : ", id_matiere);
+        console.log("type : ", type);
+        console.log("idGroupes : ", idGroupes);
+        console.log("idSalles : ", idSalles);
+        console.log("idIntervenants : ", idIntervenants);
+
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/miseajour';
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+            {
+                id: id,
+                date: date,
+                heure_debut: heure_debut,
+                heure_fin: heure_fin,
+                id_matiere: id_matiere,
+                type: type,
+                idGroupes: idGroupes,
+                idSalles: idSalles,
+                idIntervenants: idIntervenants,
+            }
+            )
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            
+        });
     }
 
     return (
@@ -433,7 +476,7 @@ function CreationSession(props){
                     
                     {props.edit
                     ? <div>
-                        <button className='button-rectangle' type="button" onClick={() => handleEditSession(props.idSession)}>Modifier</button>
+                        <button className='button-rectangle' type="button" onClick={() => handleEditSession(props.session.id)}>Modifier</button>
                         <button className='button-rectangle' type="button" onClick={() => props.setEdit(false)}>Annuler</button>
                       </div>
                     : <button className='button-rectangle' type="button" onClick={handleCreateSession}>Créer</button>

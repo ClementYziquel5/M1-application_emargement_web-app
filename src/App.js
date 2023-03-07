@@ -33,8 +33,8 @@ function Sessions(){
       {visu 
       ? <VisualisationSession session={session} setVisu={setVisu} idSession={idSession}/>
       : edit 
-        ? <CreationSession idSession={idSession} setEdit={setEdit} edit={edit}/> 
-        : <div> <Filtres/> <ListeSession setVisu={setVisu} setIdSession={setIdSession} setSession={setSession} setEdit={setEdit}/> </div>
+        ? <CreationSession session={session} setEdit={setEdit} edit={edit}/> 
+        : <div> <Filtres/> <ListeSession setVisu={setVisu} setSession={setSession} setEdit={setEdit}/> </div>
       }
 
     </div>

@@ -72,8 +72,8 @@ function ListeSession(props){
     }
 
     // Edit session
-    function handleEditClick(id){
-        props.setIdSession(id);
+    function handleEditClick(item){
+        props.setSession(item);
         props.setEdit(true);
     }
 
@@ -82,7 +82,7 @@ function ListeSession(props){
             {sessions.map((item) =>
             <div className="infos-liste" key={item.id}>
                 <div className="boutons-listeSession">
-                    <img src="button-edit.png" className="bouton-edit" alt='Bouton edit' onClick={() => handleEditClick(item.id)}></img>
+                    <img src="button-edit.png" className="bouton-edit" alt='Bouton edit' onClick={() => handleEditClick(item)}></img>
                     <img src="button-delete.png" className="bouton-poubelle" alt='Bouton suppression' onClick={() => handleDeleteClick(item.id)}></img>
                 </div>
                 <div className="cours-listeSession">
