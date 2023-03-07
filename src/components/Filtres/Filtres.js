@@ -133,7 +133,7 @@ function Filtres(props){
                 <select className="select" id='select-salle-Filtres' defaultValue=''>
                     <option className='select-default' value=''>Salle</option>
                     {salles.map((item) => (
-                        <option value={item.salle} key={item.salle}>
+                        <option value={item.id} key={item.salle}>
                             {item.salle}
                         </option>
                     ))}
