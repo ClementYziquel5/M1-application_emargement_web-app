@@ -15,8 +15,11 @@ function ListeGroupe(props){
         showConfirmationModal: false,
         itemToDelete: null,
     });
+    const [wait, setWait] = useState(false);
+
     useEffect(() => {
         setGroupes(props.groupes);
+        setWait(true);
     }, []);
 
     // Delete groupe
@@ -78,7 +81,7 @@ function ListeGroupe(props){
         });
     }
 
-    return (
+    return wait && (
         <div className='affichage-groupes'>
             <div className="groupes">
                 {groupes.map((item) =>

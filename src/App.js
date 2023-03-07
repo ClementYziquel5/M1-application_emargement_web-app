@@ -44,7 +44,7 @@ function App() {
     getDatas();
   }, []);
 
-  return (
+  return wait && (
     <Router>
         <div>
             <Header/>
@@ -81,7 +81,7 @@ function Sessions(props){
 
 const Groupes = (props) => (
   <div>
-    <ListeGroupe datas={props.datas}/>
+    <ListeGroupe groupes={props.datas.groupes}/>
   </div>
 );
 const Creation = (props) => (
