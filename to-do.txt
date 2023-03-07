@@ -1,0 +1,4 @@
+Ajouter messages de confirmation création groupe & session
+Clear champs de création session quand on clique sur créer 
+Fix CSS divers 
+Mettre un underline sur l'onglet actif
