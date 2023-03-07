@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { BrowserRouter as Router, Route,Routes, Link } from 'react-router-dom';
 import Header from './components/Header/Header.js';
 import Filtres from './components/Filtres/Filtres.js';
@@ -9,20 +9,56 @@ import ListeGroupe from './components/ListeGroupe/ListeGroupe.js';
 import VisualisationSession from './components/VisualisationSession/VisualisationSession.js';
 
 
-const App = () => (
+function App() {
+  const [datas, setDatas] = useState('');
+  const [wait, setWait] = useState(false);
+
+  const getDatas = async () => {
+
+    const urls = [  process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes',
+                    process.env.REACT_APP_API_ENDPOINT + '/v1.0/salles',
+                    process.env.REACT_APP_API_ENDPOINT + '/v1.0/matieres',
+                    process.env.REACT_APP_API_ENDPOINT + '/v1.0/types',
+                    process.env.REACT_APP_API_ENDPOINT + '/v1.0/intervenants'];
+  
+    try {
+      const responses = await Promise.all(urls.map(url => fetch(url)));
+      const data = await Promise.all(responses.map(response => response.json()));
+      const [groupesData, sallesData, matieresData, typesData, intervenantsData] = data;
+
+      const groupedData = {
+        groupes: groupesData,
+        salles: sallesData,
+        matieres: matieresData,
+        types: typesData,
+        intervenants: intervenantsData,
+      };
+      setDatas(groupedData);
+      setWait(true);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  useEffect(() => {
+    getDatas();
+  }, []);
+
+  return (
     <Router>
         <div>
             <Header/>
             <Routes>
-                <Route exact path="/sessions" element={<Sessions/>} />
-                <Route path="/groupes" element={<Groupes/>} />
-                <Route path="/creation" element={<Creation/>} />
+                <Route exact path="/sessions" element={<Sessions datas={datas}/>} />
+                <Route path="/groupes" element={<Groupes datas={datas}/>} />
+                <Route path="/creation" element={<Creation datas={datas}/>} />
             </Routes>
         </div>
     </Router>
-);
+  );
+}
 
-function Sessions(){
+function Sessions(props){
   const [edit, setEdit] = useState(false);
   const [visu, setVisu] = useState(false);
   const [idSession, setIdSession] = useState(0);
@@ -34,8 +70,8 @@ function Sessions(){
       {visu 
       ? <VisualisationSession session={session} setVisu={setVisu} idSession={idSession}/>
       : edit 
-        ? <CreationSession session={session} setSession={setSession} setEdit={setEdit} edit={edit}/> 
-        : <div> <Filtres setSessions={setSessions}/> <ListeSession setIdSession={setIdSession} sessions={sessions} setSession={setSession} setVisu={setVisu} setEdit={setEdit}/> </div>
+        ? <CreationSession datas={props.datas} session={session} setSession={setSession} setEdit={setEdit} edit={edit}/> 
+        : <div> <Filtres datas={props.datas} setSessions={setSessions}/> <ListeSession setIdSession={setIdSession} sessions={sessions} setSession={setSession} setVisu={setVisu} setEdit={setEdit}/> </div>
       }
 
     </div>
@@ -43,14 +79,14 @@ function Sessions(){
 }
 
 
-const Groupes = () => (
+const Groupes = (props) => (
   <div>
-    <ListeGroupe/>
+    <ListeGroupe datas={props.datas}/>
   </div>
 );
-const Creation = () => (
+const Creation = (props) => (
   <div className="creation">
-    <CreationSession/>
+    <CreationSession datas={props.datas}/>
     <CreationGroupe/>
   </div>
 );
