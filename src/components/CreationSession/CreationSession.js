@@ -140,56 +140,15 @@ function CreationSession(props){
     const [idGroupes, setIdGroupes] = useState([]);
     const [idSalles, setIdSalles] = useState([]);
     const [idIntervenants, setIdIntervenants] = useState([]);
-
-    const [waitGets, setWaitGets] = useState(false);
     
     useEffect(() => {
-        // console.log("useEffect");
-        // console.log("props.edit : ", props.edit);
-        // console.log("waitGets : ", waitGets);
-        // console.log("-----------------")
-        if (props.edit && waitGets) {
+        if (props.edit) {
             console.log("if useEffect");
             console.log("types : ", types);
             fillInputs(props.session);
-            setWaitGets(false);
         }
-    }, [props.edit, waitGets])
+    }, [props.edit])
 
-    // function getTypes() {
-    //     const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/types';
-    //     fetch(url)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         setTypes(data);
-    //     })
-    //     .catch(error => console.error(error));
-    // }
-
-    // function getMatieres() {
-    //     const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/matieres';
-    //     fetch(url)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         setMatieres(data);
-    //     })
-    //     .catch(error => console.error(error));
-    // }
-
-    // function getSalles() {
-    //     const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/salles';
-    //     fetch(url)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         const salle = data.map((item) => {
-    //             return {value: item.salle, label: item.salle}
-    //         })
-    //         setSalles(data);
-    //         setSallesOptions(salle);
-    //     })
-    //     .catch(error => console.error(error));
-    // }
-    
     useEffect(() => {
         if(props.datas !== undefined){
             setGroupes(props.datas.groupes);
@@ -214,37 +173,6 @@ function CreationSession(props){
             setTypes(props.datas.types);
         }
     }, []);
-
-    // function getGroupes() {
-    //     const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes';
-    //     fetch(url)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         const groupe = data.map((item) => {
-    //             return {value: item.groupe, label: item.groupe}
-    //         })
-    //         setGroupes(data);
-    //         console.log("groupe : ", data);
-    //         setGroupesOptions(groupe);
-    //         console.log("groupesOptions : ", groupesOptions);
-    //     })
-    //     .catch(error => console.error(error));
-    // }
-
-    // function getIntervenants() {
-    //     const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/intervenants';
-    //     fetch(url)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         const intervenant = data.map((item) => {
-    //             return {value: item.nom.toUpperCase() + ' ' + item.prenom, label: item.nom.toUpperCase() + ' ' + item.prenom}
-    //         })
-    //         setIntervenants(data);
-    //         setIntervenantsOptions(intervenant);
-    //         setWaitGets(true);
-    //     })
-    //     .catch(error => console.error(error));
-    // }
 
     function handleCreateSession() {      
         let date = document.getElementById('input-date').value;
