@@ -26,15 +26,16 @@ function Sessions(){
   const [edit, setEdit] = useState(false);
   const [visu, setVisu] = useState(false);
   const [idSession, setIdSession] = useState(0);
-  const [session, setSession] = useState({});
+  const [session, setSession] = useState([]);
+  const [sessions, setSessions] = useState(false);
 
   return (
     <div>
       {visu 
       ? <VisualisationSession session={session} setVisu={setVisu} idSession={idSession}/>
       : edit 
-        ? <CreationSession session={session} setEdit={setEdit} edit={edit}/> 
-        : <div> <Filtres/> <ListeSession setVisu={setVisu} setSession={setSession} setEdit={setEdit}/> </div>
+        ? <CreationSession session={session} setSession={setSession} setEdit={setEdit} edit={edit}/> 
+        : <div> <Filtres setSessions={setSessions}/> <ListeSession setIdSession={setIdSession} sessions={sessions} setSession={setSession} setVisu={setVisu} setEdit={setEdit}/> </div>
       }
 
     </div>

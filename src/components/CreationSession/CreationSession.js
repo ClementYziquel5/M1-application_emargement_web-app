@@ -309,8 +309,10 @@ function CreationSession(props){
 
 
     useEffect(() => {
-        fillInputs(props.session);
-    }, [props.session === true])
+        if (props.edit){
+            fillInputs(props.session);
+        }
+    }, [props.edit])
     
     function fillInputs(session){
         document.getElementById('input-date').value = session.date;

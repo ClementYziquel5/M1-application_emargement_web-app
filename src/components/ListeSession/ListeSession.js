@@ -10,12 +10,19 @@ function ListeSession(props){
         itemToDelete: null,
     });
     useEffect(() => {
-        getTodaySessions();
-    }, []);
+        {props.sessions ? setSessions(props.sessions) : getTodaySessions()}
+    }, [props.sessions]);
 
     // get today sessions
     function getTodaySessions(){
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/sessions/date=0/groupe=0/matiere=0/intervenant=0/salle=0';
+        // Date au format YYYY-MM-DD
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const date = `${year}-${month}-${day}`;
+
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/sessions/date='+date+'/groupe=0/matiere=0/intervenant=0/salle=0';
         fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -48,7 +55,7 @@ function ListeSession(props){
         })
         .then(response => {
             if (response.ok) {
-              getTodaySessions();
+              setSessions(sessions.filter(item => item.id !== state.itemToDelete));
             } else {
               throw new Error('DeleteSession error');
             }

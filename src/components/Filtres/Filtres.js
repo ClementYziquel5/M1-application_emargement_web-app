@@ -5,7 +5,7 @@ import makeAnimated from 'react-select/animated';
 
 import './Filtres.css'
 
-function Filtres(){
+function Filtres(props){
     const [matieres, setMatieres] = useState([]);
     const [groupes, setGroupes] = useState([]);
     const [intervenants, setIntervenants] = useState([]);
@@ -63,17 +63,39 @@ function Filtres(){
 
     //fonction qui récupère les valeurs des select
     function getSelectValues(select) {
-        console.log(select);
         let matiere = document.getElementById('select-matiere-Filtres').value;
         let groupe = document.getElementById('select-groupe-Filtres').value;
         let intervenant = document.getElementById('select-intervenant-Filtres').value;
         let salle = document.getElementById('select-salle-Filtres').value;
         let date = document.getElementById('date-input-Filtres').value;
-        console.log(matiere);
-        console.log(groupe);
-        console.log(intervenant);
-        console.log(salle);
-        console.log(date);
+
+        if (matiere === '') {
+            matiere = '0';
+        }
+        if (groupe === '') {
+            groupe = '0';
+        }
+        if (intervenant === '') {
+            intervenant = '0';
+        }
+        if (salle === '') {
+            salle = '0';
+        }
+        if (date === '') {
+            date = '0';
+        }
+
+        getSessions(date, groupe, matiere, intervenant, salle);
+
+        function getSessions(date, groupe, matiere, intervenant, salle){
+            const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/sessions/date='+date+'/groupe='+groupe+'/matiere='+matiere+'/intervenant='+intervenant+'/salle='+salle;
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                props.setSessions(data);
+            })
+            .catch(error => console.log(error));
+        }
     }
 
     
@@ -84,7 +106,7 @@ function Filtres(){
                 <select className="select" id='select-matiere-Filtres' defaultValue=''>
                     <option className='select-default' value=''>Matière</option>
                     {matieres.map((item) => (
-                        <option value={item.matiere} key={item.matiere}>
+                        <option value={item.id} key={item.matiere}>
                             {item.matiere}
                         </option>
                     ))}
@@ -93,7 +115,7 @@ function Filtres(){
                 <select className="select" id='select-groupe-Filtres' defaultValue=''>
                     <option className='select-default' value=''>Groupe</option>
                     {groupes.map((item) => (
-                        <option value={item.groupe} key={item.groupe}>
+                        <option value={item.id} key={item.groupe}>
                             {item.groupe}
                         </option>
                     ))}
@@ -102,7 +124,7 @@ function Filtres(){
                 <select className="select" id='select-intervenant-Filtres' defaultValue=''>
                     <option className='select-default' value=''>Intervenant</option>
                     {intervenants.map((item) => (
-                        <option value={item.nom} key={item.nom}>
+                        <option value={item.id} key={item.nom}>
                             {item.nom.toUpperCase() + ' ' + item.prenom}
                         </option>
                     ))}
