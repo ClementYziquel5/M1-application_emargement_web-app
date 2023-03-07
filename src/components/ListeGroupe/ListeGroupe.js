@@ -16,18 +16,8 @@ function ListeGroupe(props){
         itemToDelete: null,
     });
     useEffect(() => {
-        getGroupes();
+        setGroupes(props.groupes);
     }, []);
-
-    function getGroupes(){
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes';
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            setGroupes(data);
-        })
-        .catch(error => console.log(error));
-    }
 
     // Delete groupe
     function handleDeleteClickGroupe(id) {
@@ -73,7 +63,7 @@ function ListeGroupe(props){
         })
         .then(response => {
             if (response.ok) {
-                getGroupes();
+                setGroupes(groupes.filter(item => item.id !== state.itemToDelete));
             } else {
                 throw new Error('DeleteGroupe error');
             }

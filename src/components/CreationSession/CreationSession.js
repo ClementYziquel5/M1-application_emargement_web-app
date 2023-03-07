@@ -141,75 +141,110 @@ function CreationSession(props){
     const [idSalles, setIdSalles] = useState([]);
     const [idIntervenants, setIdIntervenants] = useState([]);
 
+    const [waitGets, setWaitGets] = useState(false);
+    
     useEffect(() => {
-            getTypes();
-            getMatieres();
-            getSalles();
-            getGroupes();
-            getIntervenants();
-    }, []);
+        // console.log("useEffect");
+        // console.log("props.edit : ", props.edit);
+        // console.log("waitGets : ", waitGets);
+        // console.log("-----------------")
+        if (props.edit && waitGets) {
+            console.log("if useEffect");
+            console.log("types : ", types);
+            fillInputs(props.session);
+            setWaitGets(false);
+        }
+    }, [props.edit, waitGets])
 
-    function getTypes() {
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/types';
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            setTypes(data);
-        })
-        .catch(error => console.error(error));
-    }
+    // function getTypes() {
+    //     const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/types';
+    //     fetch(url)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         setTypes(data);
+    //     })
+    //     .catch(error => console.error(error));
+    // }
 
-    function getMatieres() {
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/matieres';
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            setMatieres(data);
-        })
-        .catch(error => console.error(error));
-    }
+    // function getMatieres() {
+    //     const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/matieres';
+    //     fetch(url)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         setMatieres(data);
+    //     })
+    //     .catch(error => console.error(error));
+    // }
 
-    function getSalles() {
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/salles';
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const salle = data.map((item) => {
-                return {value: item.salle, label: item.salle}
-            })
-            setSalles(data);
-            setSallesOptions(salle);
-        })
-        .catch(error => console.error(error));
-    }
-
-    function getGroupes() {
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes';
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const groupe = data.map((item) => {
+    // function getSalles() {
+    //     const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/salles';
+    //     fetch(url)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         const salle = data.map((item) => {
+    //             return {value: item.salle, label: item.salle}
+    //         })
+    //         setSalles(data);
+    //         setSallesOptions(salle);
+    //     })
+    //     .catch(error => console.error(error));
+    // }
+    
+    useEffect(() => {
+        if(props.datas !== undefined){
+            setGroupes(props.datas.groupes);
+            const groupe = props.datas.groupes.map((item) => {
                 return {value: item.groupe, label: item.groupe}
             })
-            setGroupes(data);
             setGroupesOptions(groupe);
-        })
-        .catch(error => console.error(error));
-    }
 
-    function getIntervenants() {
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/intervenants';
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const intervenant = data.map((item) => {
-                return {value: item.nom.toUpperCase() + ' ' + item.prenom, label: item.nom.toUpperCase() + ' ' + item.prenom}
+            setSalles(props.datas.salles);
+            const salle = props.datas.salles.map((item) => {
+                return {value: item.salle, label: item.salle}
             })
-            setIntervenants(data);
+            setSallesOptions(salle);
+
+            setIntervenants(props.datas.intervenants);
+            const intervenant = props.datas.intervenants.map((item) => {
+                return {value: item.nom + ' ' + item.prenom, label: item.nom + ' ' + item.prenom}
+            })
             setIntervenantsOptions(intervenant);
-        })
-        .catch(error => console.error(error));
-    }
+
+            setMatieres(props.datas.matieres);
+            setTypes(props.datas.types);
+        }
+    }, []);
+
+    // function getGroupes() {
+    //     const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes';
+    //     fetch(url)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         const groupe = data.map((item) => {
+    //             return {value: item.groupe, label: item.groupe}
+    //         })
+    //         setGroupes(data);
+    //         console.log("groupe : ", data);
+    //         setGroupesOptions(groupe);
+    //         console.log("groupesOptions : ", groupesOptions);
+    //     })
+    //     .catch(error => console.error(error));
+    // }
+
+    // function getIntervenants() {
+    //     const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/intervenants';
+    //     fetch(url)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         const intervenant = data.map((item) => {
+    //             return {value: item.nom.toUpperCase() + ' ' + item.prenom, label: item.nom.toUpperCase() + ' ' + item.prenom}
+    //         })
+    //         setIntervenants(data);
+    //         setIntervenantsOptions(intervenant);
+    //         setWaitGets(true);
+    //     })
+    //     .catch(error => console.error(error));
+    // }
 
     function handleCreateSession() {      
         let date = document.getElementById('input-date').value;
@@ -306,15 +341,10 @@ function CreationSession(props){
         })
         setIdIntervenants(ids);
     }
-
-
-    useEffect(() => {
-        if (props.edit){
-            fillInputs(props.session);
-        }
-    }, [props.edit])
     
     function fillInputs(session){
+        
+        console.log("session : ", session);
         document.getElementById('input-date').value = session.date;
         document.getElementById('input-heure-debut').value = session.heureDebut;
         document.getElementById('input-heure-fin').value = session.heureFin;
@@ -390,7 +420,7 @@ function CreationSession(props){
                     <div className='inputGroupe'>
                         <div className="matiere">
                             <label htmlFor='matiere'>Matière</label>
-                            <select id='select-matiere' defaultValue=''>
+                            <select id='select-matiere'>
                                 <option value='' disabled>Choisir une matière</option>
                                 {matieres.map((item) => (
                                     <option value={item.matiere} key={item.matiere}>

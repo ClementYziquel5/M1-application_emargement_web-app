@@ -11,55 +11,14 @@ function Filtres(props){
     const [intervenants, setIntervenants] = useState([]);
     const [salles, setSalles] = useState([]);
     
-
     useEffect(() => {
-        getMatieres();
-        getGroupes();
-        getIntervenants();
-        getSalles();
+        if(props.datas !== undefined){
+            setGroupes(props.datas.groupes);
+            setSalles(props.datas.salles);
+            setIntervenants(props.datas.intervenants);
+            setMatieres(props.datas.matieres);
+        }
     }, []);
-
-    function getMatieres() {
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/matieres';
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            setMatieres(data);
-        })
-        .catch(error => console.error(error));
-    }
-
-    function getGroupes() {
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes';
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            setGroupes(data);
-        })
-        .catch(error => console.error(error));
-    }
-
-    
-    function getIntervenants() {
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/intervenants';
-
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            setIntervenants(data);
-        })
-        .catch(error => console.error(error));
-    }
-
-    function getSalles() {
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/salles';
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            setSalles(data);
-        })
-        .catch(error => console.error(error));
-    }
 
     //fonction qui récupère les valeurs des select
     function getSelectValues(select) {
