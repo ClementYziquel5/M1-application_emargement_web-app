@@ -93,41 +93,41 @@ function ListeSession(props){
                     <img src="button-delete.png" className="bouton-poubelle" alt='Bouton suppression' onClick={() => handleDeleteClick(item.id)}></img>
                 </div>
                 <div className="cours-listeSession">
-                    <div className="matiere">
+                    <div className="matiere-listeSession">
                         {item.matiere}
                     </div>
-                    <div className="type">
+                    <div className="type-listeSession">
                         {item.type}
                     </div>
                 </div>
                 <div className="groupes-listeSession">
                     {item["groupes"].map((groupe) => 
-                        <div className="groupe" key={groupe}>
+                        <div className="groupe-listeSession" key={groupe}>
                             {groupe}
                         </div>
                     )}
                 </div>
                 <div className="intervenants-listeSession">
                     {item["intervenants"].map((intervenant) =>
-                        <div className="intervenant" key={intervenant}>
+                        <div className="intervenant-listeSession" key={intervenant}>
                             {intervenant}
                         </div>
                     )}
                 </div>
                 <div className="salles-listeSession">
                     {item["salles"].map((salle) =>
-                        <div className="salle" key={salle}>
+                        <div className="salle-listeSession" key={salle}>
                             {salle}
                         </div>
                     )}
                 </div>
                 <div className="date-listeSession">
-                    <div className="la-date">
+                    <div className="la-date-listeSession">
                         {item.date}
                     </div>
                 </div>
                 <div className="heure-listeSession">
-                    <div className="heure-debut">
+                    <div className="heure-debut-listeSession">
                         {item.heureDebut}
                     </div>
                     <div className="heure-fin">
@@ -135,7 +135,7 @@ function ListeSession(props){
                     </div>
                 </div>
                 <div className="infos-listeSession">
-                    <p className="voir-infos" onClick={() => {props.setSession(item); props.setVisu(true); props.setIdSession(item.id)}}>Voir infos ➤</p>                
+                    <p className="voir-infos-listeSession" onClick={() => {props.setSession(item); props.setVisu(true); props.setIdSession(item.id)}}>Voir infos ➤</p>                
                 </div>
             </div>
             )}

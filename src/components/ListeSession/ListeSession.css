@@ -25,7 +25,7 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    width: 5%;
+    width: 10%;
 }
 
 .bouton-edit, .bouton-poubelle{
@@ -47,11 +47,11 @@
     }
   }
 
-.matiere{
+.matiere-listeSession{
     font-size: 20px;
 }
 
-.type{
+.type-listeSession{
     font-size: 12px;
 }
 
@@ -72,22 +72,22 @@
     width: 10%;
 }
 
-.groupe {
+.groupe-listeSession {
     overflow-x: hidden;
 }
 
 .heure-listeSession {
-    width: 4%;
+    width: 7%;
     text-align: right;
 }
 
 .date-listeSession {
-    width: 7%;
+    width: 13%;
     text-align: center;
 }
 
 .infos-listeSession{
-    width: 110px;
+    width: 13%;
     cursor: pointer;
 }
 
