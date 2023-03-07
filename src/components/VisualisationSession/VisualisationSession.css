@@ -37,28 +37,28 @@
     }
   }
 
-.matiere{
+.matiere-visuSession{
     font-size: 20px;
 }
 
-.type{
+.type-visuSession{
     font-size: 12px;
 }
 
-.cours-listeSession {
+.cours-visuSession {
     width: 15%;
     overflow-x: hidden;
 }
 
-.groupes-listeSession {
+.groupes-visuSession {
     width: 10%;
 }
 
-.intervenants-listeSession {
+.intervenants-visuSession {
     width: 15%;
 }
 
-.salles-listeSession {
+.salles-visuSession {
     width: 10%;
 }
 
@@ -66,22 +66,22 @@
     overflow-x: hidden;
 }
 
-.heure-listeSession {
+.heure-visuSession {
     width: 4%;
     text-align: right;
 }
 
-.date-listeSession {
+.date-visuSession {
     width: 10%;
     text-align: center;
 }
 
-.infos-listeSession{
+.infos-visuSession{
     width: 110px;
     cursor: pointer;
 }
 
-.infos-listeSession:hover{
+.infos-visuSession:hover{
     text-decoration: underline;
 }
 
