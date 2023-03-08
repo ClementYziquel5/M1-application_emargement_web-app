@@ -85,14 +85,16 @@ function VisualisationSession(props) {
                         {item.etudiants.map((etudiant) =>
                             <div>
                                 <table>
-                                    <tr>
-                                        <td className='nom-etudiant'>
-                                            {etudiant.nom.toUpperCase() + " " + etudiant.prenom}
-                                        </td>
-                                        <td className={etudiant.presence ? "present" : "absent"}>
-                                            {etudiant.presence ? "Présent" : "Absent"}
-                                        </td>
-                                    </tr>
+                                    <tbody>
+                                        <tr>
+                                            <td className='nom-etudiant'>
+                                                {etudiant.nom.toUpperCase() + " " + etudiant.prenom}
+                                            </td>
+                                            <td className={etudiant.presence ? "present" : "absent"}>
+                                                {etudiant.presence ? "Présent" : "Absent"}
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         )}

@@ -12,6 +12,20 @@ import VisualisationSession from './components/VisualisationSession/Visualisatio
 function App() {
   const [datas, setDatas] = useState('');
   const [wait, setWait] = useState(false);
+  const [groupes, setGroupes] = useState({});
+
+  function fetchGroupes() {
+    const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes';
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        setGroupes(data);
+        let newDatas = datas;
+        newDatas.groupes = data;
+        setDatas(newDatas);
+      })
+      .catch(error => console.error('Error:', error));
+  }
 
   const getDatas = async () => {
 
@@ -26,14 +40,15 @@ function App() {
       const data = await Promise.all(responses.map(response => response.json()));
       const [groupesData, sallesData, matieresData, typesData, intervenantsData] = data;
 
-      const groupedData = {
+      let datas = {
         groupes: groupesData,
         salles: sallesData,
         matieres: matieresData,
         types: typesData,
         intervenants: intervenantsData,
       };
-      setDatas(groupedData);
+      setGroupes(datas.groupes);
+      setDatas(datas);
       setWait(true);
     } catch (error) {
       console.error(error);
@@ -51,7 +66,7 @@ function App() {
             <Routes>
                 <Route exact path="/sessions" element={<Sessions datas={datas}/>} />
                 <Route path="/groupes" element={<Groupes datas={datas}/>} />
-                <Route path="/creation" element={<Creation datas={datas}/>} />
+                <Route path="/creation" element={<Creation datas={datas} fetchGroupes={fetchGroupes}/>} />
             </Routes>
         </div>
     </Router>
@@ -87,7 +102,7 @@ const Groupes = (props) => (
 const Creation = (props) => (
   <div className="creation">
     <CreationSession datas={props.datas}/>
-    <CreationGroupe/>
+    <CreationGroupe fetchGroupes={props.fetchGroupes}/>
   </div>
 );
 

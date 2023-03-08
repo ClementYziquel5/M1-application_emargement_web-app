@@ -104,6 +104,8 @@ function CreationGroupe(props){
                 ines: etudiants.map(etudiant => etudiant.ine)
             }
           )
+        }).then( () => {
+            props.fetchGroupes();
         })
         .catch(error => {
             console.error('Error:', error);
