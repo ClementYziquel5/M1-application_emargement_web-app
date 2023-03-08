@@ -92,10 +92,6 @@ function CreationGroupe(props){
 
     //fonction qui envoie la requete api pour créer le groupe
     function handleCreateGroupe() {
-        console.log(groupe);
-        console.log(etudiants);
-        console.log(etudiants.map(etudiant => etudiant.ine));
-
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupe/creation';
         fetch(url, {
           method: 'POST',
@@ -122,7 +118,6 @@ function CreationGroupe(props){
             
 
     function handleUpdateGroupe(id, nom, etudiants){
-        console.log(id, nom, etudiants);
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupe/miseajour';
         fetch(url, {
             method: 'PUT',

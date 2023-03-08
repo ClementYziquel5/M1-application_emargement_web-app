@@ -263,7 +263,6 @@ function CreationSession(props){
     
     function fillInputs(session){
         
-        console.log("session : ", session);
         document.getElementById('input-date').value = session.date;
         document.getElementById('input-heure-debut').value = session.heureDebut;
         document.getElementById('input-heure-fin').value = session.heureFin;
@@ -284,9 +283,6 @@ function CreationSession(props){
     }
 
     function handleEditSession(id){
-        console.log("edit session, à terminer");
-        console.log("id : ", id);
-
         // mise à jour de la session
         let date = document.getElementById('input-date').value;
         let heure_debut = document.getElementById('input-heure-debut').value;
@@ -302,15 +298,6 @@ function CreationSession(props){
         }
 
         let type = document.getElementById('select-type').value;
-
-        console.log("date : ", date);
-        console.log("heure_debut : ", heure_debut);
-        console.log("heure_fin : ", heure_fin);
-        console.log("id_matiere : ", id_matiere);
-        console.log("type : ", type);
-        console.log("idGroupes : ", idGroupes);
-        console.log("idSalles : ", idSalles);
-        console.log("idIntervenants : ", idIntervenants);
 
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/miseajour';
         fetch(url, {
