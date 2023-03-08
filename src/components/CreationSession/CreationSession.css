@@ -111,3 +111,18 @@ select {
 .button-rectangle{
     margin: 0px 20px;
 }
+
+.msg-session{
+    min-height: 20px;
+    font-size: 15px;
+    color: white;
+    text-decoration: underline red 2px;
+}
+
+.validation-session{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}

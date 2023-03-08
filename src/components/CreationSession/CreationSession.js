@@ -193,28 +193,28 @@ function CreationSession(props){
 
         // Vérification des champs vides
         if(id_matiere === undefined){
-            alert('Veuillez remplir le champ matière');
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ matière';
             return;
         }else if(type === ''){
-            alert('Veuillez remplir le champ type');
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ type';
             return;
         }else if(groupesSelected === ''){
-            alert('Veuillez remplir le champ groupe');
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ groupe';
             return;
         }else if(sallesSelected === ''){
-            alert('Veuillez remplir le champ salle');
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ salle';
             return;
         }else if(intervenantsSelected === ''){
-            alert('Veuillez remplir le champ intervenant');
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ intervenant';
             return;
         }else if(date === ''){
-            alert('Veuillez remplir le champ date');
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ date';
             return;
         }else if(heure_debut === ''){
-            alert('Veuillez remplir le champ heure de début');
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ heure de début';
             return;
         }else if(heure_fin === ''){
-            alert('Veuillez remplir le champ heure de fin');
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ heure de fin';
             return;
         }
 
@@ -488,13 +488,19 @@ function CreationSession(props){
                         </div>
                     </div>
                     
-                    {props.edit
-                    ? <div>
-                        <button className='button-rectangle' type="button" onClick={() => handleEditSession(props.session.id)}>Modifier</button>
-                        <button className='button-rectangle' type="button" onClick={() => props.setEdit(false)}>Annuler</button>
-                      </div>
-                    : <button className='button-rectangle' type="button" onClick={handleCreateSession}>Créer</button>
-                    }
+                    <div className="validation-session">
+                        <div id="msg-session" className="msg-session"></div>
+
+                        {props.edit
+                        ? <div>
+                            <button className='button-rectangle' type="button" onClick={() => handleEditSession(props.session.id)}>Modifier</button>
+                            <button className='button-rectangle' type="button" onClick={() => props.setEdit(false)}>Annuler</button>
+                        </div>
+                        : <button className='button-rectangle' type="button" onClick={handleCreateSession}>Créer</button>
+                        }
+                    </div>
+                    
+                    
                 </div>
             </div>
         </div>

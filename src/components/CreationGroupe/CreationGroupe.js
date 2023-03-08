@@ -93,10 +93,12 @@ function CreationGroupe(props){
     //fonction qui envoie la requete api pour créer le groupe
     function handleCreateGroupe() {
         if(!groupe){
-            alert('Veuillez renseigner un nom de groupe');   
+            document.getElementById('nomGroupe').focus();
+            document.getElementById('msg-groupe').innerHTML = 'Veuillez renseigner le nom du groupe'; 
             return;
         }else if(!etudiants.length){
-            alert('Veuillez renseigner au moins un étudiant');
+            document.getElementById('nom').focus();
+            document.getElementById('msg-groupe').innerHTML = 'Veuillez renseigner au moins un étudiant';
             return;
         }
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupe/creation';
@@ -211,12 +213,17 @@ function CreationGroupe(props){
                         ))}
                     </div>
                 </div>
-                {(props.nom) ?
-                    <button className="button-rectangle input-creer" type="button" onClick={() => {
-                        handleUpdateGroupe(props.id, groupe, etudiants, props.setShowEditForm)}}>Modifier</button>
-                    :
-                    <button className="button-rectangle input-creer" type="button" onClick={() => handleCreateGroupe()}>Créer</button>
-                }
+                
+                <div className="validation-groupe">
+                    <div id='msg-groupe' className='msg-groupe'></div>
+
+                    {(props.nom) ?
+                        <button className="button-rectangle input-creer" type="button" onClick={() => {
+                            handleUpdateGroupe(props.id, groupe, etudiants, props.setShowEditForm)}}>Modifier</button>
+                        :
+                        <button className="button-rectangle input-creer" type="button" onClick={() => handleCreateGroupe()}>Créer</button>
+                    }
+                </div>
             </div>
         </div>
     );
