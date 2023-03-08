@@ -37,14 +37,14 @@
     height: 500px;
 }
 
-.infos-liste>*{
+.infos-liste-visuSession>*{
     max-height: 75%;
     overflow-y: auto;
     text-align: left;
 }
 
 @media (max-height: 80%) {
-    .infos-liste > * {
+    .infos-liste-visuSession > * {
       overflow-y: scroll;
     }
   }
