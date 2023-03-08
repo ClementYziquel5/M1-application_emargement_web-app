@@ -180,6 +180,7 @@ function CreationSession(props){
         let date = document.getElementById('input-date').value;
         let heure_debut = document.getElementById('input-heure-debut').value;
         let heure_fin = document.getElementById('input-heure-fin').value;
+        let type = document.getElementById('select-type').value;
 
         let id_matiere;
         let matiereSelectionnee = document.getElementById('select-matiere').value;
@@ -190,12 +191,32 @@ function CreationSession(props){
             }
         }
 
-        if(date === '' || heure_debut === '' || heure_fin === '' || id_matiere === undefined || groupesSelected === '' || sallesSelected === '' || intervenantsSelected === ''){
-            alert('Veuillez remplir tous les champs');
+        // Vérification des champs vides
+        if(id_matiere === undefined){
+            alert('Veuillez remplir le champ matière');
+            return;
+        }else if(type === ''){
+            alert('Veuillez remplir le champ type');
+            return;
+        }else if(groupesSelected === ''){
+            alert('Veuillez remplir le champ groupe');
+            return;
+        }else if(sallesSelected === ''){
+            alert('Veuillez remplir le champ salle');
+            return;
+        }else if(intervenantsSelected === ''){
+            alert('Veuillez remplir le champ intervenant');
+            return;
+        }else if(date === ''){
+            alert('Veuillez remplir le champ date');
+            return;
+        }else if(heure_debut === ''){
+            alert('Veuillez remplir le champ heure de début');
+            return;
+        }else if(heure_fin === ''){
+            alert('Veuillez remplir le champ heure de fin');
             return;
         }
-
-        let type = document.getElementById('select-type').value;
 
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/create';
         fetch(url, {
