@@ -56,12 +56,18 @@
 }
 
 .infos-groupe>*{
-    max-height: 80px;
-    overflow-y: scroll;
+    max-height: 75%;
+    overflow-y: auto;
     padding-right: 10px;
     min-width: 150px;
     text-align: left;
 }
+
+@media (max-height: 75%) {
+    .infos-groupe > * {
+      overflow-y: scroll;
+    }
+  }
 
 .voir-membres-button{
     cursor: pointer;

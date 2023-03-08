@@ -40,7 +40,7 @@
     text-align: left;
 }
 
-@media (max-height: 80%) {
+@media (max-height: 75%) {
     .infos-liste > * {
       overflow-y: scroll;
     }
