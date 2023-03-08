@@ -55,7 +55,7 @@
 }
 
 .cours-listeSession {
-    width: 15%;
+    width: 17%;
     overflow-x: hidden;
 }
 
@@ -68,7 +68,7 @@
 }
 
 .salles-listeSession {
-    width: 10%;
+    width: 8%;
 }
 
 .groupe-listeSession {
@@ -76,17 +76,16 @@
 }
 
 .heure-listeSession {
-    width: 7%;
+    width: 5%;
     text-align: right;
 }
 
 .date-listeSession {
-    width: 13%;
-    text-align: center;
+    width: 7%;
 }
 
 .infos-listeSession{
-    width: 13%;
+    width: 9%;
     cursor: pointer;
 }
 
