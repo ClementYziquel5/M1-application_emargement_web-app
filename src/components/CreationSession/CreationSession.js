@@ -123,17 +123,17 @@ const selectTheme = (theme) => ({
 })
 
 function CreationSession(props){
-    const [groupes, setGroupes] = useState('');
-    const [salles, setSalles] = useState('');
-    const [intervenants, setIntervenants] = useState('');
+    const [groupes, setGroupes] = useState([]);
+    const [salles, setSalles] = useState([]);
+    const [intervenants, setIntervenants] = useState([]);
 
-    const [groupesSelected, setGroupesSelected] = useState('');
-    const [sallesSelected, setSallesSelected] = useState('');
-    const [intervenantsSelected, setIntervenantsSelected] = useState('');
+    const [groupesSelected, setGroupesSelected] = useState([]);
+    const [sallesSelected, setSallesSelected] = useState([]);
+    const [intervenantsSelected, setIntervenantsSelected] = useState([]);
 
-    const [groupesOptions, setGroupesOptions] = useState('');
-    const [sallesOptions, setSallesOptions] = useState('');
-    const [intervenantsOptions, setIntervenantsOptions] = useState('');
+    const [groupesOptions, setGroupesOptions] = useState([]);
+    const [sallesOptions, setSallesOptions] = useState([]);
+    const [intervenantsOptions, setIntervenantsOptions] = useState([]);
 
     const [types, setTypes] = useState([]);
     const [matieres, setMatieres] = useState([]);
@@ -190,6 +190,7 @@ function CreationSession(props){
                 break;
             }
         }
+        console.log("groupesSelected",groupesSelected);
 
         // Vérification des champs vides
         if(id_matiere === undefined){
@@ -198,13 +199,13 @@ function CreationSession(props){
         }else if(type === ''){
             document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ type';
             return;
-        }else if(groupesSelected === ''){
+        }else if(groupesSelected.length === 0){
             document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ groupe';
             return;
-        }else if(sallesSelected === ''){
+        }else if(sallesSelected.length === 0){
             document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ salle';
             return;
-        }else if(intervenantsSelected === ''){
+        }else if(intervenantsSelected.length === 0){
             document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ intervenant';
             return;
         }else if(date === ''){
@@ -339,11 +340,10 @@ function CreationSession(props){
     }
 
     function handleEditSession(id){
-        // mise à jour de la session
         let date = document.getElementById('input-date').value;
         let heure_debut = document.getElementById('input-heure-debut').value;
         let heure_fin = document.getElementById('input-heure-fin').value;
-
+        let type = document.getElementById('select-type').value;
         let id_matiere;
         let matiereSelectionnee = document.getElementById('select-matiere').value;
         for (let i = 0; i < matieres.length; i++) {
@@ -353,7 +353,34 @@ function CreationSession(props){
             }
         }
 
-        let type = document.getElementById('select-type').value;
+        // Vérification des champs vides
+        if(id_matiere === undefined){
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ matière';
+            return;
+        }else if(type === ''){
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ type';
+            return;
+        }else if(groupesSelected.length === 0){
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ groupe';
+            return;
+        }else if(sallesSelected.length === 0){
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ salle';
+            return;
+        }else if(intervenantsSelected.length === 0){
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ intervenant';
+            return;
+        }else if(date === ''){
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ date';
+            return;
+        }else if(heure_debut === ''){
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ heure de début';
+            return;
+        }else if(heure_fin === ''){
+            document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ heure de fin';
+            return;
+        }else{
+            document.getElementById('msg-session').innerHTML = '';
+        }
 
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/miseajour';
         fetch(url, {
