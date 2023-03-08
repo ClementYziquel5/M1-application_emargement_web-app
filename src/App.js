@@ -85,7 +85,7 @@ function Sessions(props){
       {visu 
       ? <VisualisationSession session={session} setVisu={setVisu} idSession={idSession}/>
       : edit 
-        ? <CreationSession datas={props.datas} session={session} setSession={setSession} setEdit={setEdit} edit={edit}/> 
+        ? <div className='edit'><CreationSession datas={props.datas} session={session} setSession={setSession} setEdit={setEdit} edit={edit}/> </div>
         : <div> <Filtres datas={props.datas} setSessions={setSessions}/> <ListeSession setIdSession={setIdSession} sessions={sessions} setSession={setSession} setVisu={setVisu} setEdit={setEdit}/> </div>
       }
 

@@ -99,3 +99,15 @@ select {
 .dateHeure>*>input{
     width: 120px;
 }
+
+.edit{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.button-rectangle{
+    margin: 0px 20px;
+}

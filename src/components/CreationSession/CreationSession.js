@@ -174,7 +174,9 @@ function CreationSession(props){
         }
     }, [props.edit, isDataLoaded])
 
-    function handleCreateSession() {      
+    function handleCreateSession() {  
+        // Vérification & récupération des champs
+        
         let date = document.getElementById('input-date').value;
         let heure_debut = document.getElementById('input-heure-debut').value;
         let heure_fin = document.getElementById('input-heure-fin').value;
@@ -186,6 +188,11 @@ function CreationSession(props){
                 id_matiere = matieres[i].id;
                 break;
             }
+        }
+
+        if(date === '' || heure_debut === '' || heure_fin === '' || id_matiere === undefined || groupesSelected === '' || sallesSelected === '' || intervenantsSelected === ''){
+            alert('Veuillez remplir tous les champs');
+            return;
         }
 
         let type = document.getElementById('select-type').value;
@@ -208,10 +215,11 @@ function CreationSession(props){
                 idIntervenants: idIntervenants,
             }
             )
+        }).then(() => {
+            clearInputs();
         })
         .catch(error => {
             console.error('Error:', error);
-            
         });
     }
 
@@ -260,9 +268,20 @@ function CreationSession(props){
         })
         setIdIntervenants(ids);
     }
+
+    function clearInputs() {
+        // Clear les inputs
+        document.getElementById('input-date').value = '';
+        document.getElementById('input-heure-debut').value = '';
+        document.getElementById('input-heure-fin').value = '';
+        document.getElementById('select-matiere').value = '';
+        document.getElementById('select-type').value = '';
+        setGroupesSelected('');
+        setSallesSelected('');
+        setIntervenantsSelected('');
+    }
     
     function fillInputs(session){
-        
         document.getElementById('input-date').value = session.date;
         document.getElementById('input-heure-debut').value = session.heureDebut;
         document.getElementById('input-heure-fin').value = session.heureFin;
@@ -318,10 +337,25 @@ function CreationSession(props){
                 idIntervenants: idIntervenants,
             }
             )
+        }).then(() => {
+            {props.edit 
+                ? <div>
+                    {alert('La session a été modifiée')}
+                    {props.setEdit(false)}
+                </div>
+                : alert('La session a été créée')
+            }
+            clearInputs();
         })
         .catch(error => {
             console.error('Error:', error);
-            
+            {props.edit 
+                ? <div>
+                    {alert('Erreur : La session n\'a pas été modifiée')}
+                    {props.setEdit(false)}
+                </div>
+                : alert('Erreur : La session n\'a pas été créée')
+            }
         });
     }
 
@@ -332,7 +366,7 @@ function CreationSession(props){
                     <div className='inputGroupe'>
                         <div className="matiere">
                             <label htmlFor='matiere'>Matière</label>
-                            <select id='select-matiere'>
+                            <select id='select-matiere' defaultValue={''}>
                                 <option value='' disabled>Choisir une matière</option>
                                 {matieres.map((item) => (
                                     <option value={item.matiere} key={item.matiere}>
@@ -344,7 +378,8 @@ function CreationSession(props){
 
                         <div className="type">
                             <label htmlFor='type'>Type</label>
-                            <select id='select-type'>
+                            <select id='select-type' defaultValue={''} >
+                            <option value='' disabled>Choisir un type</option>
                                 {types.map((item) => (
                                     <option value={item.type} key={item.type}>
                                         {item.type}
