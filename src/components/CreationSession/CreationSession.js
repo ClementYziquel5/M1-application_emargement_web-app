@@ -216,10 +216,24 @@ function CreationSession(props){
             }
             )
         }).then(() => {
+            {props.edit 
+                ? <div>
+                    {alert('La session a été modifiée')}
+                    {props.setEdit(false)}
+                </div>
+                : alert('La session a été créée')
+            }
             clearInputs();
         })
         .catch(error => {
             console.error('Error:', error);
+            {props.edit 
+                ? <div>
+                    {alert('Erreur : La session n\'a pas été modifiée')}
+                    {props.setEdit(false)}
+                </div>
+                : alert('Erreur : La session n\'a pas été créée')
+            }
         });
     }
 
