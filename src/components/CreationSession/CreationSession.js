@@ -216,6 +216,8 @@ function CreationSession(props){
         }else if(heure_fin === ''){
             document.getElementById('msg-session').innerHTML = 'Veuillez remplir le champ heure de fin';
             return;
+        }else{
+            document.getElementById('msg-session').innerHTML = '';
         }
 
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/create';

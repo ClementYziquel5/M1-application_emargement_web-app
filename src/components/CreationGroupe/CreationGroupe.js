@@ -100,6 +100,8 @@ function CreationGroupe(props){
             document.getElementById('nom').focus();
             document.getElementById('msg-groupe').innerHTML = 'Veuillez renseigner au moins un étudiant';
             return;
+        }else{
+            document.getElementById('msg-groupe').innerHTML = '';
         }
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupe/creation';
         fetch(url, {
