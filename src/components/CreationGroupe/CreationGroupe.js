@@ -117,7 +117,7 @@ function CreationGroupe(props){
     }
             
 
-    function handleUpdateGroupe(id, nom, etudiants){
+    function handleUpdateGroupe(id, nom, etudiants,setShowEditForm){
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupe/miseajour';
         fetch(url, {
             method: 'PUT',
@@ -140,6 +140,7 @@ function CreationGroupe(props){
         .catch(error => {
             console.error('Error:', error);
         });
+        setShowEditForm(false);
     }
 
     useEffect(() => {
@@ -203,7 +204,7 @@ function CreationGroupe(props){
                 </div>
                 {(props.nom) ?
                     <button className="button-rectangle input-creer" type="button" onClick={() => {
-                        handleUpdateGroupe(props.id, groupe, etudiants)}}>Modifier</button>
+                        handleUpdateGroupe(props.id, groupe, etudiants, props.setShowEditForm)}}>Modifier</button>
                     :
                     <button className="button-rectangle input-creer" type="button" onClick={() => handleCreateGroupe()}>Créer</button>
                 }

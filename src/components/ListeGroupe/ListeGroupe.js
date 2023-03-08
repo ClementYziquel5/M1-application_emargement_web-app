@@ -1,4 +1,3 @@
-import { Box } from '@mui/system';
 import React, {useState, useEffect} from 'react';
 import ConfirmationModal from '../Confirmation/Confirmation';
 import CreationGroupe from '../CreationGroupe/CreationGroupe';
@@ -9,7 +8,9 @@ function ListeGroupe(props){
     const [groupes, setGroupes] = useState([]);
     const [etudiants, setEtudiants] = useState([]);
     const [showEditForm, setShowEditForm] = useState(false);
-    const [groupeToEditId, setGroupeToEditId] = useState(null);
+    const [showVoirMembres, setShowVoirMembres] = useState(false);
+    const [groupeToEditId, setGroupeToEditId] = useState(0);
+    const [groupeToShowId, setGroupeToShowId] = useState(0);
     const [groupeToEditNom, setGroupeToEditNom] = useState(null);
     const [state, setState] = useState({
         showConfirmationModal: false,
@@ -40,12 +41,13 @@ function ListeGroupe(props){
     }
 
     // Récupérer les étudiants d'un groupe
-    function getEtudiantsOfGroup(id){
+    function getEtudiantsOfGroup(id,groupe){
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/etudiants/groupe/' + id;
         fetch(url)
         .then(response => response.json())
         .then(data => {
             setEtudiants(data);
+            document.getElementById('nomGroupe').innerHTML = groupe;
         })
         .catch(error => console.log(error));
     }
@@ -81,6 +83,29 @@ function ListeGroupe(props){
         });
     }
 
+    function voirMembres(id,groupe){
+        setShowEditForm(false);
+        if(groupeToShowId === id){
+            setShowVoirMembres(false);
+            return;
+        }
+        setShowVoirMembres(true);
+        setGroupeToShowId(id);
+        getEtudiantsOfGroup(id,groupe);
+    }
+
+    function editGroupe(id,nom){
+        setShowVoirMembres(false);
+        if(groupeToEditId === id){
+            setShowEditForm(false);
+            return;
+        }
+        setShowEditForm(true);
+        getEtudiantsOfGroup(id);
+        setGroupeToEditId(id);
+        setGroupeToEditNom(nom);
+    }
+
     return wait && (
         <div className='affichage-groupes'>
             <div className="groupes">
@@ -88,11 +113,7 @@ function ListeGroupe(props){
                 <div className="infos-groupe" key={item.id}>
                     <div className="bouton">
                         <img src="button-edit.png" className="bouton-edit" alt='Bouton edit' onClick={() => {
-                            setShowEditForm(true);
-                            getEtudiantsOfGroup(item.id);
-                            setGroupeToEditId(item.id);
-                            setGroupeToEditNom(item.groupe);
-                            setShowEditForm(true);
+                            editGroupe(item.id,item.groupe);
                         }}></img>
                         <img src="button-delete.png" className="bouton-poubelle" alt='Bouton suppression' onClick={() => handleDeleteClickGroupe(item.id,null)}></img>
                     </div>
@@ -101,9 +122,7 @@ function ListeGroupe(props){
                     </div>
                     <div className="voir-membres">
                         <p className="voir-membres-button" onClick={() => {
-                            setShowEditForm(false);
-                            getEtudiantsOfGroup(item.id);
-                            document.getElementById('nomGroupe').innerHTML = item.groupe;
+                            voirMembres(item.id, item.groupe);
                         }}>Voir les membres ➤</p>
                     </div>
                 </div>
@@ -112,18 +131,19 @@ function ListeGroupe(props){
             </div>
             <div className="etudiants">
                 {showEditForm ?
-                    <CreationGroupe id={groupeToEditId} nom={groupeToEditNom} etudiants={etudiants} getEtudiantsOfGroup={getEtudiantsOfGroup}/>
+                    <CreationGroupe setShowEditForm={setShowEditForm} id={groupeToEditId} nom={groupeToEditNom} etudiants={etudiants} getEtudiantsOfGroup={getEtudiantsOfGroup}/>
                 : 
-                <Box>
-                    <div id='nomGroupe' className='nomGroupe'></div>
-                    <div className="infos-etudiant"> 
-                        {etudiants.map((item) =>            
-                            <div className="etudiant" key={item.ine} >
-                                {item.nom.toUpperCase() + " " + item.prenom}
-                            </div>
-                        )}
+                showVoirMembres &&
+                    <div>
+                        <div id='nomGroupe' className='nomGroupe'></div>
+                        <div className="infos-etudiant"> 
+                            {etudiants.map((item) =>            
+                                <div className="etudiant" key={item.ine} >
+                                    {item.nom.toUpperCase() + " " + item.prenom}
+                                </div>
+                            )}
+                        </div>
                     </div>
-                </Box>
                 
                 }
             </div>
