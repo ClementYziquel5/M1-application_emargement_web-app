@@ -1,9 +1,9 @@
 TODO:
 Fix CSS divers 
 Mettre un underline sur l'onglet actif
-Fix les polices 
+Fix les polices (ça c'est juste Firefox qui casse les noisettes, les autres navigateurs sont OK)
 Gérer le fait qu'on puisse ajouter +eurs fois le même étudiant dans un groupe
-
+Css pour quznd on clique sur "Voir les membres"
 
 
 DONE:
