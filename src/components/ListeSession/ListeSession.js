@@ -102,21 +102,21 @@ function ListeSession(props){
                 </div>
                 <div className="groupes-listeSession">
                     {item["groupes"].map((groupe) => 
-                        <div className="groupe-listeSession" key={"groupe-"+item.id}>
+                        <div className="groupe-listeSession" key={"groupe-"+groupe}>
                             {groupe}
                         </div>
                     )}
                 </div>
                 <div className="intervenants-listeSession">
                     {item["intervenants"].map((intervenant) =>
-                        <div className="intervenant-listeSession" key={"intervenant-"+item.id}>
+                        <div className="intervenant-listeSession" key={"intervenant-"+intervenant}>
                             {intervenant}
                         </div>
                     )}
                 </div>
                 <div className="salles-listeSession">
                     {item["salles"].map((salle) =>
-                        <div className="salle-listeSession" key={"salle-"+item.id}>
+                        <div className="salle-listeSession" key={"salle-"+salle}>
                             {salle}
                         </div>
                     )}

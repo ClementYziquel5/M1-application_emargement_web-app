@@ -140,15 +140,8 @@ function CreationSession(props){
     const [idGroupes, setIdGroupes] = useState([]);
     const [idSalles, setIdSalles] = useState([]);
     const [idIntervenants, setIdIntervenants] = useState([]);
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
     
-    useEffect(() => {
-        if (props.edit) {
-            console.log("if useEffect");
-            console.log("types : ", types);
-            fillInputs(props.session);
-        }
-    }, [props.edit])
-
     useEffect(() => {
         if(props.datas !== undefined){
             setGroupes(props.datas.groupes);
@@ -171,8 +164,15 @@ function CreationSession(props){
 
             setMatieres(props.datas.matieres);
             setTypes(props.datas.types);
+            setIsDataLoaded(true);
         }
-    }, []);
+    }, [props.datas]);    
+    
+    useEffect(() => {
+        if (props.edit && isDataLoaded) {
+            fillInputs(props.session);
+        }
+    }, [props.edit, isDataLoaded])
 
     function handleCreateSession() {      
         let date = document.getElementById('input-date').value;
@@ -269,12 +269,18 @@ function CreationSession(props){
         document.getElementById('input-heure-fin').value = session.heureFin;
         document.getElementById('select-matiere').value = session.matiere;
         document.getElementById('select-type').value = session.type;
+
         const newGroupes = session.groupes.map(item => ({ value: item, label: item }));
         setGroupesSelected(newGroupes);
+        handleChangeGroupe(newGroupes);
+
         const newSalles = session.salles.map(item => ({ value: item, label: item }));
         setSallesSelected(newSalles);
+        handleChangeSalle(newSalles);
+
         const newIntervenants = session.intervenants.map(item => ({ value: item, label: item }));
         setIntervenantsSelected(newIntervenants);
+        handleChangeIntervenant(newIntervenants);
     }
 
     function handleEditSession(id){
