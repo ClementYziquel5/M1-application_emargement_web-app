@@ -190,15 +190,6 @@ function CreationSession(props){
 
         let type = document.getElementById('select-type').value;
 
-        console.log("date : ", date);
-        console.log("heure_debut : ", heure_debut);
-        console.log("heure_fin : ", heure_fin);
-        console.log("id_matiere : ", id_matiere);
-        console.log("type : ", type);
-        console.log("idGroupes : ", idGroupes);
-        console.log("idSalles : ", idSalles);
-        console.log("idIntervenants : ", idIntervenants);
-
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/create';
         fetch(url, {
             method: 'POST',

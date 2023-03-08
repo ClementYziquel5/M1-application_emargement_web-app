@@ -113,32 +113,11 @@ function CreationGroupe(props){
             console.error('Error:', error);
         });
 
-        //handleAddEtudiantsToGroup();
 
         setNom('');
         setPrenom('');
         setEtudiants([]);
         setGroupe('');
-    }
-
-    //fonction qui envoie la requete api pour ajouter les étudiants au groupe
-    function handleAddEtudiantsToGroup() {
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupe/etudiant/ajout';
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                {
-                    idGroupe: 40,
-                    ines: etudiants.map(etudiant => etudiant.ine)
-                }
-            )
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
     }
             
 
