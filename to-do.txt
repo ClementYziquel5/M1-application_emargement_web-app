@@ -1,5 +1,13 @@
-Ajouter messages de confirmation création groupe & session
-Clear champs de création session quand on clique sur créer 
+TODO:
 Fix CSS divers 
 Mettre un underline sur l'onglet actif
 Fix les polices 
+Gérer le fait qu'on puisse ajouter +eurs fois le même étudiant dans un groupe
+
+
+
+DONE:
+Lorsque l'on créé un groupe, mettre à jour la variable groupes dans App
+Ajouter messages de confirmation création groupe & session
+Clear champs de création session quand on clique sur créer 
+Afficher des msg d'erreur quand tous les champs de création ne sont pas renseignés

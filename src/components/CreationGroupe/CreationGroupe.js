@@ -92,6 +92,13 @@ function CreationGroupe(props){
 
     //fonction qui envoie la requete api pour créer le groupe
     function handleCreateGroupe() {
+        if(!groupe){
+            alert('Veuillez renseigner un nom de groupe');   
+            return;
+        }else if(!etudiants.length){
+            alert('Veuillez renseigner au moins un étudiant');
+            return;
+        }
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupe/creation';
         fetch(url, {
           method: 'POST',
