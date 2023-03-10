@@ -41,15 +41,29 @@ function CreationGroupe(props){
 
     function handleAddEtudiant() {
         if (nom && prenom) {
+            // On vérifie que l'étuddiant existe dans la base de données
+            let exist = false;
+            for (let i = 0; i < datas.length; i++) {
+                if (datas[i].nom.toUpperCase() === nom && datas[i].prenom === prenom) {
+                    exist = true;
+                    setIne(datas[i].ine);
+                }
+            }
+            if (!exist) {
+                return;
+            }
+
             setEtudiants([...etudiants, {nom, prenom, ine}]);
-            let newDatas = [...datas];
+
             // supprimer l'étudiant ajouté du tableau datas
+            let newDatas = [...datas];
             for (let i = 0; i < newDatas.length; i++) {
                 if (newDatas[i].nom.toUpperCase() === nom && newDatas[i].prenom === prenom) {
                     newDatas.splice(i, 1);
                 }
             }
             setDatas(newDatas);
+
             setNom('');
             setPrenom('');
             setIne('');
