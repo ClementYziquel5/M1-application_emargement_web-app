@@ -85,7 +85,7 @@ function ListeGroupe(props){
 
     function voirMembres(id,groupe){
         setShowEditForm(false);
-        if(groupeToShowId === id){
+        if(groupeToShowId === id && showVoirMembres){
             setShowVoirMembres(false);
             return;
         }
@@ -96,7 +96,7 @@ function ListeGroupe(props){
 
     function editGroupe(id,nom){
         setShowVoirMembres(false);
-        if(groupeToEditId === id){
+        if(groupeToEditId === id && showEditForm){
             setShowEditForm(false);
             return;
         }
