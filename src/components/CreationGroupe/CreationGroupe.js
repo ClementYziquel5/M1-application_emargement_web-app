@@ -42,6 +42,14 @@ function CreationGroupe(props){
     function handleAddEtudiant() {
         if (nom && prenom) {
             setEtudiants([...etudiants, {nom, prenom, ine}]);
+            let newDatas = [...datas];
+            // supprimer l'étudiant ajouté du tableau datas
+            for (let i = 0; i < newDatas.length; i++) {
+                if (newDatas[i].nom.toUpperCase() === nom && newDatas[i].prenom === prenom) {
+                    newDatas.splice(i, 1);
+                }
+            }
+            setDatas(newDatas);
             setNom('');
             setPrenom('');
             setIne('');
@@ -54,6 +62,8 @@ function CreationGroupe(props){
         const newEtudiants = [...etudiants];
         newEtudiants.splice(index, 1);
         setEtudiants(newEtudiants);
+        // ajouter l'étudiant supprimé au tableau datas
+        setDatas([...datas, {nom: etudiants[index].nom, prenom: etudiants[index].prenom, ine: etudiants[index].ine}]);
     }
 
     function handleNomPrenom(e) {
@@ -86,7 +96,14 @@ function CreationGroupe(props){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            setDatas(data);
+            let tempData = [];
+            data.map((etudiant)=> {
+                // Si l'étudiant n'est pas déjà etudiants, on l'ajoute à tempData
+                if (!etudiants.some((item) => item.nom === etudiant.nom && item.prenom === etudiant.prenom)) {
+                    tempData.push(etudiant);
+                }
+            })
+            setDatas(tempData);
         })
     }
 
