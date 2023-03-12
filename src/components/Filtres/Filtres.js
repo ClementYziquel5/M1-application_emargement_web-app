@@ -10,6 +10,7 @@ function Filtres(props){
     const [salles, setSalles] = useState([]);
     const [date, setDate] = useState("");
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isFiltred, setIsFiltred] = useState(false);
     
     useEffect(() => {
         if(props.datas !== undefined && props.filtres !== undefined){
@@ -23,38 +24,45 @@ function Filtres(props){
     }, []);
 
     useEffect(() => {
-        if(isLoaded){
+        if(isFiltred){
+            console.log("isFiltred");
             getSelectValues();
+            setIsFiltred(false);
         }
-    }, [isLoaded]);
+    }, [isFiltred]);
 
 
     useEffect(() => {
-        if(props.filtres.matiere !== "0"){
-            console.log("matiere", props.filtres.matiere);
-            document.getElementById('select-matiere-Filtres').value = props.filtres.matiere;
-        }
-        if(props.filtres.groupe !== "0"){
-            console.log("groupe", props.filtres.groupe);
-            document.getElementById('select-groupe-Filtres').value = props.filtres.groupe;
-        }
-        if(props.filtres.intervenant !== "0"){
-            console.log("intervenant", props.filtres.intervenant);
-            document.getElementById('select-intervenant-Filtres').value = props.filtres.intervenant;
-        }
-        if(props.filtres.salle !== "0"){
-            console.log("salle", props.filtres.salle);
-            document.getElementById('select-salle-Filtres').value = props.filtres.salle;
-        }
-        if(props.filtres.date !== "0"){
-            console.log("date", props.filtres.date);
-            document.getElementById('date-input-Filtres').value = props.filtres.date;
-        }
-        getSelectValues();
-    }, [props.edit]);
+        if(isLoaded){
+            console.log("isLoaded");
+            if(props.filtres.matiere !== "0"){
+                console.log("matiere", props.filtres.matiere);
+                document.getElementById('select-matiere-Filtres').value = props.filtres.matiere;
+            }
+            if(props.filtres.groupe !== "0"){
+                console.log("groupe", props.filtres.groupe);
+                document.getElementById('select-groupe-Filtres').value = props.filtres.groupe;
+            }
+            if(props.filtres.intervenant !== "0"){
+                console.log("intervenant", props.filtres.intervenant);
+                document.getElementById('select-intervenant-Filtres').value = props.filtres.intervenant;
+            }
+            if(props.filtres.salle !== "0"){
+                console.log("salle", props.filtres.salle);
+                document.getElementById('select-salle-Filtres').value = props.filtres.salle;
+            }
+            if(props.filtres.date !== "0"){
+                console.log("date", props.filtres.date);
+                document.getElementById('date-input-Filtres').value = props.filtres.date;
+            }
+            setIsFiltred(true);
+            setIsLoaded(false);
+        }        
+    }, [isLoaded]);
 
     //fonction qui récupère les valeurs des select
     function getSelectValues() {
+        console.log("getSelectValues");
         let matiere = document.getElementById('select-matiere-Filtres').value;
         let groupe = document.getElementById('select-groupe-Filtres').value;
         let intervenant = document.getElementById('select-intervenant-Filtres').value;
