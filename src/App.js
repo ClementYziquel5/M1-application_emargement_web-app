@@ -49,7 +49,6 @@ function App() {
         types: typesData,
         intervenants: intervenantsData,
       };
-      console.log(datas);
       setGroupes(datas.groupes);
       setDatas(datas);
       setWait(true);
@@ -82,7 +81,8 @@ function Sessions(props){
   const [idSession, setIdSession] = useState(0);
   const [session, setSession] = useState([]);
   const [sessions, setSessions] = useState(false);
-  const [filtres , setFiltres] = useState({date: '0', groupe: '0', salle: '0', matiere: '0', type: '0', intervenant: '0'});
+  let yourDate = new Date().toISOString().split('T')[0]
+  const [filtres , setFiltres] = useState({date: yourDate, groupe: '0', salle: '0', matiere: '0', type: '0', intervenant: '0'});
 
   return (
     <div>
@@ -90,7 +90,10 @@ function Sessions(props){
       ? <VisualisationSession session={session} setVisu={setVisu} idSession={idSession}/>
       : edit 
         ? <div className='edit'><CreationSession datas={props.datas} session={session} setSession={setSession} setEdit={setEdit} edit={edit}/> </div>
-        : <div> <Filtres filtres={filtres} setFiltres={setFiltres} datas={props.datas} setSessions={setSessions} edit={edit} visu={visu}/> <ListeSession setIdSession={setIdSession} sessions={sessions} setSession={setSession} setVisu={setVisu} setEdit={setEdit}/> </div>
+        : <div> 
+            <Filtres filtres={filtres} setFiltres={setFiltres} datas={props.datas} setSessions={setSessions} edit={edit} visu={visu}/> 
+            <ListeSession setIdSession={setIdSession} sessions={sessions} setSession={setSession} setVisu={setVisu} setEdit={setEdit}/> 
+          </div>
       }
 
     </div>

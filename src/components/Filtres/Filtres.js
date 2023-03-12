@@ -9,24 +9,25 @@ function Filtres(props){
     const [intervenants, setIntervenants] = useState([]);
     const [salles, setSalles] = useState([]);
     const [date, setDate] = useState("");
-
-    useEffect(() => {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = (now.getMonth() + 1).toString().padStart(2, "0");
-      const day = now.getDate().toString().padStart(2, "0");
-      const today = `${year}-${month}-${day}`;
-      setDate(today);
-    }, []);
+    const [isLoaded, setIsLoaded] = useState(false);
     
     useEffect(() => {
-        if(props.datas !== undefined){
+        if(props.datas !== undefined && props.filtres !== undefined){
+            setDate(props.filtres.date);
             setGroupes(props.datas.groupes);
             setSalles(props.datas.salles);
             setIntervenants(props.datas.intervenants);
             setMatieres(props.datas.matieres);
         }
+        setIsLoaded(true);
     }, []);
+
+    useEffect(() => {
+        if(isLoaded){
+            getSelectValues();
+        }
+    }, [isLoaded]);
+
 
     useEffect(() => {
         if(props.filtres.matiere !== "0"){
@@ -49,9 +50,8 @@ function Filtres(props){
             console.log("date", props.filtres.date);
             document.getElementById('date-input-Filtres').value = props.filtres.date;
         }
-        console.log("filtres", props.filtres);
         getSelectValues();
-    }, []);
+    }, [props.edit]);
 
     //fonction qui récupère les valeurs des select
     function getSelectValues() {
