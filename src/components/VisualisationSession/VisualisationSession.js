@@ -44,21 +44,21 @@ function VisualisationSession(props) {
                     </div>
                     <div className="groupes-visuSession">
                         {props.session["groupes"].map((groupe) => 
-                            <div className="groupe-visuSession">
+                            <div className="groupe-visuSession" key={groupe}>
                                 {groupe}
                             </div>
                         )}
                     </div>
                     <div className="intervenants-visuSession">
                         {props.session["intervenants"].map((intervenant) =>
-                            <div className="intervenant-visuSession">
+                            <div className="intervenant-visuSession" key={intervenant}>
                                 {intervenant}
                             </div>
                         )}
                     </div>
                     <div className="salles-visuSession">
                         {props.session["salles"].map((salle) =>
-                            <div className="salle-visuSession">
+                            <div className="salle-visuSession" key={salle}>
                                 {salle}
                             </div>
                         )}
