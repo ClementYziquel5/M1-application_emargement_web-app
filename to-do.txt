@@ -2,9 +2,7 @@ TODO:
 Fix CSS divers 
 Mettre un underline sur l'onglet actif
 Fix les polices (ça c'est juste Firefox qui casse les noisettes, les autres navigateurs sont OK)
-Gérer le fait qu'on puisse ajouter +eurs fois le même étudiant dans un groupe
 Css pour quznd on clique sur "Voir les membres"
-Quand on modif une session, quand on appuie sur "modifier", on retourne sur la liste des sessions, mais la session modifiée n'est pas mise à jour
 Quand on essaye de modifier une sesion ou il manque un élément, genre un groupe, il y a des erreurs
 
 DONE:
@@ -12,3 +10,5 @@ Lorsque l'on créé un groupe, mettre à jour la variable groupes dans App
 Ajouter messages de confirmation création groupe & session
 Clear champs de création session quand on clique sur créer 
 Afficher des msg d'erreur quand tous les champs de création ne sont pas renseignés
+Quand on modif une session, quand on appuie sur "modifier", on retourne sur la liste des sessions, mais la session modifiée n'est pas mise à jour
+Gérer le fait qu'on puisse ajouter +eurs fois le même étudiant dans un groupe
