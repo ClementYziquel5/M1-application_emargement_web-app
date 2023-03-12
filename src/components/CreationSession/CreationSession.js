@@ -190,7 +190,6 @@ function CreationSession(props){
                 break;
             }
         }
-        console.log("groupesSelected",groupesSelected);
 
         // Vérification des champs vides
         if(id_matiere === undefined){
