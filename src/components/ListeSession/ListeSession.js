@@ -10,7 +10,7 @@ function ListeSession(props){
         itemToDelete: null,
     });
     useEffect(() => {
-        {props.sessions ? setSessions(props.sessions) : getTodaySessions()}
+        {props.sessions && setSessions(props.sessions) }
     }, [props.sessions]);
 
     // get today sessions

@@ -147,7 +147,7 @@ function CreationGroupe(props){
             }
           )
         }).then( () => {
-            props.fetchGroupes();
+            props.updateGroupe();
         })
         .catch(error => {
             console.error('Error:', error);

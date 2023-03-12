@@ -14,18 +14,20 @@ function App() {
   const [wait, setWait] = useState(false);
   const [groupes, setGroupes] = useState({});
 
-  function fetchGroupes() {
+  function updateGroupe() {
     const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes';
     fetch(url)
       .then(response => response.json())
       .then(data => {
         setGroupes(data);
-        let newDatas = datas;
-        newDatas.groupes = data;
-        setDatas(newDatas);
+        setDatas({
+          ...datas,
+          groupes: data
+        });
       })
       .catch(error => console.error('Error:', error));
   }
+  
 
   const getDatas = async () => {
 
@@ -47,6 +49,7 @@ function App() {
         types: typesData,
         intervenants: intervenantsData,
       };
+      console.log(datas);
       setGroupes(datas.groupes);
       setDatas(datas);
       setWait(true);
@@ -66,7 +69,7 @@ function App() {
             <Routes>
                 <Route exact path="/sessions" element={<Sessions datas={datas}/>} />
                 <Route path="/groupes" element={<Groupes datas={datas}/>} />
-                <Route path="/creation" element={<Creation datas={datas} fetchGroupes={fetchGroupes}/>} />
+                <Route path="/creation" element={<Creation setDatas={setDatas} datas={datas} updateGroupe={updateGroupe}/>} />
             </Routes>
         </div>
     </Router>
@@ -74,11 +77,12 @@ function App() {
 }
 
 function Sessions(props){
-  const [edit, setEdit] = useState(false);
-  const [visu, setVisu] = useState(false);
+  const [edit, setEdit] = useState('');
+  const [visu, setVisu] = useState('');
   const [idSession, setIdSession] = useState(0);
   const [session, setSession] = useState([]);
   const [sessions, setSessions] = useState(false);
+  const [filtres , setFiltres] = useState({date: '0', groupe: '0', salle: '0', matiere: '0', type: '0', intervenant: '0'});
 
   return (
     <div>
@@ -86,7 +90,7 @@ function Sessions(props){
       ? <VisualisationSession session={session} setVisu={setVisu} idSession={idSession}/>
       : edit 
         ? <div className='edit'><CreationSession datas={props.datas} session={session} setSession={setSession} setEdit={setEdit} edit={edit}/> </div>
-        : <div> <Filtres datas={props.datas} setSessions={setSessions}/> <ListeSession setIdSession={setIdSession} sessions={sessions} setSession={setSession} setVisu={setVisu} setEdit={setEdit}/> </div>
+        : <div> <Filtres filtres={filtres} setFiltres={setFiltres} datas={props.datas} setSessions={setSessions} edit={edit} visu={visu}/> <ListeSession setIdSession={setIdSession} sessions={sessions} setSession={setSession} setVisu={setVisu} setEdit={setEdit}/> </div>
       }
 
     </div>
@@ -102,7 +106,7 @@ const Groupes = (props) => (
 const Creation = (props) => (
   <div className="creation">
     <CreationSession datas={props.datas}/>
-    <CreationGroupe fetchGroupes={props.fetchGroupes}/>
+    <CreationGroupe setDatas={props.setDatas} datas={props.datas} updateGroupe={props.updateGroupe}/>
   </div>
 );
 

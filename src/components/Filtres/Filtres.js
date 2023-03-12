@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { useState, useRef, useEffect } from "react";
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
 
 import './Filtres.css'
 
@@ -10,6 +8,16 @@ function Filtres(props){
     const [groupes, setGroupes] = useState([]);
     const [intervenants, setIntervenants] = useState([]);
     const [salles, setSalles] = useState([]);
+    const [date, setDate] = useState("");
+
+    useEffect(() => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = (now.getMonth() + 1).toString().padStart(2, "0");
+      const day = now.getDate().toString().padStart(2, "0");
+      const today = `${year}-${month}-${day}`;
+      setDate(today);
+    }, []);
     
     useEffect(() => {
         if(props.datas !== undefined){
@@ -20,8 +28,33 @@ function Filtres(props){
         }
     }, []);
 
+    useEffect(() => {
+        if(props.filtres.matiere !== "0"){
+            console.log("matiere", props.filtres.matiere);
+            document.getElementById('select-matiere-Filtres').value = props.filtres.matiere;
+        }
+        if(props.filtres.groupe !== "0"){
+            console.log("groupe", props.filtres.groupe);
+            document.getElementById('select-groupe-Filtres').value = props.filtres.groupe;
+        }
+        if(props.filtres.intervenant !== "0"){
+            console.log("intervenant", props.filtres.intervenant);
+            document.getElementById('select-intervenant-Filtres').value = props.filtres.intervenant;
+        }
+        if(props.filtres.salle !== "0"){
+            console.log("salle", props.filtres.salle);
+            document.getElementById('select-salle-Filtres').value = props.filtres.salle;
+        }
+        if(props.filtres.date !== "0"){
+            console.log("date", props.filtres.date);
+            document.getElementById('date-input-Filtres').value = props.filtres.date;
+        }
+        console.log("filtres", props.filtres);
+        getSelectValues();
+    }, []);
+
     //fonction qui récupère les valeurs des select
-    function getSelectValues(select) {
+    function getSelectValues() {
         let matiere = document.getElementById('select-matiere-Filtres').value;
         let groupe = document.getElementById('select-groupe-Filtres').value;
         let intervenant = document.getElementById('select-intervenant-Filtres').value;
@@ -43,6 +76,8 @@ function Filtres(props){
         if (date === '') {
             date = '0';
         }
+
+        props.setFiltres({date: date, groupe: groupe, matiere: matiere, intervenant: intervenant, salle: salle});
 
         getSessions(date, groupe, matiere, intervenant, salle);
 
@@ -98,7 +133,7 @@ function Filtres(props){
                     ))}
                 </select>
 
-                <input className="select" required name='date' id='date-input-Filtres' type='date' ></input>
+                <input className="select" required name='date' id='date-input-Filtres' type='date' defaultValue={date}></input>
                 
                 <div id="button-afficher-Filtres">
                     <button className="button-rectangle" type="button" onClick={ () => getSelectValues()}>Afficher
