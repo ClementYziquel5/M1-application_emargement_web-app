@@ -3,33 +3,28 @@ import ConfirmationModal from '../Confirmation/Confirmation';
 
 import './ListeSession.css'
 
+/*
+ * Composant ListeSession : permet d'afficher la liste des sessions filtrées
+ *
+ * props :
+ * - sessions : liste des sessions
+ * 
+ * - setSession : permet de modifier la session sélectionnée
+ * - setIdSession : permet de passer l'id de la session sélectionnée
+ * 
+ * - setEdit : permet de modifier l'état d'édition
+ * - setVisu : permet de modifier l'état de visualisation
+ */
 function ListeSession(props){
-    const [sessions, setSessions] = useState([]);
-    const [state, setState] = useState({
+    const [sessions, setSessions] = useState([]); // sessions = liste des sessions à afficher
+    const [state, setState] = useState({ // state = état de la modal de confirmation de suppression
         showConfirmationModal: false,
         itemToDelete: null,
     });
-    useEffect(() => {
+
+    useEffect(() => { // Lorsque les sessions sont chargées on les affiche
         {props.sessions && setSessions(props.sessions) }
     }, [props.sessions]);
-
-    // get today sessions
-    function getTodaySessions(){
-        // Date au format YYYY-MM-DD
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const day = String(today.getDate()).padStart(2, '0');
-        const date = `${year}-${month}-${day}`;
-
-        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/sessions/date='+date+'/groupe=0/matiere=0/intervenant=0/salle=0';
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            setSessions(data);
-        })
-        .catch(error => console.log(error));
-    }
 
     // Delete session
     function handleDeleteClick(id) {
@@ -55,7 +50,7 @@ function ListeSession(props){
         })
         .then(response => {
             if (response.ok) {
-              setSessions(sessions.filter(item => item.id !== state.itemToDelete));
+              setSessions(sessions.filter(item => item.id !== state.itemToDelete)); // On supprime la session supprimée de la liste
             } else {
               throw new Error('DeleteSession error');
             }
@@ -64,7 +59,7 @@ function ListeSession(props){
             console.error('Error:', error);
         });
 
-        setState({
+        setState({ // On ferme la modal de confirmation
             showConfirmationModal: false,
             itemToDelete: null,
         })
@@ -72,16 +67,16 @@ function ListeSession(props){
 
     // Cancel delete
     function handleCancelDelete(){
-        setState({
+        setState({ // On ferme la modal de confirmation
             showConfirmationModal: false,
             itemToDelete: null,
         })
     }
 
     // Edit session
-    function handleEditClick(item){
-        props.setSession(item);
-        props.setEdit(true);
+    function handleEditClick(item){ 
+        props.setSession(item); // On passe la session sélectionnée
+        props.setEdit(true); // On passe l'état d'édition à true
     }
 
     return (

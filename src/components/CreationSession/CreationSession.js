@@ -122,6 +122,19 @@ const selectTheme = (theme) => ({
     },
 })
 
+/*
+ * Composant de création ou de modification de session
+ *
+ * props (création de session):
+ * - datas: données nécessaires à la création de la session (groupes, salles, intervenants, matières, types)
+ * 
+ * props (modification de session):
+ * - datas: données nécessaires à la création de la session (groupes, salles, intervenants, matières, types)
+ * - session: données de la session à modifier
+ * - setSession: fonction de modification de la session
+ * - edit: état d'édition de la session
+ * - setEdit: fonction de modification de l'état d'édition de la session
+ */
 function CreationSession(props){
     const [groupes, setGroupes] = useState([]);
     const [salles, setSalles] = useState([]);
@@ -168,7 +181,7 @@ function CreationSession(props){
         }
     }, [props.datas]);    
     
-    useEffect(() => {
+    useEffect(() => { // Remplissage des champs si on est en mode édition de session (props.edit = true) et que les données sont chargées
         if (props.edit && isDataLoaded) {
             fillInputs(props.session);
         }
@@ -239,14 +252,14 @@ function CreationSession(props){
             }
             )
         }).then(() => {
-            {props.edit 
+            {props.edit // Si on est en mode édition de session, on affiche un message différent de celui de création de session
                 ? <div>
                     {alert('La session a été modifiée')}
-                    {props.setEdit(false)}
+                    {props.setEdit(false) /* On remet le mode édition à false */ } 
                 </div>
                 : alert('La session a été créée')
             }
-            clearInputs();
+            clearInputs(); // On vide les champs
         })
         .catch(error => {
             console.error('Error:', error);
@@ -318,13 +331,16 @@ function CreationSession(props){
         setIntervenantsSelected('');
     }
     
-    function fillInputs(session){
+    function fillInputs(session){ // Remplir les inputs avec les données de la session à modifier (si on est en mode édition)
+        // Remplir les inputs avec les données de la session à modifier
         document.getElementById('input-date').value = session.date;
         document.getElementById('input-heure-debut').value = session.heureDebut;
         document.getElementById('input-heure-fin').value = session.heureFin;
         document.getElementById('select-matiere').value = session.matiere;
         document.getElementById('select-type').value = session.type;
 
+        // Remplir les select avec les données de la session à modifier
+        // Une fois les select remplis, on appelle les fonctions handleChange pour mettre à jour les ids des groupes, salles et intervenants sélectionnés
         const newGroupes = session.groupes.map(item => ({ value: item, label: item }));
         setGroupesSelected(newGroupes);
         handleChangeGroupe(newGroupes);
@@ -339,6 +355,7 @@ function CreationSession(props){
     }
 
     function handleEditSession(id){
+        // On récupère les données de la session à modifier
         let date = document.getElementById('input-date').value;
         let heure_debut = document.getElementById('input-heure-debut').value;
         let heure_fin = document.getElementById('input-heure-fin').value;
@@ -381,6 +398,7 @@ function CreationSession(props){
             document.getElementById('msg-session').innerHTML = '';
         }
 
+        // On envoie les nouvelles données au serveur
         const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/miseajour';
         fetch(url, {
             method: 'PUT',
@@ -401,14 +419,14 @@ function CreationSession(props){
             }
             )
         }).then(() => {
-            {props.edit 
+            {props.edit // Si on est en mode édition, on affiche un message de confirmation différent de celui de création
                 ? <div>
                     {alert('La session a été modifiée')}
-                    {props.setEdit(false)}
+                    {props.setEdit(false) /* Lorsque la modification est terminée, on remet le mode édition à false pour revenir à la liste des sessions */}
                 </div>
                 : alert('La session a été créée')
             }
-            clearInputs();
+            clearInputs(); // On vide les inputs
         })
         .catch(error => {
             console.error('Error:', error);

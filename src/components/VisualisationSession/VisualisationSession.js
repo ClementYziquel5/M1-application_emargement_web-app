@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import './VisualisationSession.css';
 
+/*
+ * Composant VisualisationSession : permet d'afficher les informations d'une session
+ *
+ * props :
+ * - session : session à afficher
+ * - idSession : id de la session à afficher
+ * - setVisu : permet de modifier l'état de visualisation
+ */
 function VisualisationSession(props) {
-
     // Get Students by group by session
     const [etudiants, setEtudiants] = useState([{groupe: "", etudiants: []}]);
+    const [isEtudiantsLoaded, setIsEtudiantsLoaded] = useState(false);
 
-    useEffect(() => {
+    useEffect(() => { // Au chargement du composant on récupère les étudiants de la session
         getetudiants();
     }, []);
 
     function getetudiants() {
         const newEtudiants = [];
-        props.session["groupes"].map((groupe) => {
+        props.session["groupes"].map((groupe) => { // Pour chaque groupe de la session, on récupère les étudiants de ce groupe
             const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/' + props.idSession + '/groupe/' + groupe + '/etudiants';
             fetch(url)
             .then(response => response.json())
@@ -20,6 +28,7 @@ function VisualisationSession(props) {
                 newEtudiants.push({ groupe: groupe, etudiants: data });
                 if (newEtudiants.length === props.session["groupes"].length) {
                     setEtudiants(newEtudiants);
+                    setIsEtudiantsLoaded(true);
                 }
             }) 
             .catch(error => console.log(error));
@@ -27,7 +36,7 @@ function VisualisationSession(props) {
     }
     
 
-    return (
+    return isEtudiantsLoaded && ( // On affiche les informations de la session dès qu'elle est chargée
         <div className="visualisation-session">
             <div className="retour">
                 <button onClick={() => props.setVisu(false)}>Retour</button>

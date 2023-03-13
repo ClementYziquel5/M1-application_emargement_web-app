@@ -10,16 +10,14 @@ import VisualisationSession from './components/VisualisationSession/Visualisatio
 
 
 function App() {
-  const [datas, setDatas] = useState('');
-  const [wait, setWait] = useState(false);
-  const [groupes, setGroupes] = useState({});
+  const [datas, setDatas] = useState(''); // datas = {groupes: [], salles: [], matieres: [], types: [], intervenants: []}
+  const [wait, setWait] = useState(false); // wait = true quand les datas sont chargées
 
-  function updateGroupe() {
+  function updateGroupe() { // fonction pour mettre à jour les groupes après création d'un nouveau groupe
     const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes';
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        setGroupes(data);
         setDatas({
           ...datas,
           groupes: data
@@ -29,8 +27,7 @@ function App() {
   }
   
 
-  const getDatas = async () => {
-
+  const getDatas = async () => { // fonction pour récupérer les datas fixes (groupes, salles, matières, types, intervenants)
     const urls = [  process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes',
                     process.env.REACT_APP_API_ENDPOINT + '/v1.0/salles',
                     process.env.REACT_APP_API_ENDPOINT + '/v1.0/matieres',
@@ -49,7 +46,6 @@ function App() {
         types: typesData,
         intervenants: intervenantsData,
       };
-      setGroupes(datas.groupes);
       setDatas(datas);
       setWait(true);
     } catch (error) {
@@ -57,34 +53,40 @@ function App() {
     }
   }
   
-  useEffect(() => {
+  useEffect(() => { // au chargement de la page, on récupère les datas
     getDatas();
   }, []);
 
-  return wait && (
+  return wait && ( // on attend que les datas soient chargées
     <Router>
         <div>
-            <Header/>
+            <Header/> 
             <Routes>
                 <Route exact path="/sessions" element={<Sessions datas={datas}/>} />
                 <Route path="/groupes" element={<Groupes datas={datas}/>} />
-                <Route path="/creation" element={<Creation setDatas={setDatas} datas={datas} updateGroupe={updateGroupe}/>} />
+                <Route path="/creation" element={<Creation datas={datas} updateGroupe={updateGroupe}/>} />
             </Routes>
         </div>
     </Router>
   );
 }
 
-function Sessions(props){
-  const [edit, setEdit] = useState('');
-  const [visu, setVisu] = useState('');
-  const [idSession, setIdSession] = useState(0);
-  const [session, setSession] = useState([]);
-  const [sessions, setSessions] = useState(false);
-  let yourDate = new Date().toISOString().split('T')[0]
-  const [filtres , setFiltres] = useState({date: yourDate, groupe: '0', salle: '0', matiere: '0', type: '0', intervenant: '0'});
+function Sessions(props){ // composant pour afficher les sessions
+  const [edit, setEdit] = useState(''); // edit = true quand on est en mode édition
+  const [visu, setVisu] = useState(''); // visu = true quand on est en mode visualisation
+  const [idSession, setIdSession] = useState(0); // idSession = id de la session à visualiser ou à éditer
+  const [session, setSession] = useState([]); // session = données de la session à visualiser ou à éditer
+  const [sessions, setSessions] = useState(false); // sessions = liste des sessions à afficher
+  let date = new Date().toISOString().split('T')[0]; // date = date du jour 
+  const [filtres , setFiltres] = useState({date: date, groupe: '0', salle: '0', matiere: '0', type: '0', intervenant: '0'}); // filtres = filtres appliqués à la liste des sessions
 
-  return (
+
+  /* 
+   * Initialement, on affiche les filtres et la liste des sessions du jour
+   * si on clique sur "Voir infos", on affiche la visualisation de la session (visu = true) => VisualisationSession
+   * si on clique sur "Modifier", on affiche le formulaire d'édition de la session (edit = true) => CreationSession
+   */
+  return ( 
     <div>
       {visu 
       ? <VisualisationSession session={session} setVisu={setVisu} idSession={idSession}/>
@@ -100,16 +102,22 @@ function Sessions(props){
   )
 }
 
-
+/*
+ * Composant pour afficher les groupes existants
+ */
 const Groupes = (props) => (
   <div>
     <ListeGroupe groupes={props.datas.groupes}/>
   </div>
 );
+
+/*
+ * Composants pour créer une session ou un groupe
+ */
 const Creation = (props) => (
   <div className="creation">
     <CreationSession datas={props.datas}/>
-    <CreationGroupe setDatas={props.setDatas} datas={props.datas} updateGroupe={props.updateGroupe}/>
+    <CreationGroupe updateGroupe={props.updateGroupe}/>
   </div>
 );
 

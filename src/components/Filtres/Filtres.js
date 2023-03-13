@@ -3,16 +3,31 @@ import { useState, useRef, useEffect } from "react";
 
 import './Filtres.css'
 
+/*
+ * Composant Filtres : permet de filtrer les sessions à afficher 
+ * par matière, groupe, intervenant, salle et date
+ * 
+ * props : 
+ * - datas : données des groupes, salles, intervenants et matières
+ * 
+ * - filtres : filtres appliqués à la liste des sessions, on les stocke pour pouvoir les réappliquer lors du rechargement de la page(si edition ou visualisation)
+ * - setFiltres : fonction qui permet de mettre à jour les filtres
+ * 
+ * - setSessions : fonction qui permet de mettre à jour la liste des sessions à afficher
+ * 
+ * - edit : booléen qui permet de savoir si on est en mode édition
+ * - visu : booléen qui permet de savoir si on est en mode visualisation
+ */
 function Filtres(props){
-    const [matieres, setMatieres] = useState([]);
-    const [groupes, setGroupes] = useState([]);
-    const [intervenants, setIntervenants] = useState([]);
-    const [salles, setSalles] = useState([]);
-    const [date, setDate] = useState("");
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [isFiltred, setIsFiltred] = useState(false);
+    const [matieres, setMatieres] = useState([]); // Liste des matières
+    const [groupes, setGroupes] = useState([]); // Liste des groupes
+    const [intervenants, setIntervenants] = useState([]); // Liste des intervenants
+    const [salles, setSalles] = useState([]); // Liste des salles
+    const [date, setDate] = useState(""); // Date
+    const [isLoaded, setIsLoaded] = useState(false); // Booléen qui permet de savoir si les données sont chargées
+    const [isFiltred, setIsFiltred] = useState(false); // Booléen qui permet de savoir si les filtres ont été appliqués
     
-    useEffect(() => {
+    useEffect(() => { // au chargement de la page, on récupère les datas et les filtres à appliquer
         if(props.datas !== undefined && props.filtres !== undefined){
             setDate(props.filtres.date);
             setGroupes(props.datas.groupes);
@@ -20,18 +35,11 @@ function Filtres(props){
             setIntervenants(props.datas.intervenants);
             setMatieres(props.datas.matieres);
         }
-        setIsLoaded(true);
+        setIsLoaded(true); // Les données sont chargées
     }, []);
 
-    useEffect(() => {
-        if(isFiltred){
-            getSelectValues();
-            setIsFiltred(false);
-        }
-    }, [isFiltred]);
 
-
-    useEffect(() => {
+    useEffect(() => { // Lorsque les données sont chargées, on applique les filtres
         if(isLoaded){
             if(props.filtres.matiere !== "0"){
                 document.getElementById('select-matiere-Filtres').value = props.filtres.matiere;
@@ -48,12 +56,21 @@ function Filtres(props){
             if(props.filtres.date !== "0"){
                 document.getElementById('date-input-Filtres').value = props.filtres.date;
             }
-            setIsFiltred(true);
-            setIsLoaded(false);
+            setIsFiltred(true); // Les filtres sont appliqués
+            setIsLoaded(false); // Les données ne sont plus chargées
         }        
     }, [isLoaded]);
 
-    //fonction qui récupère les valeurs des select
+
+    useEffect(() => { // Lorsque les filtres sont appliqués, on récupère les valeurs des select et on met à jour la liste des sessions en fonction des filtres
+        if(isFiltred){ 
+            getSelectValues(); 
+            setIsFiltred(false);
+        }
+    }, [isFiltred]);
+
+
+    //fonction qui récupère les valeurs des select et qui met à jour la liste des sessions en fonction des filtres
     function getSelectValues() {
         let matiere = document.getElementById('select-matiere-Filtres').value;
         let groupe = document.getElementById('select-groupe-Filtres').value;
@@ -61,6 +78,7 @@ function Filtres(props){
         let salle = document.getElementById('select-salle-Filtres').value;
         let date = document.getElementById('date-input-Filtres').value;
 
+        // Si les valeurs des select sont vides, on met 0 pour les filtres (0 = pas de filtre)
         if (matiere === '') {
             matiere = '0';
         }
@@ -77,19 +95,17 @@ function Filtres(props){
             date = '0';
         }
 
+        // On met à jour les filtres dans le state, pour pouvoir les réutiliser lors du prochain chargement de la page
         props.setFiltres({date: date, groupe: groupe, matiere: matiere, intervenant: intervenant, salle: salle});
 
-        getSessions(date, groupe, matiere, intervenant, salle);
-
-        function getSessions(date, groupe, matiere, intervenant, salle){
-            const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/sessions/date='+date+'/groupe='+groupe+'/matiere='+matiere+'/intervenant='+intervenant+'/salle='+salle;
-            fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                props.setSessions(data);
-            })
-            .catch(error => console.log(error));
-        }
+        // On passe la requête à l'API pour récupérer les sessions en fonction des filtres
+        const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/sessions/date='+date+'/groupe='+groupe+'/matiere='+matiere+'/intervenant='+intervenant+'/salle='+salle;
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            props.setSessions(data);
+        })
+        .catch(error => console.log(error));
     }
 
     

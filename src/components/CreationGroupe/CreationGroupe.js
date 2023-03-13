@@ -21,6 +21,20 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+
+/*
+ * Composant CreationGroupe : permet de créer un nouveau groupe ou de modifier un groupe existant
+ *
+ * props (si création de groupe) :
+ * - updateGroupe : fonction qui permet de mettre à jour la liste des groupes après la création d'un nouveau groupe
+ * 
+ * props (si modification de groupe) :
+ * - setShowEditForm : fonction qui permet de cacher/afficher le formulaire de modification
+ * - id : id du groupe à modifier
+ * - nom : nom du groupe à modifier
+ * - etudiants : étudiants du groupe à modifier
+ * - getEtudiantsOfGroupe : fonction qui récupère les étudiants d'un groupe
+ */
 function CreationGroupe(props){
 
     const [groupe, setGroupe] = useState('');

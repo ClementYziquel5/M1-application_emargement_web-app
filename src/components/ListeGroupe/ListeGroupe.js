@@ -4,21 +4,27 @@ import CreationGroupe from '../CreationGroupe/CreationGroupe';
 
 import './ListeGroupe.css'
 
+/*
+ * Composant ListeGroupe : permet d'afficher la liste des groupes
+ *
+ * props :
+ * - groupes : liste des groupes
+ */
 function ListeGroupe(props){
-    const [groupes, setGroupes] = useState([]);
-    const [etudiants, setEtudiants] = useState([]);
-    const [showEditForm, setShowEditForm] = useState(false);
-    const [showVoirMembres, setShowVoirMembres] = useState(false);
-    const [groupeToEditId, setGroupeToEditId] = useState(0);
-    const [groupeToShowId, setGroupeToShowId] = useState(0);
-    const [groupeToEditNom, setGroupeToEditNom] = useState(null);
-    const [state, setState] = useState({
+    const [groupes, setGroupes] = useState([]); // Liste des groupes
+    const [etudiants, setEtudiants] = useState([]); // Liste des étudiants d'un groupe
+    const [showEditForm, setShowEditForm] = useState(false); // Pour afficher le formulaire de modification
+    const [showVoirMembres, setShowVoirMembres] = useState(false); // Pour afficher la liste des étudiants d'un groupe
+    const [groupeToEditId, setGroupeToEditId] = useState(0); // Id du groupe à modifier lors du clic sur le bouton modifier
+    const [groupeToShowId, setGroupeToShowId] = useState(0); // Id du groupe à afficher lors du clic sur le bouton voir membres
+    const [groupeToEditNom, setGroupeToEditNom] = useState(null); // Nom du groupe à modifier lors du clic sur le bouton modifier
+    const [state, setState] = useState({ // Pour la modal de confirmation de suppression
         showConfirmationModal: false,
         itemToDelete: null,
     });
-    const [wait, setWait] = useState(false);
+    const [wait, setWait] = useState(false); // Pour attendre que les groupes soient chargés
 
-    useEffect(() => {
+    useEffect(() => { // Lorsque les groupes sont chargés on les affiche
         setGroupes(props.groupes);
         setWait(true);
     }, []);
@@ -84,29 +90,29 @@ function ListeGroupe(props){
     }
 
     function voirMembres(id,groupe){
-        setShowEditForm(false);
-        if(groupeToShowId === id && showVoirMembres){
-            setShowVoirMembres(false);
+        setShowEditForm(false); // On cache le formulaire de modification si il est affiché
+        if(groupeToShowId === id && showVoirMembres){ // Si on clique sur le même bouton une 2ème fois, on cache la liste des étudiants
+            setShowVoirMembres(false); 
             return;
         }
-        setShowVoirMembres(true);
-        setGroupeToShowId(id);
-        getEtudiantsOfGroup(id,groupe);
+        setShowVoirMembres(true); // On affiche la liste des étudiants
+        setGroupeToShowId(id); // On stocke l'id du groupe pour savoir si on clique sur le même bouton
+        getEtudiantsOfGroup(id,groupe); // On récupère les étudiants du groupe
     }
 
-    function editGroupe(id,nom){
-        setShowVoirMembres(false);
-        if(groupeToEditId === id && showEditForm){
+    function editGroupe(id,nom){ // Pour afficher le formulaire de modification
+        setShowVoirMembres(false); // On cache la liste des étudiants si elle est affichée
+        if(groupeToEditId === id && showEditForm){ // Si on clique sur le même bouton une 2ème fois, on cache le formulaire de modification
             setShowEditForm(false);
             return;
         }
-        setShowEditForm(true);
-        getEtudiantsOfGroup(id);
-        setGroupeToEditId(id);
-        setGroupeToEditNom(nom);
-    }
+        setShowEditForm(true); // On affiche le formulaire de modification
+        getEtudiantsOfGroup(id); // On récupère les étudiants du groupe
+        setGroupeToEditId(id); // On stocke l'id du groupe pour savoir si on clique sur le même bouton
+        setGroupeToEditNom(nom); // On stocke le nom du groupe pour le passer au formulaire de modification
+    } 
 
-    return wait && (
+    return wait && ( // On attend que les groupes soient chargés
         <div className='affichage-groupes'>
             <div className="groupes">
                 {groupes.map((item) =>
