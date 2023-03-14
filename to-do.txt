@@ -12,3 +12,5 @@ Clear champs de création session quand on clique sur créer
 Afficher des msg d'erreur quand tous les champs de création ne sont pas renseignés
 Quand on modif une session, quand on appuie sur "modifier", on retourne sur la liste des sessions, mais la session modifiée n'est pas mise à jour
 Gérer le fait qu'on puisse ajouter +eurs fois le même étudiant dans un groupe
+
+----to do update 10h25----
