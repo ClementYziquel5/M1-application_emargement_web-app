@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css'
 
-function Header(){
+function Header(props){
     const [showInfos, setShowInfos] = useState(false);
     const handleClick = () => {
       setShowInfos(!showInfos);
@@ -14,11 +14,14 @@ function Header(){
                 <img src="logo.png" className="logo" alt='ISEN Logo'></img>
             </div>
 
-            <div className="navbar">
-                <Link to="/sessions">Sessions</Link>
-                <Link to="/groupes">Groupes</Link>
-                <Link to="/creation">Création</Link>
-            </div>
+            {!props.connexionEnCours && 
+                <div className="navbar">
+                    <Link to="/sessions">Sessions</Link>
+                    <Link to="/groupes">Groupes</Link>
+                    <Link to="/creation">Création</Link>
+                </div>
+            }
+            
 
             <div>
                 <div className="hamburger-div">
@@ -28,7 +31,7 @@ function Header(){
                 <div className='infos-hamburger' style={{ display: showInfos ? 'block' : 'none' }}>
                     <p id='nom'>Nom Prenom</p>
                     <p id='pseudo'>pseudo</p>
-                    <a href='#'><p className='deconnexion'>Déconnexion</p></a>
+                    <p onClick={() => {props.logout.logout()} } className='deconnexion'>Déconnexion</p>
                 </div>  
             </div>
         </div>
