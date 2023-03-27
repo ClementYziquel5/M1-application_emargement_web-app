@@ -21,6 +21,7 @@
     "react-select": "^5.7.0",
     "react-transition-group": "^4.4.5",
     "rebass": "^4.0.7",
+    "stream": "^0.0.2",
     "timers": "^0.1.1",
     "web-vitals": "^2.1.4"
   },

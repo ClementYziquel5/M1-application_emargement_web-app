@@ -8,7 +8,6 @@ import CreationGroupe from './components/CreationGroupe/CreationGroupe.js';
 import ListeSession from './components/ListeSession/ListeSession.js';
 import ListeGroupe from './components/ListeGroupe/ListeGroupe.js';
 import VisualisationSession from './components/VisualisationSession/VisualisationSession.js';
-import Connexion from './components/Connexion/Connexion.js';
 import { CasUserContext, CasUserContextProvider } from './context/casUserContext';
 import useCas from './hooks/useCas.js';
 
@@ -16,6 +15,7 @@ import useCas from './hooks/useCas.js';
 function App() {
   const [datas, setDatas] = useState(''); // datas = {groupes: [], salles: [], matieres: [], types: [], intervenants: []}
   const [wait, setWait] = useState(false); // wait = true quand les datas sont chargées
+  const casUserContext = useContext(CasUserContext);
 
   function updateGroupe() { // fonction pour mettre à jour les groupes après création d'un nouveau groupe
     const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes';
@@ -92,7 +92,7 @@ function Layout(props){
     }
   }, [props.isSecure,casUserContext.user]); // on vérifie à chaque fois que la page change ou que l'utilisateur se connecte
 
-  return (
+  return securityChecked && (
     <Box align="center" background={props.background} fill> 
       <Box justify="center" align="center"> 
         {props.children} 
@@ -120,7 +120,7 @@ function Accueil(){
 
   useEffect(() => {
     if (casUserContext.user) { // si l'utilisateur est connecté
-      navigate('/'); // on le redirige vers la page des sessions
+      navigate('/'); // on le redirige vers la page d'accueil
     }
   }, [casUserContext.user]); // on vérifie à chaque fois que l'utilisateur se connecte
 
@@ -128,7 +128,7 @@ function Accueil(){
     <Layout background="status-unknown" isSecure={false}> 
       {!cas.isLoading && (  // si le chargement de l'authentification est terminé
         <Box align="center" gap="xsmall"> 
-          
+
         </Box>
        )}
     </Layout>
