@@ -8,6 +8,7 @@ import './VisualisationSession.css';
  * - session : session à afficher
  * - idSession : id de la session à afficher
  * - setVisu : permet de modifier l'état de visualisation
+ * - groupes : liste des groupes existants
  */
 function VisualisationSession(props) {
     // Get Students by group by session
@@ -19,20 +20,51 @@ function VisualisationSession(props) {
     }, []);
 
     function getetudiants() {
+        const newEtudiants = [];
+        let idGroupe = 0;
+        props.session["groupes"].map((groupe) => { // Pour chaque groupe de la session, on récupère les étudiants de ce groupe
+            // récupérer id du groupe en fonction du nom du groupe
+            props.groupes.map((groupe2) => {
+                if (groupe2.groupe === groupe) {
+                    idGroupe = groupe2.id;
+                }
+            })
+            const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/' + props.idSession + '/groupe/' + idGroupe + '/etudiants';
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                newEtudiants.push({ groupe: groupe, etudiants: data });
+                if (newEtudiants.length === props.session["groupes"].length) {
+                    setEtudiants(newEtudiants);
+                    setIsEtudiantsLoaded(true);
+                }
+            }) 
+            .catch(error => console.log(error));
+        })
+    }
+    
+
+    function getetudiants() {
         // Créer une fonction pour effectuer la requête pour un groupe
         const fetchEtudiants = (groupe) => {
-          const url =
-            process.env.REACT_APP_API_ENDPOINT +
-            "/v1.0/session/" +
-            props.idSession +
-            "/groupe/" +
-            groupe +
-            "/etudiants";
-          return fetch(url)
-            .then((response) => response.json())
-            .then((data) => {
-              return { groupe: groupe, etudiants: data };
-            });
+            let idGroupe = 0;
+            props.groupes.map((groupe2) => {
+                if (groupe2.groupe === groupe) {
+                    idGroupe = groupe2.id;
+                }
+            })
+            const url =
+                process.env.REACT_APP_API_ENDPOINT +
+                "/v1.0/session/" +
+                props.idSession +
+                "/groupe/" +
+                idGroupe +
+                "/etudiants";
+            return fetch(url)
+                .then((response) => response.json())
+                .then((data) => {
+                return { groupe: groupe, etudiants: data };
+                });
         };
       
         // Créer un tableau de promesses pour toutes les requêtes

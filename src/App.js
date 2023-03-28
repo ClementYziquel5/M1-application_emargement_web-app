@@ -158,7 +158,7 @@ function Sessions(props){ // composant pour afficher les sessions
     <Layout background="status-ok" isSecure={true}>
       <div>
         {visu 
-        ? <VisualisationSession session={session} setVisu={setVisu} idSession={idSession}/>
+        ? <VisualisationSession session={session} setVisu={setVisu} idSession={idSession} groupes={props.data.groupes} />
         : edit 
           ? <div className='edit'><CreationSession datas={props.datas} session={session} setSession={setSession} setEdit={setEdit} edit={edit}/> </div>
           : <div> 
