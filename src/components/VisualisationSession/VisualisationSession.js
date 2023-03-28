@@ -19,20 +19,32 @@ function VisualisationSession(props) {
     }, []);
 
     function getetudiants() {
-        const newEtudiants = [];
-        props.session["groupes"].map((groupe) => { // Pour chaque groupe de la session, on récupère les étudiants de ce groupe
-            const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/session/' + props.idSession + '/groupe/' + groupe + '/etudiants';
-            fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                newEtudiants.push({ groupe: groupe, etudiants: data });
-                if (newEtudiants.length === props.session["groupes"].length) {
-                    setEtudiants(newEtudiants);
-                    setIsEtudiantsLoaded(true);
-                }
-            }) 
-            .catch(error => console.log(error));
-        })
+        // Créer une fonction pour effectuer la requête pour un groupe
+        const fetchEtudiants = (groupe) => {
+          const url =
+            process.env.REACT_APP_API_ENDPOINT +
+            "/v1.0/session/" +
+            props.idSession +
+            "/groupe/" +
+            groupe +
+            "/etudiants";
+          return fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+              return { groupe: groupe, etudiants: data };
+            });
+        };
+      
+        // Créer un tableau de promesses pour toutes les requêtes
+        const etudiantsPromises = props.session["groupes"].map(fetchEtudiants);
+      
+        // Attendre que toutes les promesses soient résolues
+        Promise.all(etudiantsPromises)
+            .then((newEtudiants) => {
+                setEtudiants(newEtudiants);
+                setIsEtudiantsLoaded(true);
+            })
+            .catch((error) => console.log(error));
     }
     
 

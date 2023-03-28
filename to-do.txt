@@ -4,6 +4,7 @@ Fix les polices (ça c'est juste Firefox qui casse les noisettes, les autres nav
 Css pour quznd on clique sur "Voir les membres"
 Ajouter un truc qui tourne quand la page est en train de charger
 Résoudre les warnings au lancement du serveur
+Optimiser requete dans VisualisationSession
 
 DONE:
 Lorsque l'on créé un groupe, mettre à jour la variable groupes dans App
