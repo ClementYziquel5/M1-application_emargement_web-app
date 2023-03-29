@@ -13,19 +13,19 @@ const useCas = (attempLoginWithGateway = false) => {
     version: constant.CAS_VERSION_3_0,
   });
 
-  useEffect(() => {
-    if (!casUserContext.user) {
-      (async function () {
-        try {
-          await attemptCasLogin(attempLoginWithGateway);
-        } catch (error) {
-          console.error(error);
-        }
-      })();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!casUserContext.user) {
+  //     (async function () {
+  //       try {
+  //         await attemptCasLogin(attempLoginWithGateway);
+  //       } catch (error) {
+  //         console.error(error);
+  //       }
+  //     })();
+  //   }
+  // }, []);
 
-  function attemptCasLogin(gateway) {
+  function attemptCasLogin(attempLoginWithGateway) {
     return new Promise((resolve, reject) => {
       casClient
         .auth(gateway)

@@ -127,7 +127,7 @@ function Accueil() {
   // }, [casUserContext.user]);
 
   useEffect(() => {
-    if (ticket) {
+    if (!ticket) {
       console.log("CAS authentication ticket:", ticket);
       // If a ticket is present in the URL, attempt to authenticate with the CAS server
       cas.attemptCasLogin(false).catch((error) => {
@@ -140,7 +140,7 @@ function Accueil() {
       });
     } else {
       // If the user is already authenticated, redirect to the sessions page
-      navigate("/sessions");
+      // navigate("/sessions");
     }
   }, [casUserContext.user, ticket]);
 
