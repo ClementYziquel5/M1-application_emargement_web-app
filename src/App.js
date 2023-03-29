@@ -102,7 +102,7 @@ function Layout(props){
 
 function EnTete(props){
   const casUserContext = useContext(CasUserContext);
-  const cas = useCas(true);
+  const cas = useCas();
   const navigate = useNavigate();
 
   return (
@@ -115,13 +115,14 @@ function EnTete(props){
 
 function Accueil() {
   const navigate = useNavigate();
-  const cas = useCas(true);
+  const cas = useCas();
   const casUserContext = useContext(CasUserContext);
   const queryParams = new URLSearchParams(window.location.search);
   const ticket = queryParams.get("ticket");
 
   useEffect(() => {
     if (ticket) {
+      console.log("CAS authentication ticket:", ticket);
       // If a ticket is present in the URL, attempt to authenticate with the CAS server
       cas.attemptCasLogin(false).catch((error) => {
         console.error("CAS authentication error:", error);
