@@ -120,22 +120,17 @@ function Accueil() {
   const casUserContext = useContext(CasUserContext);
   const queryParams = new URLSearchParams(window.location.search);
   const ticket = queryParams.get("ticket");
-  const [isAuthenticated, setIsAuthenticated] = useState(casUserContext.user);
-
-  // useEffect(() => {
-  //   setIsAuthenticated(casUserContext.user);
-  // }, [casUserContext.user]);
 
   useEffect(() => {
-    if (!ticket) {
-      console.log("CAS authentication ticket:", ticket);
+    if (ticket) {
+      //console.log("CAS authentication ticket:", ticket);
       // If a ticket is present in the URL, attempt to authenticate with the CAS server
-      cas.attemptCasLogin(false).catch((error) => {
+      cas.attemptCasLogin(true).catch((error) => {
         console.error("CAS authentication error:", error);
       });
     } else if (!casUserContext.user) {
       // If the user is not authenticated, attempt to authenticate with the CAS server using the gateway
-      cas.attemptCasLogin(true).catch((error) => {
+      cas.attemptCasLogin(false).catch((error) => {
         console.error("CAS authentication error:", error);
       });
     } else {

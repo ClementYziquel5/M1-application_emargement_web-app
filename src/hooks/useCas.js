@@ -28,7 +28,7 @@ const useCas = (attempLoginWithGateway = false) => {
   function attemptCasLogin(attempLoginWithGateway) {
     return new Promise((resolve, reject) => {
       casClient
-        .auth(gateway)
+        .auth(attempLoginWithGateway)
         .then((successRes) => {
           // Login user in state / locationStorage ()
           // eg. loginUser(response.user);
