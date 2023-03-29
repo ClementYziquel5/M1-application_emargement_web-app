@@ -113,27 +113,32 @@ function EnTete(props){
 }
 
 
-function Accueil(){
-  const navigate = useNavigate(); 
-  const cas = useCas(true); 
-  const casUserContext = useContext(CasUserContext); 
+function Accueil() {
+  const navigate = useNavigate();
+  const cas = useCas(true);
+  const casUserContext = useContext(CasUserContext);
+  const queryParams = new URLSearchParams(window.location.search);
+  const ticket = queryParams.get("ticket");
 
   useEffect(() => {
-    if (casUserContext.user) { // si l'utilisateur est connecté
-      navigate('/sessions'); // on le redirige vers la page d'accueil
+    if (ticket) {
+      // If a ticket is present in the URL, attempt to authenticate with the CAS server
+      cas.attemptCasLogin(false).catch((error) => {
+        console.error("CAS authentication error:", error);
+      });
+    } else if (casUserContext.user) {
+      // If the user is already authenticated, redirect to the sessions page
+      navigate("/sessions");
     }
-  }, [casUserContext.user]); // on vérifie à chaque fois que l'utilisateur se connecte
+  }, [casUserContext.user, ticket]);
 
   return (
-    <Layout background="status-unknown" isSecure={false}> 
-      {!cas.isLoading && (  // si le chargement de l'authentification est terminé
-        <Box align="center" gap="xsmall"> 
-
-        </Box>
-       )}
+    <Layout background="status-unknown" isSecure={false}>
+      {!cas.isLoading && <Box align="center" gap="xsmall"></Box>}
     </Layout>
   );
 }
+
 
 
 function Sessions(props){ // composant pour afficher les sessions
