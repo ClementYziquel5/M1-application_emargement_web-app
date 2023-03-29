@@ -33,6 +33,7 @@ const useCas = (attempLoginWithGateway = false) => {
           // Login user in state / locationStorage ()
           // eg. loginUser(response.user);
           casUserContext.setUser(successRes.user);
+          console.log("user", successRes.user);
           // Update current path to trim any extra params in url
           // eg. this.props.history.replace(response.currentPath);
           setIsLoading(false);
