@@ -120,19 +120,27 @@ function Accueil() {
   const casUserContext = useContext(CasUserContext);
   const queryParams = new URLSearchParams(window.location.search);
   const ticket = queryParams.get("ticket");
+  const [isAuthenticated, setIsAuthenticated] = useState(casUserContext.user);
+
+  useEffect(() => {
+    setIsAuthenticated(casUserContext.user);
+  }, [casUserContext.user]);
 
   useEffect(() => {
     if (ticket) {
       console.log("CAS authentication ticket:", ticket);
-      // If a ticket is present in the URL, attempt to authenticate with the CAS server
-      cas.attemptCasLogin(false).catch((error) => {
-        console.error("CAS authentication error:", error);
-      });
-    } else if (casUserContext.user) {
-      // If the user is already authenticated, redirect to the sessions page
+      cas
+        .attemptCasLogin(false)
+        .then(() => {
+          setIsAuthenticated(true);
+        })
+        .catch((error) => {
+          console.error("CAS authentication error:", error);
+        });
+    } else if (isAuthenticated) {
       navigate("/sessions");
     }
-  }, [casUserContext.user, ticket]);
+  }, [isAuthenticated, ticket]);
 
   return (
     <Layout background="status-unknown" isSecure={false}>
@@ -140,6 +148,7 @@ function Accueil() {
     </Layout>
   );
 }
+
 
 
 
