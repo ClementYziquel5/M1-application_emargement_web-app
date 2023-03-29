@@ -36,11 +36,11 @@ const useCas = (attempLoginWithGateway = false) => {
           // Update current path to trim any extra params in url
           // eg. this.props.history.replace(response.currentPath);
           setIsLoading(false);
-          navigate(successRes.currentPath);
+          //navigate(successRes.currentPath);
         })
         .catch((errorRes) => {
           setIsLoading(false);
-          navigate(errorRes.currentPath);
+          //navigate(errorRes.currentPath);
           reject(errorRes);
         });
     });

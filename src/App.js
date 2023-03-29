@@ -128,17 +128,15 @@ function Accueil() {
 
   useEffect(() => {
     if (ticket) {
-      console.log("CAS authentication ticket:", ticket);
       cas
         .attemptCasLogin(false)
         .then(() => {
           setIsAuthenticated(true);
+          navigate("/sessions");
         })
         .catch((error) => {
           console.error("CAS authentication error:", error);
         });
-    } else if (isAuthenticated) {
-      navigate("/sessions");
     }
   }, [isAuthenticated, ticket]);
 
