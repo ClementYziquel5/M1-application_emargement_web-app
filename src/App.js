@@ -86,7 +86,7 @@ function Layout(props){
 
   useEffect(() => {
     if (props.isSecure && !casUserContext.user) { // si la page nécessite une authentification et que l'utilisateur n'est pas connecté
-      //navigate('/'); // on le redirige vers la page de connexion
+      navigate('/'); // on le redirige vers la page de connexion
     }else{
       setSecurityChecked(true); // sinon on indique que la sécurité a été vérifiée
     }
@@ -120,7 +120,7 @@ function Accueil(){
 
   useEffect(() => {
     if (casUserContext.user) { // si l'utilisateur est connecté
-      //navigate('/'); // on le redirige vers la page d'accueil
+      navigate('/sessions'); // on le redirige vers la page d'accueil
     }
   }, [casUserContext.user]); // on vérifie à chaque fois que l'utilisateur se connecte
 
