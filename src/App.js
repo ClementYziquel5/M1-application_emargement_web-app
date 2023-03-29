@@ -80,7 +80,8 @@ function App() {
 }
 
 function Layout(props){
-  const navigate = useNavigate();
+  const cas = useCas();
+  const { navigate } = cas;
   const [securityChecked, setSecurityChecked] = useState(false);
   const casUserContext = useContext(CasUserContext);
 
@@ -103,7 +104,7 @@ function Layout(props){
 function EnTete(props){
   const casUserContext = useContext(CasUserContext);
   const cas = useCas();
-  const navigate = useNavigate();
+  const { navigate } = cas;
 
   return (
     <Layout background="status-unknown" isSecure={true}>
@@ -114,8 +115,8 @@ function EnTete(props){
 
 
 function Accueil() {
-  const navigate = useNavigate();
   const cas = useCas();
+  const { navigate } = cas;
   const casUserContext = useContext(CasUserContext);
   const queryParams = new URLSearchParams(window.location.search);
   const ticket = queryParams.get("ticket");

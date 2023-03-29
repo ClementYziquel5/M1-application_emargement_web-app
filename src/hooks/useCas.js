@@ -50,7 +50,7 @@ const useCas = (attempLoginWithGateway = false) => {
     casClient.logout("/");
   }
 
-  return { isLoading, attemptCasLogin, logout };
+  return { isLoading, attemptCasLogin, logout, navigate };
 };
 
 export default useCas;
