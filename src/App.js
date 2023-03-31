@@ -1,6 +1,5 @@
-import React, {useState, useEffect, useContext } from 'react';
-import { BrowserRouter as Router, Route,Routes, useNavigate } from 'react-router-dom';
-import { Box } from 'rebass';
+import React, {useState, useEffect} from 'react';
+import { BrowserRouter as Router, Route,Routes, Link } from 'react-router-dom';
 import Header from './components/Header/Header.js';
 import Filtres from './components/Filtres/Filtres.js';
 import CreationSession from './components/CreationSession/CreationSession.js';
@@ -8,14 +7,11 @@ import CreationGroupe from './components/CreationGroupe/CreationGroupe.js';
 import ListeSession from './components/ListeSession/ListeSession.js';
 import ListeGroupe from './components/ListeGroupe/ListeGroupe.js';
 import VisualisationSession from './components/VisualisationSession/VisualisationSession.js';
-import { CasUserContext, CasUserContextProvider } from './context/casUserContext';
-import useCas from './hooks/useCas.js';
 
 
 function App() {
   const [datas, setDatas] = useState(''); // datas = {groupes: [], salles: [], matieres: [], types: [], intervenants: []}
   const [wait, setWait] = useState(false); // wait = true quand les datas sont chargées
-  const casUserContext = useContext(CasUserContext);
 
   function updateGroupe() { // fonction pour mettre à jour les groupes après création d'un nouveau groupe
     const url = process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes';
@@ -62,94 +58,18 @@ function App() {
   }, []);
 
   return wait && ( // on attend que les datas soient chargées
-    <CasUserContextProvider>
-      <Router>
-          <div>
-              <EnTete /> 
-              <Routes>
-                  <Route path="/" element={<Accueil/>} />
-                  <Route exact path="/sessions" element={<Sessions datas={datas}/>} />
-                  <Route path="/groupes" element={<Groupes datas={datas}/>} />
-                  <Route path="/creation" element={<Creation datas={datas} updateGroupe={updateGroupe}/>} />
-                  <Route path="*" element={<NotFound/>} />
-              </Routes>
-          </div>
-      </Router>
-    </CasUserContextProvider>
+    <Router>
+        <div>
+            <Header/> 
+            <Routes>
+                <Route exact path="/sessions" element={<Sessions datas={datas}/>} />
+                <Route path="/groupes" element={<Groupes datas={datas}/>} />
+                <Route path="/creation" element={<Creation datas={datas} updateGroupe={updateGroupe}/>} />
+            </Routes>
+        </div>
+    </Router>
   );
 }
-
-function Layout(props){
-  const cas = useCas();
-  const { navigate } = cas;
-  const [securityChecked, setSecurityChecked] = useState(false);
-  const casUserContext = useContext(CasUserContext);
-
-  useEffect(() => {
-    if (props.isSecure && !casUserContext.user) { // si la page nécessite une authentification et que l'utilisateur n'est pas connecté
-      navigate('/'); // on le redirige vers la page de connexion
-    }else{
-      setSecurityChecked(true); // sinon on indique que la sécurité a été vérifiée
-    }
-  }, [props.isSecure,casUserContext.user]); // on vérifie à chaque fois que la page change ou que l'utilisateur se connecte
-
-  return securityChecked && (
-    <Box align="center" background={props.background} fill> 
-      <Box justify="center" align="center"> 
-        {props.children} 
-      </Box>
-    </Box>  );
-}
-
-function EnTete(props){
-  const casUserContext = useContext(CasUserContext);
-  const cas = useCas();
-  const { navigate } = cas;
-
-  return (
-    <Layout background="status-unknown" isSecure={true}>
-      <Header casUserContext={casUserContext} cas={cas} navigate={navigate}/>
-    </Layout>
-  );
-}
-
-
-function Accueil() {
-  const cas = useCas();
-  const { navigate } = cas;
-  const casUserContext = useContext(CasUserContext);
-  const queryParams = new URLSearchParams(window.location.search);
-  const ticket = queryParams.get("ticket");
-
-  useEffect(() => {
-    if (!ticket) {
-      // If the user is not authenticated, attempt to authenticate with the CAS server using the gateway
-      cas.attemptCasLogin(true).catch((error) => {
-        console.error("CAS authentication error:", error);
-      });
-    } else if (!casUserContext.user) {
-      console.log("Ticket : ", ticket);
-      // If a ticket is present in the URL, attempt to authenticate with the CAS server
-      cas.attemptCasLogin(false).catch((error) => {
-        console.error("CAS authentication error:", error);
-      });
-    } else if (casUserContext.user) {
-      console.log("User : ", casUserContext.user);
-      // If the user is authenticated, navigate to the /sessions route
-      navigate("/sessions");
-    }
-  }, [casUserContext.user, ticket]);
-  
-
-  return (
-    <Layout background="status-unknown" isSecure={false}>
-      {!cas.isLoading && <Box align="center" gap="xsmall"></Box>}
-    </Layout>
-  );
-}
-
-
-
 
 function Sessions(props){ // composant pour afficher les sessions
   const [edit, setEdit] = useState(''); // edit = true quand on est en mode édition
@@ -160,9 +80,6 @@ function Sessions(props){ // composant pour afficher les sessions
   let date = new Date().toISOString().split('T')[0]; // date = date du jour 
   const [filtres , setFiltres] = useState({date: date, groupe: '0', salle: '0', matiere: '0', type: '0', intervenant: '0'}); // filtres = filtres appliqués à la liste des sessions
 
-  const cas = useCas();
-  const casUserContext = useContext(CasUserContext);
-
 
   /* 
    * Initialement, on affiche les filtres et la liste des sessions du jour
@@ -170,62 +87,38 @@ function Sessions(props){ // composant pour afficher les sessions
    * si on clique sur "Modifier", on affiche le formulaire d'édition de la session (edit = true) => CreationSession
    */
   return ( 
-    <Layout background="status-ok" isSecure={true}>
-      <div>
-        {visu 
-        ? <VisualisationSession session={session} setVisu={setVisu} idSession={idSession} groupes={props.data.groupes} />
-        : edit 
-          ? <div className='edit'><CreationSession datas={props.datas} session={session} setSession={setSession} setEdit={setEdit} edit={edit}/> </div>
-          : <div> 
-              <Filtres filtres={filtres} setFiltres={setFiltres} datas={props.datas} setSessions={setSessions} edit={edit} visu={visu}/> 
-              <ListeSession setIdSession={setIdSession} sessions={sessions} setSession={setSession} setVisu={setVisu} setEdit={setEdit}/> 
-            </div>
-        }
-      </div>
-    </Layout>
+    <div>
+      {visu 
+      ? <VisualisationSession session={session} setVisu={setVisu} idSession={idSession} groupes={props.datas.groupes} />
+      : edit 
+        ? <div className='edit'><CreationSession datas={props.datas} session={session} setSession={setSession} setEdit={setEdit} edit={edit}/> </div>
+        : <div> 
+            <Filtres filtres={filtres} setFiltres={setFiltres} datas={props.datas} setSessions={setSessions} edit={edit} visu={visu}/> 
+            <ListeSession setIdSession={setIdSession} sessions={sessions} setSession={setSession} setVisu={setVisu} setEdit={setEdit}/> 
+          </div>
+      }
+
+    </div>
   )
 }
 
 /*
  * Composant pour afficher les groupes existants
  */
-function Groupes(props){
-  const cas = useCas();
-  const casUserContext = useContext(CasUserContext);
-
-  return (
-    <Layout background="status-ok" isSecure={true}>
-      <Header logout={cas}/>
-      <ListeGroupe groupes={props.datas.groupes}/>
-    </Layout>
-  );
-}
+const Groupes = (props) => (
+  <div>
+    <ListeGroupe groupes={props.datas.groupes}/>
+  </div>
+);
 
 /*
  * Composants pour créer une session ou un groupe
  */
-function Creation(){
-  const cas = useCas();
-  const casUserContext = useContext(CasUserContext);
-
-  return (
-    <Layout background="status-ok" isSecure={true}>
-      <Header logout={cas}/>
-      <div className="creation">
-        <CreationSession />
-        <CreationGroupe />
-      </div>
-    </Layout>
-  );
-}
-
-const NotFound = () => (
-  <div style={{textAlign:'center'}}>
-    <h1>404</h1>
-    <p>Page not found</p>
+const Creation = (props) => (
+  <div className="creation">
+    <CreationSession datas={props.datas}/>
+    <CreationGroupe updateGroupe={props.updateGroupe}/>
   </div>
 );
-
-
 
 export default App;
