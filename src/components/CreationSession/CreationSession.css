@@ -11,14 +11,14 @@
 
 @media (max-width: 1500px) {
     .creation {
-      flex-direction: column;
+        flex-direction: column;
     }
-  }
+}
   
 @media (min-width: 1501px) {
-.creation {
-    flex-direction: row;
-}
+    .creation {
+        flex-direction: row;
+    }
 }
 
 .creationSession{
