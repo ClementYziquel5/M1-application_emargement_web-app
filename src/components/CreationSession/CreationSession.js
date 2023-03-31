@@ -63,56 +63,6 @@ const multiSelectStyle = {
     }),
 }
 
-const simpleSelectStyle = {
-    control: (provided, state) => ({
-        ...provided,
-        width: '220px',
-        height: '2.7em',
-        backgroundColor: 'white',
-        color: 'black',
-        fontSize: '16px',
-        alignItems: 'flex-start',
-        border: '0px',
-        overflow: 'hidden',
-        ":hover": {
-            cursor: 'text',
-        }
-    }),
-    menu: (provided, state) => ({
-        ...provided,
-        width: '220px',
-        backgroundColor: 'white',
-        color: 'black',
-        fontSize: '16px',
-        margin: '0px',
-        padding: '0px',
-        ":hover": {
-            cursor: 'pointer',
-        }
-    }),
-    option: (provided, state) => ({
-        ...provided,
-        color: 'black', // Modifier la couleur de la police
-        backgroundColor: state.isSelected ? 'blue' : 'white', // Modifier la couleur de fond en fonction de l'état de la sélection
-        '&:hover': {
-          backgroundColor: 'lightgray', // Modifier la couleur de fond au survol
-          cursor: 'pointer',
-        },
-    }),
-    valueContainer: (provided) => ({
-        ...provided,
-        width: '200px', // Modifier l'espace entre les options sélectionnées
-        padding: '3px',
-        '&:hover': {
-            cursor: 'pointer',
-        },
-    }),
-    clearIndicator: (provided, state) => ({
-        ...provided,
-        cursor: 'pointer', // Modifier le curseur de la croix
-    }),
-}
-
 const selectTheme = (theme) => ({
     ...theme,
     colors: {
@@ -155,10 +105,11 @@ function CreationSession(props){
     const [idIntervenants, setIdIntervenants] = useState([]);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     
-    useEffect(() => {
+    useEffect(() => {   // Récupèrer toutes les données du datas de App.js et les mettre dans les states du composant
         if(props.datas !== undefined){
             setGroupes(props.datas.groupes);
-            const groupe = props.datas.groupes.map((item) => {
+            // Obligé de dédier un state "setXxOptions" pour les inputs en react-select qui prend en argument un tableau avec item: et label:
+            const groupe = props.datas.groupes.map((item) => {  // On convertit notre tableau original avec un tableau compatabible avec react-select
                 return {value: item.groupe, label: item.groupe}
             })
             setGroupesOptions(groupe);
@@ -274,9 +225,9 @@ function CreationSession(props){
     }
 
     function handleChangeGroupe(e) {
-        setGroupesSelected(e);
+        setGroupesSelected(e);  // Tableau avec format react-select
         let ids = [];
-        e.map((item) => {
+        e.map((item) => {   // Passer du format de react-select à notre format
             const groupe = groupes.find(g => g.groupe === item.value);
             if(groupe.id) {
                 ids.push(groupe.id);
@@ -300,12 +251,8 @@ function CreationSession(props){
     function handleChangeIntervenant(e) {
         setIntervenantsSelected(e);
         let ids = [];
-        e.map((item) => {
+        e.map((item) => {   // Mettre les majuscules comme il faut (LE NOM Prénom De Truc)
             const nomComplet = item.value;
-            // const parts = fullName.split(" ");
-            // const nom = parts.slice(0, -1).join(" ").toUpperCase();
-            // const prenom = parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].substr(1).toLowerCase();
-            
             const regex = /^([A-Z\s]+)\s(.*)$/;
             const resultats = nomComplet.match(regex);
             if (resultats) {
@@ -422,7 +369,7 @@ function CreationSession(props){
             {props.edit // Si on est en mode édition, on affiche un message de confirmation différent de celui de création
                 ? <div>
                     {alert('La session a été modifiée')}
-                    {props.setEdit(false) /* Lorsque la modification est terminée, on remet le mode édition à false pour revenir à la liste des sessions */}
+                    {props.setEdit(false)} {/* Lorsque la modification est terminée, on remet le mode édition à false pour revenir à la liste des sessions */}
                 </div>
                 : alert('La session a été créée')
             }
