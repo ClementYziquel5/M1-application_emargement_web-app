@@ -8,7 +8,6 @@ import ListeSession from './components/ListeSession/ListeSession.js';
 import ListeGroupe from './components/ListeGroupe/ListeGroupe.js';
 import VisualisationSession from './components/VisualisationSession/VisualisationSession.js';
 
-
 function App() {
   const [datas, setDatas] = useState(''); // datas = {groupes: [], salles: [], matieres: [], types: [], intervenants: []}
   const [wait, setWait] = useState(false); // wait = true quand les datas sont chargées
@@ -26,7 +25,6 @@ function App() {
       .catch(error => console.error('Error:', error));
   }
   
-
   const getDatas = async () => { // fonction pour récupérer les datas fixes (groupes, salles, matières, types, intervenants)
     const urls = [  process.env.REACT_APP_API_ENDPOINT + '/v1.0/groupes',
                     process.env.REACT_APP_API_ENDPOINT + '/v1.0/salles',
