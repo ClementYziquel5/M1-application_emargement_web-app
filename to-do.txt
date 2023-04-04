@@ -1,10 +1,8 @@
 TODO:
 Mettre un underline sur l'onglet actif
-Fix les polices (ça c'est juste Firefox qui casse les noisettes, les autres navigateurs sont OK)
 Css pour quznd on clique sur "Voir les membres"
 Ajouter un truc qui tourne quand la page est en train de charger
 Résoudre les warnings au lancement du serveur
-Optimiser requete dans VisualisationSession
 
 DONE:
 Lorsque l'on créé un groupe, mettre à jour la variable groupes dans App
@@ -13,5 +11,5 @@ Clear champs de création session quand on clique sur créer
 Afficher des msg d'erreur quand tous les champs de création ne sont pas renseignés
 Quand on modif une session, quand on appuie sur "modifier", on retourne sur la liste des sessions, mais la session modifiée n'est pas mise à jour
 Gérer le fait qu'on puisse ajouter +eurs fois le même étudiant dans un groupe
-
-----to do update 10h25----
+Optimiser requete dans VisualisationSession
+Fix les polices (problème seulement avec firefox)
