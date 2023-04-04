@@ -14,11 +14,17 @@
 }
 
 button {
-    margin-top: 20px;
     padding: 5px 10px;
-    margin-left: 10px;
 }
 
 button:hover {
     cursor: pointer;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+.button-confirm{
+    margin: 4px;
 }
