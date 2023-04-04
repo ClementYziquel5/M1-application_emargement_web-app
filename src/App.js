@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { BrowserRouter as Router, Route,Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route,Routes } from 'react-router-dom';
 import Header from './components/Header/Header.js';
 import Filtres from './components/Filtres/Filtres.js';
 import CreationSession from './components/CreationSession/CreationSession.js';
@@ -61,7 +61,7 @@ function App() {
             <Header/> 
             <Routes>
                 <Route exact path="/sessions" element={<Sessions datas={datas}/>} />
-                <Route path="/groupes" element={<Groupes datas={datas}/>} />
+                <Route path="/groupes" element={<Groupes datas={datas} updateGroupe={updateGroupe}/>} />
                 <Route path="/creation" element={<Creation datas={datas} updateGroupe={updateGroupe}/>} />
             </Routes>
         </div>
@@ -105,7 +105,7 @@ function Sessions(props){ // composant pour afficher les sessions
  */
 const Groupes = (props) => (
   <div>
-    <ListeGroupe groupes={props.datas.groupes}/>
+    <ListeGroupe groupes={props.datas.groupes} updateGroupe={props.updateGroupe} />
   </div>
 );
 

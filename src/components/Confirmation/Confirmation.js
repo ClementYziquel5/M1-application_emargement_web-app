@@ -32,14 +32,14 @@ const ConfirmationModal = ({ type, isOpen, onRequestClose, onConfirm }) => {
       }}
     >
       <h2>Confirmer la suppression</h2>  {/* On affiche un message différent selon le type de suppression (groupe ou session)*/}
-      {type === 'groupe' && <p>Êtes-vous sûr de vouloir supprimer ce groupe?</p>} 
-      {type === 'session' && <p>Êtes-vous sûr de vouloir supprimer cette session?</p>}
-      <scan className='button-confirm'>
+      {type === 'groupe' && <p className='paragraph-confirm'>Êtes-vous sûr de vouloir supprimer ce groupe?</p>} 
+      {type === 'session' && <p className='paragraph-confirm'>Êtes-vous sûr de vouloir supprimer cette session?</p>}
+      <span className='button-confirm'>
         <button onClick={onConfirm}>Supprimer</button>
-      </scan>
-      <scan className='button-confirm'>
+      </span>
+      <span className='button-confirm'>
         <button onClick={onRequestClose}>Annuler</button>
-      </scan>
+      </span>
     </Modal>
   );
 };

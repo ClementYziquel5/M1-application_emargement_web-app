@@ -9,6 +9,7 @@ import './ListeGroupe.css'
  *
  * props :
  * - groupes : liste des groupes
+ * - updateGroupe : fonction pour mettre à jour la liste des groupes
  */
 function ListeGroupe(props){
     const [groupes, setGroupes] = useState([]); // Liste des groupes
@@ -75,6 +76,7 @@ function ListeGroupe(props){
         .then(response => {
             if (response.ok) {
                 setGroupes(groupes.filter(item => item.id !== state.itemToDelete));
+                props.updateGroupe();
             } else {
                 throw new Error('DeleteGroupe error');
             }
